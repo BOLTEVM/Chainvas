@@ -1,0 +1,47 @@
+.ProseMirror {
+    min-height: 100%;
+    outline: none;
+}
+
+.ProseMirror p {
+    margin-bottom: 1em;
+}
+
+.tool-select {
+    cursor: default;
+}
+
+.tool-direct-select {
+    cursor: crosshair;
+}
+
+.tool-text {
+    cursor: text;
+}
+
+.tool-hand {
+    cursor: grab;
+}
+
+.tool-hand:active {
+    cursor: grabbing;
+}
+
+.tool-zoom {
+    cursor: zoom-in;
+}
+
+.tool-rectangle,
+.tool-rectangle-frame,
+.tool-ellipse,
+.tool-ellipse-frame,
+.tool-line,
+.tool-polygon,
+.tool-polygon-frame {
+    cursor: crosshair;
+}
+
+.workspace-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
