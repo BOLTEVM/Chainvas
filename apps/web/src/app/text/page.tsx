@@ -159,7 +159,7 @@ export default function InDesignTextEditor() {
     };
 
     const handleOptionsChange = (newOptions: Partial<TypographyOptions>) => {
-        setTypography(prev => ({ ...prev, ...newOptions }));
+        setTypography((prev: TypographyOptions) => ({ ...prev, ...newOptions }));
         // In a complete implementation, this would also apply to the currently selected objects
     };
 
