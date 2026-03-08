@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/bolt-logo.png" alt="Chainvas Logo" width="180" />
+  <img src="public/banner.png" alt="Chainvas Banner" width="100%" />
 
   # ⚡ Chainvas
   ### *The decentralized nexus for collaborative creation.*

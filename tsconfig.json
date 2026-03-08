@@ -1,15 +1,11 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": [
-                "apps/web/src/*"
-            ]
+    "files": [],
+    "references": [
+        {
+            "path": "./apps/web"
+        },
+        {
+            "path": "./packages/contracts"
         }
-    },
-    "include": [
-        "apps/web/src/**/*.ts",
-        "apps/web/src/**/*.tsx",
-        "packages/contracts/**/*.ts"
     ]
 }
