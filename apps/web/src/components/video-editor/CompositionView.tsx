@@ -13,9 +13,19 @@ interface CompositionViewProps {
     onTogglePlayback: () => void;
     onSeek: (time: number) => void;
     onFilesDrop: (files: FileList) => void;
+    zoom?: number;
 }
 
-export default function CompositionView({ playback, layers, activeLayerId, onSelectLayer, onTogglePlayback, onSeek, onFilesDrop }: CompositionViewProps) {
+export default function CompositionView({
+    playback,
+    layers,
+    activeLayerId,
+    onSelectLayer,
+    onTogglePlayback,
+    onSeek,
+    onFilesDrop,
+    zoom = 100
+}: CompositionViewProps) {
     const [isDragging, setIsDragging] = useState(false);
 
     const formatTimecode = (seconds: number) => {
@@ -88,7 +98,10 @@ export default function CompositionView({ playback, layers, activeLayerId, onSel
                 <div className="absolute inset-0 opacity-10 workspace-grid" />
 
                 {/* Simulated Final Canvas */}
-                <div className="relative aspect-video bg-black shadow-2xl overflow-hidden border border-white/5 w-[80%] max-w-[1200px]">
+                <div
+                    className="relative aspect-video bg-black shadow-2xl overflow-hidden border border-white/5 w-[80%] max-w-[1200px] transition-transform duration-200 ease-out"
+                    style={{ transform: `scale(${zoom / 100})` }}
+                >
                     {layers.filter(l => {
                         const anySolo = layers.some(s => s.solo);
                         if (anySolo && !l.solo) return false;

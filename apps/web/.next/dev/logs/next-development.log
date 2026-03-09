@@ -7,3 +7,9 @@
 [00:01:56.420] Server  LOG     ✓ Finished writing to filesystem cache in 11.6s
 [00:02:16.904] Server  LOG     ✓ Finished filesystem cache database compaction in 20.5s
 [00:55:30.319] Server  LOG     ✓ Finished filesystem cache database compaction in 17.3s
+[01:01:14.556] Server  LOG     ✓ Compiled in 10.9s
+[01:01:38.374] Server  LOG     ✓ Finished writing to filesystem cache in 22.0s
+[01:01:39.494] Server  LOG     ✓ Compiled in 1157ms
+[01:01:55.474] Server  LOG     ✓ Compiled in 1829ms
+[01:02:39.868] Server  LOG     ✓ Compiled in 838ms
+[01:02:45.621] Server  LOG     ✓ Compiled in 1002ms

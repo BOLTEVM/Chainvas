@@ -1865,18 +1865,19 @@ var _s = __turbopack_context__.k.signature();
 ;
 function CompositionView(t0) {
     _s();
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(64);
-    if ($[0] !== "cf6eff7fb0dbf108a931029cec62e9c14cf0a270affff9c93c5e77f9cf8416fd") {
-        for(let $i = 0; $i < 64; $i += 1){
+    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(67);
+    if ($[0] !== "b316f6e7bca367d67b93bab0e094e8cf0b8f5fd44d51a2400f7e05c910ba9998") {
+        for(let $i = 0; $i < 67; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "cf6eff7fb0dbf108a931029cec62e9c14cf0a270affff9c93c5e77f9cf8416fd";
+        $[0] = "b316f6e7bca367d67b93bab0e094e8cf0b8f5fd44d51a2400f7e05c910ba9998";
     }
-    const { playback, layers, activeLayerId, onSelectLayer, onTogglePlayback, onSeek, onFilesDrop } = t0;
+    const { playback, layers, activeLayerId, onSelectLayer, onTogglePlayback, onSeek, onFilesDrop, zoom: t1 } = t0;
+    const zoom = t1 === undefined ? 100 : t1;
     const [isDragging, setIsDragging] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    let t1;
+    let t2;
     if ($[1] !== playback.fps) {
-        t1 = ({
+        t2 = ({
             "CompositionView[formatTimecode]": (seconds)=>{
                 const h = Math.floor(seconds / 3600);
                 const m = Math.floor(seconds % 3600 / 60);
@@ -1886,15 +1887,15 @@ function CompositionView(t0) {
             }
         })["CompositionView[formatTimecode]"];
         $[1] = playback.fps;
-        $[2] = t1;
+        $[2] = t2;
     } else {
-        t1 = $[2];
+        t2 = $[2];
     }
-    const formatTimecode = t1;
-    let t2;
+    const formatTimecode = t2;
     let t3;
+    let t4;
     if ($[3] !== playback.isPlaying) {
-        t2 = ({
+        t3 = ({
             "CompositionView[useEffect()]": ()=>{
                 const videos = document.querySelectorAll("video");
                 videos.forEach({
@@ -1908,21 +1909,21 @@ function CompositionView(t0) {
                 }["CompositionView[useEffect() > videos.forEach()]"]);
             }
         })["CompositionView[useEffect()]"];
-        t3 = [
+        t4 = [
             playback.isPlaying
         ];
         $[3] = playback.isPlaying;
-        $[4] = t2;
-        $[5] = t3;
+        $[4] = t3;
+        $[5] = t4;
     } else {
-        t2 = $[4];
-        t3 = $[5];
+        t3 = $[4];
+        t4 = $[5];
     }
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t2, t3);
-    let t4;
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t3, t4);
     let t5;
+    let t6;
     if ($[6] !== playback.currentTime) {
-        t4 = ({
+        t5 = ({
             "CompositionView[useEffect()]": ()=>{
                 const videos_0 = document.querySelectorAll("video");
                 videos_0.forEach({
@@ -1934,45 +1935,45 @@ function CompositionView(t0) {
                 }["CompositionView[useEffect() > videos_0.forEach()]"]);
             }
         })["CompositionView[useEffect()]"];
-        t5 = [
+        t6 = [
             playback.currentTime
         ];
         $[6] = playback.currentTime;
-        $[7] = t4;
-        $[8] = t5;
+        $[7] = t5;
+        $[8] = t6;
     } else {
-        t4 = $[7];
-        t5 = $[8];
+        t5 = $[7];
+        t6 = $[8];
     }
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t4, t5);
-    let t6;
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t5, t6);
+    let t7;
     if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
-        t6 = ({
+        t7 = ({
             "CompositionView[handleDragOver]": (e)=>{
                 e.preventDefault();
                 setIsDragging(true);
             }
         })["CompositionView[handleDragOver]"];
-        $[9] = t6;
+        $[9] = t7;
     } else {
-        t6 = $[9];
+        t7 = $[9];
     }
-    const handleDragOver = t6;
-    let t7;
+    const handleDragOver = t7;
+    let t8;
     if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
-        t7 = ({
+        t8 = ({
             "CompositionView[handleDragLeave]": ()=>{
                 setIsDragging(false);
             }
         })["CompositionView[handleDragLeave]"];
-        $[10] = t7;
+        $[10] = t8;
     } else {
-        t7 = $[10];
+        t8 = $[10];
     }
-    const handleDragLeave = t7;
-    let t8;
+    const handleDragLeave = t8;
+    let t9;
     if ($[11] !== onFilesDrop) {
-        t8 = ({
+        t9 = ({
             "CompositionView[handleDrop]": (e_0)=>{
                 e_0.preventDefault();
                 setIsDragging(false);
@@ -1982,14 +1983,14 @@ function CompositionView(t0) {
             }
         })["CompositionView[handleDrop]"];
         $[11] = onFilesDrop;
-        $[12] = t8;
+        $[12] = t9;
     } else {
-        t8 = $[12];
+        t9 = $[12];
     }
-    const handleDrop = t8;
-    let t9;
+    const handleDrop = t9;
+    let t10;
     if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
-        t9 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        t10 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-center gap-4",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1997,32 +1998,32 @@ function CompositionView(t0) {
                     children: "Composition 1"
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                    lineNumber: 145,
-                    columnNumber: 51
+                    lineNumber: 148,
+                    columnNumber: 52
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                     children: "1920 x 1080 (1.00)"
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                    lineNumber: 145,
-                    columnNumber: 136
+                    lineNumber: 148,
+                    columnNumber: 137
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 145,
-            columnNumber: 10
+            lineNumber: 148,
+            columnNumber: 11
         }, this);
-        $[13] = t9;
+        $[13] = t10;
     } else {
-        t9 = $[13];
+        t10 = $[13];
     }
-    let t10;
+    let t11;
     if ($[14] === Symbol.for("react.memo_cache_sentinel")) {
-        t10 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        t11 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "h-8 bg-[#2d2d2d] border-b border-black flex items-center justify-between px-4 text-[11px] text-gray-400",
             children: [
-                t9,
+                t10,
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex items-center gap-2",
                     children: [
@@ -2030,50 +2031,61 @@ function CompositionView(t0) {
                             className: "w-3.5 h-3.5 hover:text-white cursor-pointer"
                         }, void 0, false, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                            lineNumber: 152,
-                            columnNumber: 177
+                            lineNumber: 155,
+                            columnNumber: 178
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$maximize$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Maximize$3e$__["Maximize"], {
                             className: "w-3.5 h-3.5 hover:text-white cursor-pointer"
                         }, void 0, false, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                            lineNumber: 152,
-                            columnNumber: 245
+                            lineNumber: 155,
+                            columnNumber: 246
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                    lineNumber: 152,
-                    columnNumber: 136
+                    lineNumber: 155,
+                    columnNumber: 137
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 152,
+            lineNumber: 155,
             columnNumber: 11
         }, this);
-        $[14] = t10;
+        $[14] = t11;
     } else {
-        t10 = $[14];
+        t11 = $[14];
     }
-    let t11;
+    let t12;
     if ($[15] === Symbol.for("react.memo_cache_sentinel")) {
-        t11 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        t12 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "absolute inset-0 opacity-10 workspace-grid"
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 159,
+            lineNumber: 162,
             columnNumber: 11
         }, this);
-        $[15] = t11;
+        $[15] = t12;
     } else {
-        t11 = $[15];
+        t12 = $[15];
     }
-    let t12;
-    if ($[16] !== activeLayerId || $[17] !== layers || $[18] !== onSelectLayer) {
-        let t13;
-        if ($[20] !== layers) {
-            t13 = ({
+    const t13 = `scale(${zoom / 100})`;
+    let t14;
+    if ($[16] !== t13) {
+        t14 = {
+            transform: t13
+        };
+        $[16] = t13;
+        $[17] = t14;
+    } else {
+        t14 = $[17];
+    }
+    let t15;
+    if ($[18] !== activeLayerId || $[19] !== layers || $[20] !== onSelectLayer) {
+        let t16;
+        if ($[22] !== layers) {
+            t16 = ({
                 "CompositionView[layers.filter()]": (l)=>{
                     const anySolo = layers.some(_CompositionViewLayersFilterLayersSome);
                     if (anySolo && !l.solo) {
@@ -2082,14 +2094,14 @@ function CompositionView(t0) {
                     return l.visible;
                 }
             })["CompositionView[layers.filter()]"];
-            $[20] = layers;
-            $[21] = t13;
+            $[22] = layers;
+            $[23] = t16;
         } else {
-            t13 = $[21];
+            t16 = $[23];
         }
-        let t14;
-        if ($[22] !== activeLayerId || $[23] !== onSelectLayer) {
-            t14 = ({
+        let t17;
+        if ($[24] !== activeLayerId || $[25] !== onSelectLayer) {
+            t17 = ({
                 "CompositionView[(anonymous)()]": (layer)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         onClick: {
                             "CompositionView[(anonymous)() > <div>.onClick]": ()=>!layer.locked && onSelectLayer(layer.id)
@@ -2115,7 +2127,7 @@ function CompositionView(t0) {
                                 onLoadedMetadata: _CompositionViewAnonymousVideoOnLoadedMetadata
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                                lineNumber: 197,
+                                lineNumber: 211,
                                 columnNumber: 52
                             }, this),
                             layer.url && layer.type === "AUDIO" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2125,7 +2137,7 @@ function CompositionView(t0) {
                                         className: `w-3 h-3 ${layer.muted ? "text-gray-500" : "text-[#10b981]"} mr-2`
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                                        lineNumber: 197,
+                                        lineNumber: 211,
                                         columnNumber: 400
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2137,13 +2149,13 @@ function CompositionView(t0) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                                        lineNumber: 197,
+                                        lineNumber: 211,
                                         columnNumber: 490
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                                lineNumber: 197,
+                                lineNumber: 211,
                                 columnNumber: 258
                             }, this),
                             layer.locked && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2152,53 +2164,55 @@ function CompositionView(t0) {
                                     className: "w-4 h-4 text-white/50"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                                    lineNumber: 197,
+                                    lineNumber: 211,
                                     columnNumber: 735
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                                lineNumber: 197,
+                                lineNumber: 211,
                                 columnNumber: 656
                             }, this)
                         ]
                     }, layer.id, true, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                        lineNumber: 185,
+                        lineNumber: 199,
                         columnNumber: 52
                     }, this)
             })["CompositionView[(anonymous)()]"];
-            $[22] = activeLayerId;
-            $[23] = onSelectLayer;
-            $[24] = t14;
+            $[24] = activeLayerId;
+            $[25] = onSelectLayer;
+            $[26] = t17;
         } else {
-            t14 = $[24];
+            t17 = $[26];
         }
-        t12 = layers.filter(t13).map(t14);
-        $[16] = activeLayerId;
-        $[17] = layers;
-        $[18] = onSelectLayer;
-        $[19] = t12;
+        t15 = layers.filter(t16).map(t17);
+        $[18] = activeLayerId;
+        $[19] = layers;
+        $[20] = onSelectLayer;
+        $[21] = t15;
     } else {
-        t12 = $[19];
+        t15 = $[21];
     }
-    let t13;
-    if ($[25] !== t12) {
-        t13 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "relative aspect-video bg-black shadow-2xl overflow-hidden border border-white/5 w-[80%] max-w-[1200px]",
-            children: t12
+    let t16;
+    if ($[27] !== t14 || $[28] !== t15) {
+        t16 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "relative aspect-video bg-black shadow-2xl overflow-hidden border border-white/5 w-[80%] max-w-[1200px] transition-transform duration-200 ease-out",
+            style: t14,
+            children: t15
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 215,
+            lineNumber: 229,
             columnNumber: 11
         }, this);
-        $[25] = t12;
-        $[26] = t13;
+        $[27] = t14;
+        $[28] = t15;
+        $[29] = t16;
     } else {
-        t13 = $[26];
+        t16 = $[29];
     }
-    let t14;
-    if ($[27] !== isDragging) {
-        t14 = isDragging && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    let t17;
+    if ($[30] !== isDragging) {
+        t17 = isDragging && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "absolute inset-0 z-50 bg-[#d391fc]/20 backdrop-blur-sm flex items-center justify-center border-4 border-dashed border-[#d391fc]/50 pointer-events-none",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "text-center",
@@ -2209,12 +2223,12 @@ function CompositionView(t0) {
                             className: "w-8 h-8 text-[#1e1e1e]"
                         }, void 0, false, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                            lineNumber: 223,
+                            lineNumber: 238,
                             columnNumber: 361
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                        lineNumber: 223,
+                        lineNumber: 238,
                         columnNumber: 222
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -2222,321 +2236,321 @@ function CompositionView(t0) {
                         children: "Drop to Import to BOLTChain"
                     }, void 0, false, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                        lineNumber: 223,
+                        lineNumber: 238,
                         columnNumber: 414
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                lineNumber: 223,
+                lineNumber: 238,
                 columnNumber: 193
             }, this)
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 223,
+            lineNumber: 238,
             columnNumber: 25
         }, this);
-        $[27] = isDragging;
-        $[28] = t14;
+        $[30] = isDragging;
+        $[31] = t17;
     } else {
-        t14 = $[28];
+        t17 = $[31];
     }
-    let t15;
-    if ($[29] === Symbol.for("react.memo_cache_sentinel")) {
-        t15 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    let t18;
+    if ($[32] === Symbol.for("react.memo_cache_sentinel")) {
+        t18 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "absolute inset-0 pointer-events-none border border-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-[90%] h-[90%] border border-dashed border-white/10"
             }, void 0, false, {
                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                lineNumber: 231,
+                lineNumber: 246,
                 columnNumber: 173
             }, this)
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 231,
+            lineNumber: 246,
             columnNumber: 11
         }, this);
-        $[29] = t15;
+        $[32] = t18;
     } else {
-        t15 = $[29];
+        t18 = $[32];
     }
-    let t16;
-    if ($[30] !== t13 || $[31] !== t14) {
-        t16 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    let t19;
+    if ($[33] !== t16 || $[34] !== t17) {
+        t19 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex-grow relative flex items-center justify-center bg-[#0e0e0e] overflow-hidden group",
             children: [
-                t11,
-                t13,
-                t14,
-                t15
+                t12,
+                t16,
+                t17,
+                t18
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 238,
+            lineNumber: 253,
             columnNumber: 11
         }, this);
-        $[30] = t13;
-        $[31] = t14;
-        $[32] = t16;
+        $[33] = t16;
+        $[34] = t17;
+        $[35] = t19;
     } else {
-        t16 = $[32];
+        t19 = $[35];
     }
-    const t17 = formatTimecode(playback.currentTime);
-    let t18;
-    if ($[33] !== t17) {
-        t18 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    const t20 = formatTimecode(playback.currentTime);
+    let t21;
+    if ($[36] !== t20) {
+        t21 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-center gap-4",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                 className: "text-xl font-mono text-[#00e0ff] font-bold tabular-nums",
-                children: t17
+                children: t20
             }, void 0, false, {
                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                lineNumber: 248,
+                lineNumber: 263,
                 columnNumber: 52
             }, this)
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 248,
+            lineNumber: 263,
             columnNumber: 11
         }, this);
-        $[33] = t17;
-        $[34] = t18;
+        $[36] = t20;
+        $[37] = t21;
     } else {
-        t18 = $[34];
+        t21 = $[37];
     }
-    let t19;
-    if ($[35] !== onSeek) {
-        t19 = ({
+    let t22;
+    if ($[38] !== onSeek) {
+        t22 = ({
             "CompositionView[<button>.onClick]": ()=>onSeek(0)
         })["CompositionView[<button>.onClick]"];
-        $[35] = onSeek;
-        $[36] = t19;
+        $[38] = onSeek;
+        $[39] = t22;
     } else {
-        t19 = $[36];
+        t22 = $[39];
     }
-    let t20;
-    if ($[37] === Symbol.for("react.memo_cache_sentinel")) {
-        t20 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$skip$2d$back$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__SkipBack$3e$__["SkipBack"], {
+    let t23;
+    if ($[40] === Symbol.for("react.memo_cache_sentinel")) {
+        t23 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$skip$2d$back$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__SkipBack$3e$__["SkipBack"], {
             className: "w-5 h-5 fill-current"
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 266,
+            lineNumber: 281,
             columnNumber: 11
         }, this);
-        $[37] = t20;
+        $[40] = t23;
     } else {
-        t20 = $[37];
+        t23 = $[40];
     }
-    let t21;
-    if ($[38] !== t19) {
-        t21 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-            onClick: t19,
+    let t24;
+    if ($[41] !== t22) {
+        t24 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+            onClick: t22,
             className: "text-gray-400 hover:text-white transition-colors",
-            children: t20
+            children: t23
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 273,
+            lineNumber: 288,
             columnNumber: 11
         }, this);
-        $[38] = t19;
-        $[39] = t21;
+        $[41] = t22;
+        $[42] = t24;
     } else {
-        t21 = $[39];
+        t24 = $[42];
     }
-    let t22;
-    if ($[40] !== playback.isPlaying) {
-        t22 = playback.isPlaying ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pause$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pause$3e$__["Pause"], {
+    let t25;
+    if ($[43] !== playback.isPlaying) {
+        t25 = playback.isPlaying ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pause$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pause$3e$__["Pause"], {
             className: "w-5 h-5 fill-current text-white"
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 281,
+            lineNumber: 296,
             columnNumber: 32
         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
             className: "w-5 h-5 fill-current text-white ml-1"
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 281,
+            lineNumber: 296,
             columnNumber: 88
         }, this);
-        $[40] = playback.isPlaying;
-        $[41] = t22;
+        $[43] = playback.isPlaying;
+        $[44] = t25;
     } else {
-        t22 = $[41];
-    }
-    let t23;
-    if ($[42] !== onTogglePlayback || $[43] !== t22) {
-        t23 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-            onClick: onTogglePlayback,
-            className: "w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors border border-white/10 shadow-lg group",
-            children: t22
-        }, void 0, false, {
-            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 289,
-            columnNumber: 11
-        }, this);
-        $[42] = onTogglePlayback;
-        $[43] = t22;
-        $[44] = t23;
-    } else {
-        t23 = $[44];
-    }
-    let t24;
-    if ($[45] !== onSeek || $[46] !== playback.duration) {
-        t24 = ({
-            "CompositionView[<button>.onClick]": ()=>onSeek(playback.duration)
-        })["CompositionView[<button>.onClick]"];
-        $[45] = onSeek;
-        $[46] = playback.duration;
-        $[47] = t24;
-    } else {
-        t24 = $[47];
-    }
-    let t25;
-    if ($[48] === Symbol.for("react.memo_cache_sentinel")) {
-        t25 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$skip$2d$forward$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__SkipForward$3e$__["SkipForward"], {
-            className: "w-5 h-5 fill-current"
-        }, void 0, false, {
-            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 309,
-            columnNumber: 11
-        }, this);
-        $[48] = t25;
-    } else {
-        t25 = $[48];
+        t25 = $[44];
     }
     let t26;
-    if ($[49] !== t24) {
+    if ($[45] !== onTogglePlayback || $[46] !== t25) {
         t26 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-            onClick: t24,
-            className: "text-gray-400 hover:text-white transition-colors",
+            onClick: onTogglePlayback,
+            className: "w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors border border-white/10 shadow-lg group",
             children: t25
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 316,
+            lineNumber: 304,
             columnNumber: 11
         }, this);
-        $[49] = t24;
-        $[50] = t26;
+        $[45] = onTogglePlayback;
+        $[46] = t25;
+        $[47] = t26;
     } else {
-        t26 = $[50];
+        t26 = $[47];
     }
     let t27;
-    if ($[51] !== t21 || $[52] !== t23 || $[53] !== t26) {
-        t27 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex items-center gap-4",
-            children: [
-                t21,
-                t23,
-                t26
-            ]
-        }, void 0, true, {
+    if ($[48] !== onSeek || $[49] !== playback.duration) {
+        t27 = ({
+            "CompositionView[<button>.onClick]": ()=>onSeek(playback.duration)
+        })["CompositionView[<button>.onClick]"];
+        $[48] = onSeek;
+        $[49] = playback.duration;
+        $[50] = t27;
+    } else {
+        t27 = $[50];
+    }
+    let t28;
+    if ($[51] === Symbol.for("react.memo_cache_sentinel")) {
+        t28 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$skip$2d$forward$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__SkipForward$3e$__["SkipForward"], {
+            className: "w-5 h-5 fill-current"
+        }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
             lineNumber: 324,
             columnNumber: 11
         }, this);
-        $[51] = t21;
-        $[52] = t23;
-        $[53] = t26;
-        $[54] = t27;
+        $[51] = t28;
     } else {
-        t27 = $[54];
+        t28 = $[51];
     }
-    let t28;
-    if ($[55] === Symbol.for("react.memo_cache_sentinel")) {
-        t28 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$volume$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Volume2$3e$__["Volume2"], {
+    let t29;
+    if ($[52] !== t27) {
+        t29 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+            onClick: t27,
+            className: "text-gray-400 hover:text-white transition-colors",
+            children: t28
+        }, void 0, false, {
+            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
+            lineNumber: 331,
+            columnNumber: 11
+        }, this);
+        $[52] = t27;
+        $[53] = t29;
+    } else {
+        t29 = $[53];
+    }
+    let t30;
+    if ($[54] !== t24 || $[55] !== t26 || $[56] !== t29) {
+        t30 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "flex items-center gap-4",
+            children: [
+                t24,
+                t26,
+                t29
+            ]
+        }, void 0, true, {
+            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
+            lineNumber: 339,
+            columnNumber: 11
+        }, this);
+        $[54] = t24;
+        $[55] = t26;
+        $[56] = t29;
+        $[57] = t30;
+    } else {
+        t30 = $[57];
+    }
+    let t31;
+    if ($[58] === Symbol.for("react.memo_cache_sentinel")) {
+        t31 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$volume$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Volume2$3e$__["Volume2"], {
             className: "w-4 h-4 text-gray-400"
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 334,
+            lineNumber: 349,
             columnNumber: 11
         }, this);
-        $[55] = t28;
+        $[58] = t31;
     } else {
-        t28 = $[55];
+        t31 = $[58];
     }
-    let t29;
-    if ($[56] === Symbol.for("react.memo_cache_sentinel")) {
-        t29 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    let t32;
+    if ($[59] === Symbol.for("react.memo_cache_sentinel")) {
+        t32 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-center gap-6",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center gap-2",
                 children: [
-                    t28,
+                    t31,
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "w-20 h-1 bg-white/10 rounded-full overflow-hidden",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "w-[80%] h-full bg-[#00e0ff]"
                         }, void 0, false, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                            lineNumber: 341,
+                            lineNumber: 356,
                             columnNumber: 165
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                        lineNumber: 341,
+                        lineNumber: 356,
                         columnNumber: 98
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-                lineNumber: 341,
+                lineNumber: 356,
                 columnNumber: 52
             }, this)
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 341,
+            lineNumber: 356,
             columnNumber: 11
         }, this);
-        $[56] = t29;
+        $[59] = t32;
     } else {
-        t29 = $[56];
+        t32 = $[59];
     }
-    let t30;
-    if ($[57] !== t18 || $[58] !== t27) {
-        t30 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    let t33;
+    if ($[60] !== t21 || $[61] !== t30) {
+        t33 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "h-12 bg-[#2d2d2d] border-t border-black flex items-center justify-between px-6",
             children: [
-                t18,
-                t27,
-                t29
+                t21,
+                t30,
+                t32
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 348,
+            lineNumber: 363,
             columnNumber: 11
         }, this);
-        $[57] = t18;
-        $[58] = t27;
-        $[59] = t30;
+        $[60] = t21;
+        $[61] = t30;
+        $[62] = t33;
     } else {
-        t30 = $[59];
+        t33 = $[62];
     }
-    let t31;
-    if ($[60] !== handleDrop || $[61] !== t16 || $[62] !== t30) {
-        t31 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    let t34;
+    if ($[63] !== handleDrop || $[64] !== t19 || $[65] !== t33) {
+        t34 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex flex-col flex-grow bg-[#161616] relative overflow-hidden",
             onDragOver: handleDragOver,
             onDragLeave: handleDragLeave,
             onDrop: handleDrop,
             children: [
-                t10,
-                t16,
-                t30
+                t11,
+                t19,
+                t33
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/CompositionView.tsx",
-            lineNumber: 357,
+            lineNumber: 372,
             columnNumber: 11
         }, this);
-        $[60] = handleDrop;
-        $[61] = t16;
-        $[62] = t30;
-        $[63] = t31;
+        $[63] = handleDrop;
+        $[64] = t19;
+        $[65] = t33;
+        $[66] = t34;
     } else {
-        t31 = $[63];
+        t34 = $[66];
     }
-    return t31;
+    return t34;
 }
 _s(CompositionView, "//y4/U26I19D1CBu/ZKEuR95i8o=");
 _c = CompositionView;
@@ -3220,12 +3234,12 @@ var _s = __turbopack_context__.k.signature();
 ;
 function VideoMenuBar(t0) {
     _s();
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(116);
-    if ($[0] !== "4e5d31f179d035e1d2a060521ba4da7f75339b3be5377094c3e42d93196c4bdb") {
-        for(let $i = 0; $i < 116; $i += 1){
+    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(144);
+    if ($[0] !== "ff888230ad03107e0f5ce6e0ca0e1fa8acdc4d8ba3688cb8c5011490ba49a9d6") {
+        for(let $i = 0; $i < 144; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "4e5d31f179d035e1d2a060521ba4da7f75339b3be5377094c3e42d93196c4bdb";
+        $[0] = "ff888230ad03107e0f5ce6e0ca0e1fa8acdc4d8ba3688cb8c5011490ba49a9d6";
     }
     const { onAction } = t0;
     const [activeMenu, setActiveMenu] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
@@ -3311,7 +3325,7 @@ function VideoMenuBar(t0) {
     let t8;
     if ($[13] !== onAction) {
         t8 = {
-            label: "Import",
+            label: "Import File...",
             shortcut: "Ctrl+I",
             action: ()=>onAction?.("FILE_IMPORT")
         };
@@ -3478,9 +3492,9 @@ function VideoMenuBar(t0) {
     let t21;
     if ($[44] !== onAction) {
         t21 = {
-            label: "Duplicate",
-            shortcut: "F3",
-            action: ()=>onAction?.("EDIT_DUPLICATE")
+            label: "Select All",
+            shortcut: "Ctrl+A",
+            action: ()=>onAction?.("EDIT_SELECT_ALL")
         };
         $[44] = onAction;
         $[45] = t21;
@@ -3490,9 +3504,9 @@ function VideoMenuBar(t0) {
     let t22;
     if ($[46] !== onAction) {
         t22 = {
-            label: "Split Layer",
-            shortcut: "F4",
-            action: ()=>onAction?.("EDIT_SPLIT")
+            label: "Deselect All",
+            shortcut: "Shift+Ctrl+A",
+            action: ()=>onAction?.("EDIT_DESELECT")
         };
         $[46] = onAction;
         $[47] = t22;
@@ -3511,9 +3525,9 @@ function VideoMenuBar(t0) {
     let t24;
     if ($[49] !== onAction) {
         t24 = {
-            label: "Preferences",
-            shortcut: "Ctrl+K",
-            action: ()=>onAction?.("EDIT_PREFERENCES")
+            label: "Duplicate Layer",
+            shortcut: "Ctrl+D",
+            action: ()=>onAction?.("EDIT_DUPLICATE")
         };
         $[49] = onAction;
         $[50] = t24;
@@ -3521,8 +3535,53 @@ function VideoMenuBar(t0) {
         t24 = $[50];
     }
     let t25;
-    if ($[51] !== t14 || $[52] !== t15 || $[53] !== t17 || $[54] !== t18 || $[55] !== t19 || $[56] !== t21 || $[57] !== t22 || $[58] !== t24) {
+    if ($[51] !== onAction) {
         t25 = {
+            label: "Split Layer",
+            shortcut: "Ctrl+Shift+D",
+            action: ()=>onAction?.("EDIT_SPLIT")
+        };
+        $[51] = onAction;
+        $[52] = t25;
+    } else {
+        t25 = $[52];
+    }
+    let t26;
+    if ($[53] !== onAction) {
+        t26 = {
+            label: "Delete",
+            shortcut: "F4",
+            action: ()=>onAction?.("EDIT_DELETE")
+        };
+        $[53] = onAction;
+        $[54] = t26;
+    } else {
+        t26 = $[54];
+    }
+    let t27;
+    if ($[55] === Symbol.for("react.memo_cache_sentinel")) {
+        t27 = {
+            separator: true
+        };
+        $[55] = t27;
+    } else {
+        t27 = $[55];
+    }
+    let t28;
+    if ($[56] !== onAction) {
+        t28 = {
+            label: "Preferences",
+            shortcut: "Ctrl+K",
+            action: ()=>onAction?.("EDIT_PREFERENCES")
+        };
+        $[56] = onAction;
+        $[57] = t28;
+    } else {
+        t28 = $[57];
+    }
+    let t29;
+    if ($[58] !== t14 || $[59] !== t15 || $[60] !== t17 || $[61] !== t18 || $[62] !== t19 || $[63] !== t21 || $[64] !== t22 || $[65] !== t24 || $[66] !== t25 || $[67] !== t26 || $[68] !== t28) {
+        t29 = {
             label: "Edit",
             items: [
                 t14,
@@ -3535,191 +3594,212 @@ function VideoMenuBar(t0) {
                 t21,
                 t22,
                 t23,
-                t24
+                t24,
+                t25,
+                t26,
+                t27,
+                t28
             ]
         };
-        $[51] = t14;
-        $[52] = t15;
-        $[53] = t17;
-        $[54] = t18;
-        $[55] = t19;
-        $[56] = t21;
-        $[57] = t22;
-        $[58] = t24;
-        $[59] = t25;
+        $[58] = t14;
+        $[59] = t15;
+        $[60] = t17;
+        $[61] = t18;
+        $[62] = t19;
+        $[63] = t21;
+        $[64] = t22;
+        $[65] = t24;
+        $[66] = t25;
+        $[67] = t26;
+        $[68] = t28;
+        $[69] = t29;
     } else {
-        t25 = $[59];
+        t29 = $[69];
     }
-    let t26;
-    if ($[60] !== onAction) {
-        t26 = {
+    let t30;
+    if ($[70] !== onAction) {
+        t30 = {
             label: "New Composition...",
             shortcut: "Ctrl+N",
             action: ()=>onAction?.("COMP_NEW")
         };
-        $[60] = onAction;
-        $[61] = t26;
+        $[70] = onAction;
+        $[71] = t30;
     } else {
-        t26 = $[61];
+        t30 = $[71];
     }
-    let t27;
-    if ($[62] !== onAction) {
-        t27 = {
+    let t31;
+    if ($[72] !== onAction) {
+        t31 = {
             label: "Composition Settings...",
             shortcut: "Ctrl+K",
             action: ()=>onAction?.("COMP_SETTINGS")
         };
-        $[62] = onAction;
-        $[63] = t27;
+        $[72] = onAction;
+        $[73] = t31;
     } else {
-        t27 = $[63];
+        t31 = $[73];
     }
-    let t28;
-    let t29;
-    let t30;
-    let t31;
-    if ($[64] === Symbol.for("react.memo_cache_sentinel")) {
-        t28 = {
+    let t32;
+    let t33;
+    let t34;
+    let t35;
+    if ($[74] === Symbol.for("react.memo_cache_sentinel")) {
+        t32 = {
             separator: true
         };
-        t29 = {
+        t33 = {
             label: "Preview",
             shortcut: "Space"
         };
-        t30 = {
+        t34 = {
             label: "Save Frame As"
         };
-        t31 = {
+        t35 = {
             separator: true
         };
-        $[64] = t28;
-        $[65] = t29;
-        $[66] = t30;
-        $[67] = t31;
+        $[74] = t32;
+        $[75] = t33;
+        $[76] = t34;
+        $[77] = t35;
     } else {
-        t28 = $[64];
-        t29 = $[65];
-        t30 = $[66];
-        t31 = $[67];
+        t32 = $[74];
+        t33 = $[75];
+        t34 = $[76];
+        t35 = $[77];
     }
-    let t32;
-    if ($[68] !== onAction) {
-        t32 = {
+    let t36;
+    if ($[78] !== onAction) {
+        t36 = {
             label: "Add to Render Queue",
-            shortcut: "F5",
+            shortcut: "Ctrl+M",
             action: ()=>onAction?.("COMP_RENDER")
         };
-        $[68] = onAction;
-        $[69] = t32;
+        $[78] = onAction;
+        $[79] = t36;
     } else {
-        t32 = $[69];
+        t36 = $[79];
     }
-    let t33;
-    if ($[70] !== t26 || $[71] !== t27 || $[72] !== t32) {
-        t33 = {
+    let t37;
+    if ($[80] !== t30 || $[81] !== t31 || $[82] !== t36) {
+        t37 = {
             label: "Composition",
             items: [
-                t26,
-                t27,
-                t28,
-                t29,
                 t30,
                 t31,
-                t32
+                t32,
+                t33,
+                t34,
+                t35,
+                t36
             ]
         };
-        $[70] = t26;
-        $[71] = t27;
-        $[72] = t32;
-        $[73] = t33;
+        $[80] = t30;
+        $[81] = t31;
+        $[82] = t36;
+        $[83] = t37;
     } else {
-        t33 = $[73];
+        t37 = $[83];
     }
-    let t34;
-    let t35;
-    let t36;
-    if ($[74] === Symbol.for("react.memo_cache_sentinel")) {
-        t34 = {
+    let t38;
+    let t39;
+    let t40;
+    if ($[84] === Symbol.for("react.memo_cache_sentinel")) {
+        t38 = {
             label: "New"
         };
-        t35 = {
+        t39 = {
             label: "Layer Settings...",
             shortcut: "Shift+Ctrl+Y"
         };
-        t36 = {
+        t40 = {
             separator: true
         };
-        $[74] = t34;
-        $[75] = t35;
-        $[76] = t36;
+        $[84] = t38;
+        $[85] = t39;
+        $[86] = t40;
     } else {
-        t34 = $[74];
-        t35 = $[75];
-        t36 = $[76];
+        t38 = $[84];
+        t39 = $[85];
+        t40 = $[86];
     }
-    let t37;
-    if ($[77] !== onAction) {
-        t37 = {
+    let t41;
+    if ($[87] !== onAction) {
+        t41 = {
             label: "Duplicate",
-            shortcut: "F3",
+            shortcut: "Ctrl+D",
             action: ()=>onAction?.("EDIT_DUPLICATE")
         };
-        $[77] = onAction;
-        $[78] = t37;
+        $[87] = onAction;
+        $[88] = t41;
     } else {
-        t37 = $[78];
+        t41 = $[88];
     }
-    let t38;
-    if ($[79] !== onAction) {
-        t38 = {
+    let t42;
+    if ($[89] !== onAction) {
+        t42 = {
+            label: "Split",
+            shortcut: "Ctrl+Shift+D",
+            action: ()=>onAction?.("EDIT_SPLIT")
+        };
+        $[89] = onAction;
+        $[90] = t42;
+    } else {
+        t42 = $[90];
+    }
+    let t43;
+    if ($[91] !== onAction) {
+        t43 = {
             label: "Delete",
             shortcut: "F4",
             action: ()=>onAction?.("EDIT_DELETE")
         };
-        $[79] = onAction;
-        $[80] = t38;
+        $[91] = onAction;
+        $[92] = t43;
     } else {
-        t38 = $[80];
+        t43 = $[92];
     }
-    let t39;
-    let t40;
-    if ($[81] === Symbol.for("react.memo_cache_sentinel")) {
-        t39 = {
+    let t44;
+    let t45;
+    if ($[93] === Symbol.for("react.memo_cache_sentinel")) {
+        t44 = {
             separator: true
         };
-        t40 = {
+        t45 = {
             label: "Pre-compose...",
             shortcut: "Shift+Ctrl+C"
         };
-        $[81] = t39;
-        $[82] = t40;
+        $[93] = t44;
+        $[94] = t45;
     } else {
-        t39 = $[81];
-        t40 = $[82];
+        t44 = $[93];
+        t45 = $[94];
     }
-    let t41;
-    if ($[83] !== t37 || $[84] !== t38) {
-        t41 = {
+    let t46;
+    if ($[95] !== t41 || $[96] !== t42 || $[97] !== t43) {
+        t46 = {
             label: "Layer",
             items: [
-                t34,
-                t35,
-                t36,
-                t37,
                 t38,
                 t39,
-                t40
+                t40,
+                t41,
+                t42,
+                t43,
+                t44,
+                t45
             ]
         };
-        $[83] = t37;
-        $[84] = t38;
-        $[85] = t41;
+        $[95] = t41;
+        $[96] = t42;
+        $[97] = t43;
+        $[98] = t46;
     } else {
-        t41 = $[85];
+        t46 = $[98];
     }
-    let t42;
-    if ($[86] === Symbol.for("react.memo_cache_sentinel")) {
-        t42 = {
+    let t47;
+    if ($[99] === Symbol.for("react.memo_cache_sentinel")) {
+        t47 = {
             label: "Effect",
             items: [
                 {
@@ -3746,163 +3826,221 @@ function VideoMenuBar(t0) {
                 }
             ]
         };
-        $[86] = t42;
+        $[99] = t47;
     } else {
-        t42 = $[86];
+        t47 = $[99];
     }
-    let t43;
-    if ($[87] === Symbol.for("react.memo_cache_sentinel")) {
-        t43 = {
+    let t48;
+    if ($[100] !== onAction) {
+        t48 = {
+            label: "Zoom In",
+            shortcut: "Ctrl++",
+            action: ()=>onAction?.("VIEW_ZOOM_IN")
+        };
+        $[100] = onAction;
+        $[101] = t48;
+    } else {
+        t48 = $[101];
+    }
+    let t49;
+    if ($[102] !== onAction) {
+        t49 = {
+            label: "Zoom Out",
+            shortcut: "Ctrl+-",
+            action: ()=>onAction?.("VIEW_ZOOM_OUT")
+        };
+        $[102] = onAction;
+        $[103] = t49;
+    } else {
+        t49 = $[103];
+    }
+    let t50;
+    if ($[104] !== onAction) {
+        t50 = {
+            label: "Fit in Window",
+            shortcut: "Ctrl+0",
+            action: ()=>onAction?.("VIEW_FIT")
+        };
+        $[104] = onAction;
+        $[105] = t50;
+    } else {
+        t50 = $[105];
+    }
+    let t51;
+    let t52;
+    let t53;
+    let t54;
+    let t55;
+    if ($[106] === Symbol.for("react.memo_cache_sentinel")) {
+        t51 = {
+            separator: true
+        };
+        t52 = {
+            label: "Fullscreen",
+            shortcut: "F11"
+        };
+        t53 = {
+            separator: true
+        };
+        t54 = {
+            label: "Show Rulers",
+            shortcut: "Ctrl+R"
+        };
+        t55 = {
+            label: "Show Guides",
+            shortcut: "Ctrl+;"
+        };
+        $[106] = t51;
+        $[107] = t52;
+        $[108] = t53;
+        $[109] = t54;
+        $[110] = t55;
+    } else {
+        t51 = $[106];
+        t52 = $[107];
+        t53 = $[108];
+        t54 = $[109];
+        t55 = $[110];
+    }
+    let t56;
+    if ($[111] !== t48 || $[112] !== t49 || $[113] !== t50) {
+        t56 = {
             label: "View",
             items: [
-                {
-                    label: "Zoom In",
-                    shortcut: "Ctrl++"
-                },
-                {
-                    label: "Zoom Out",
-                    shortcut: "Ctrl+-"
-                },
-                {
-                    separator: true
-                },
-                {
-                    label: "Fullscreen",
-                    shortcut: "F11"
-                },
-                {
-                    separator: true
-                },
-                {
-                    label: "Show Rulers",
-                    shortcut: "Ctrl+R"
-                },
-                {
-                    label: "Show Guides",
-                    shortcut: "Ctrl+;"
-                }
+                t48,
+                t49,
+                t50,
+                t51,
+                t52,
+                t53,
+                t54,
+                t55
             ]
         };
-        $[87] = t43;
+        $[111] = t48;
+        $[112] = t49;
+        $[113] = t50;
+        $[114] = t56;
     } else {
-        t43 = $[87];
+        t56 = $[114];
     }
-    let t44;
-    if ($[88] !== onAction) {
-        t44 = {
+    let t57;
+    if ($[115] !== onAction) {
+        t57 = {
             label: "Project Panel",
             shortcut: "F6",
             action: ()=>onAction?.("WINDOW_PROJECT")
         };
-        $[88] = onAction;
-        $[89] = t44;
+        $[115] = onAction;
+        $[116] = t57;
     } else {
-        t44 = $[89];
+        t57 = $[116];
     }
-    let t45;
-    if ($[90] !== onAction) {
-        t45 = {
+    let t58;
+    if ($[117] !== onAction) {
+        t58 = {
             label: "Timeline",
             shortcut: "F7",
             action: ()=>onAction?.("WINDOW_TIMELINE")
         };
-        $[90] = onAction;
-        $[91] = t45;
+        $[117] = onAction;
+        $[118] = t58;
     } else {
-        t45 = $[91];
+        t58 = $[118];
     }
-    let t46;
-    if ($[92] !== onAction) {
-        t46 = {
+    let t59;
+    if ($[119] !== onAction) {
+        t59 = {
             label: "Effects Control",
             shortcut: "F8",
             action: ()=>onAction?.("WINDOW_EFFECTS")
         };
-        $[92] = onAction;
-        $[93] = t46;
+        $[119] = onAction;
+        $[120] = t59;
     } else {
-        t46 = $[93];
+        t59 = $[120];
     }
-    let t47;
-    if ($[94] === Symbol.for("react.memo_cache_sentinel")) {
-        t47 = {
+    let t60;
+    if ($[121] === Symbol.for("react.memo_cache_sentinel")) {
+        t60 = {
             separator: true
         };
-        $[94] = t47;
+        $[121] = t60;
     } else {
-        t47 = $[94];
+        t60 = $[121];
     }
-    let t48;
-    if ($[95] !== onAction) {
-        t48 = {
+    let t61;
+    if ($[122] !== onAction) {
+        t61 = {
             label: "Help Center",
             shortcut: "F1",
             action: ()=>onAction?.("FILE_HELP")
         };
-        $[95] = onAction;
-        $[96] = t48;
+        $[122] = onAction;
+        $[123] = t61;
     } else {
-        t48 = $[96];
+        t61 = $[123];
     }
-    let t49;
-    if ($[97] !== onAction) {
-        t49 = {
+    let t62;
+    if ($[124] !== onAction) {
+        t62 = {
             label: "Mint Asset",
             shortcut: "F12",
             action: ()=>onAction?.("FILE_MINT")
         };
-        $[97] = onAction;
-        $[98] = t49;
+        $[124] = onAction;
+        $[125] = t62;
     } else {
-        t49 = $[98];
+        t62 = $[125];
     }
-    let t50;
-    if ($[99] !== t44 || $[100] !== t45 || $[101] !== t46 || $[102] !== t48 || $[103] !== t49) {
-        t50 = {
+    let t63;
+    if ($[126] !== t57 || $[127] !== t58 || $[128] !== t59 || $[129] !== t61 || $[130] !== t62) {
+        t63 = {
             label: "Window",
             items: [
-                t44,
-                t45,
-                t46,
-                t47,
-                t48,
-                t49
+                t57,
+                t58,
+                t59,
+                t60,
+                t61,
+                t62
             ]
         };
-        $[99] = t44;
-        $[100] = t45;
-        $[101] = t46;
-        $[102] = t48;
-        $[103] = t49;
-        $[104] = t50;
+        $[126] = t57;
+        $[127] = t58;
+        $[128] = t59;
+        $[129] = t61;
+        $[130] = t62;
+        $[131] = t63;
     } else {
-        t50 = $[104];
+        t63 = $[131];
     }
-    let t51;
-    if ($[105] !== t13 || $[106] !== t25 || $[107] !== t33 || $[108] !== t41 || $[109] !== t50) {
-        t51 = [
+    let t64;
+    if ($[132] !== t13 || $[133] !== t29 || $[134] !== t37 || $[135] !== t46 || $[136] !== t56 || $[137] !== t63) {
+        t64 = [
             t13,
-            t25,
-            t33,
-            t41,
-            t42,
-            t43,
-            t50
+            t29,
+            t37,
+            t46,
+            t47,
+            t56,
+            t63
         ];
-        $[105] = t13;
-        $[106] = t25;
-        $[107] = t33;
-        $[108] = t41;
-        $[109] = t50;
-        $[110] = t51;
+        $[132] = t13;
+        $[133] = t29;
+        $[134] = t37;
+        $[135] = t46;
+        $[136] = t56;
+        $[137] = t63;
+        $[138] = t64;
     } else {
-        t51 = $[110];
+        t64 = $[138];
     }
-    const menus = t51;
-    let t52;
-    let t53;
-    if ($[111] === Symbol.for("react.memo_cache_sentinel")) {
-        t52 = ({
+    const menus = t64;
+    let t65;
+    let t66;
+    if ($[139] === Symbol.for("react.memo_cache_sentinel")) {
+        t65 = ({
             "VideoMenuBar[useEffect()]": ()=>{
                 const handleClickOutside = {
                     "VideoMenuBar[useEffect() > handleClickOutside]": (event)=>{
@@ -3915,17 +4053,17 @@ function VideoMenuBar(t0) {
                 return ()=>document.removeEventListener("mousedown", handleClickOutside);
             }
         })["VideoMenuBar[useEffect()]"];
-        t53 = [];
-        $[111] = t52;
-        $[112] = t53;
+        t66 = [];
+        $[139] = t65;
+        $[140] = t66;
     } else {
-        t52 = $[111];
-        t53 = $[112];
+        t65 = $[139];
+        t66 = $[140];
     }
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t52, t53);
-    let t54;
-    if ($[113] !== activeMenu || $[114] !== menus) {
-        t54 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t65, t66);
+    let t67;
+    if ($[141] !== activeMenu || $[142] !== menus) {
+        t67 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             ref: containerRef,
             className: "h-full flex items-center bg-[#2d2d2d] select-none z-50 px-2 uppercase tracking-tighter",
             children: menus.map({
@@ -3943,7 +4081,7 @@ function VideoMenuBar(t0) {
                                 children: menu.label
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-                                lineNumber: 657,
+                                lineNumber: 775,
                                 columnNumber: 114
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -3969,7 +4107,7 @@ function VideoMenuBar(t0) {
                                                 className: "h-px bg-white/5 my-1 mx-2"
                                             }, idx, false, {
                                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-                                                lineNumber: 673,
+                                                lineNumber: 791,
                                                 columnNumber: 97
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 disabled: item.disabled,
@@ -3986,7 +4124,7 @@ function VideoMenuBar(t0) {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-                                                        lineNumber: 678,
+                                                        lineNumber: 796,
                                                         columnNumber: 279
                                                     }, this),
                                                     item.shortcut && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3994,45 +4132,45 @@ function VideoMenuBar(t0) {
                                                         children: item.shortcut
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-                                                        lineNumber: 678,
+                                                        lineNumber: 796,
                                                         columnNumber: 387
                                                     }, this)
                                                 ]
                                             }, idx, true, {
                                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-                                                lineNumber: 673,
+                                                lineNumber: 791,
                                                 columnNumber: 155
                                             }, this)
                                     }["VideoMenuBar[menus.map() > menu.items.map()]"])
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-                                    lineNumber: 661,
+                                    lineNumber: 779,
                                     columnNumber: 323
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-                                lineNumber: 661,
+                                lineNumber: 779,
                                 columnNumber: 276
                             }, this)
                         ]
                     }, menu.label, true, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-                        lineNumber: 657,
+                        lineNumber: 775,
                         columnNumber: 46
                     }, this)
             }["VideoMenuBar[menus.map()]"])
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/components/video-editor/VideoMenuBar.tsx",
-            lineNumber: 656,
+            lineNumber: 774,
             columnNumber: 11
         }, this);
-        $[113] = activeMenu;
-        $[114] = menus;
-        $[115] = t54;
+        $[141] = activeMenu;
+        $[142] = menus;
+        $[143] = t67;
     } else {
-        t54 = $[115];
+        t67 = $[143];
     }
-    return t54;
+    return t67;
 }
 _s(VideoMenuBar, "zBNRlF0CmTF1Rk8yrECWo3GwSCI=");
 _c = VideoMenuBar;
@@ -4942,12 +5080,12 @@ var _s = __turbopack_context__.k.signature();
 ;
 function AEVideoEditor() {
     _s();
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(120);
-    if ($[0] !== "697c1fede1859b08dda49d5c3ca8b566d2c3470b5aeec8dea771a7e6462731cc") {
-        for(let $i = 0; $i < 120; $i += 1){
+    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(122);
+    if ($[0] !== "d3b54decd837880f8cd673336b0c757ef5168873110aa78e517fa776c666feaf") {
+        for(let $i = 0; $i < 122; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "697c1fede1859b08dda49d5c3ca8b566d2c3470b5aeec8dea771a7e6462731cc";
+        $[0] = "d3b54decd837880f8cd673336b0c757ef5168873110aa78e517fa776c666feaf";
     }
     const { synced } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$apps$2f$web$2f$src$2f$hooks$2f$useYjs$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useYjs"])("bolt-ae-video-v1");
     const requestRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -4987,6 +5125,7 @@ function AEVideoEditor() {
         t1 = $[3];
     }
     const [playback, setPlayback] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(t1);
+    const [zoom, setZoom] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(100);
     let t2;
     if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
         t2 = {
@@ -5321,7 +5460,7 @@ function AEVideoEditor() {
     }
     const activeLayer = t14;
     let t15;
-    if ($[31] !== activeLayerId || $[32] !== handleSplitLayer || $[33] !== history || $[34] !== layers || $[35] !== setLayers) {
+    if ($[31] !== activeLayerId || $[32] !== handleFiles || $[33] !== handleSplitLayer || $[34] !== history || $[35] !== layers || $[36] !== setLayers) {
         t15 = ({
             "AEVideoEditor[handleMenuAction]": (id_1)=>{
                 bb100: switch(id_1){
@@ -5389,8 +5528,8 @@ function AEVideoEditor() {
                                         name: `${layer.name} Copy`
                                     };
                                     setLayers({
-                                        "AEVideoEditor[handleMenuAction > setLayers()]": (prev_12)=>[
-                                                ...prev_12,
+                                        "AEVideoEditor[handleMenuAction > setLayers()]": (prev_14)=>[
+                                                ...prev_14,
                                                 newLayer_1
                                             ]
                                     }["AEVideoEditor[handleMenuAction > setLayers()]"]);
@@ -5403,9 +5542,9 @@ function AEVideoEditor() {
                         {
                             if (activeLayerId) {
                                 setLayers({
-                                    "AEVideoEditor[handleMenuAction > setLayers()]": (prev_11)=>prev_11.filter({
-                                            "AEVideoEditor[handleMenuAction > setLayers() > prev_11.filter()]": (l_4)=>l_4.id !== activeLayerId
-                                        }["AEVideoEditor[handleMenuAction > setLayers() > prev_11.filter()]"])
+                                    "AEVideoEditor[handleMenuAction > setLayers()]": (prev_13)=>prev_13.filter({
+                                            "AEVideoEditor[handleMenuAction > setLayers() > prev_13.filter()]": (l_4)=>l_4.id !== activeLayerId
+                                        }["AEVideoEditor[handleMenuAction > setLayers() > prev_13.filter()]"])
                                 }["AEVideoEditor[handleMenuAction > setLayers()]"]);
                                 setActiveLayerId(null);
                             }
@@ -5445,6 +5584,56 @@ function AEVideoEditor() {
                             });
                             break bb100;
                         }
+                    case "COMP_NEW":
+                        {
+                            setModalConfig({
+                                isOpen: true,
+                                type: "COMP_SETTINGS",
+                                title: "New Composition"
+                            });
+                            break bb100;
+                        }
+                    case "EDIT_SELECT_ALL":
+                        {
+                            if (layers.length > 0) {
+                                setActiveLayerId(layers[layers.length - 1].id);
+                            }
+                            break bb100;
+                        }
+                    case "EDIT_DESELECT":
+                        {
+                            setActiveLayerId(null);
+                            break bb100;
+                        }
+                    case "VIEW_ZOOM_IN":
+                        {
+                            setZoom(_AEVideoEditorHandleMenuActionSetZoom);
+                            break bb100;
+                        }
+                    case "VIEW_ZOOM_OUT":
+                        {
+                            setZoom(_AEVideoEditorHandleMenuActionSetZoom2);
+                            break bb100;
+                        }
+                    case "VIEW_FIT":
+                        {
+                            setZoom(100);
+                            break bb100;
+                        }
+                    case "FILE_IMPORT":
+                        {
+                            const input = document.createElement("input");
+                            input.type = "file";
+                            input.multiple = true;
+                            input.accept = "video/*,audio/*,image/*";
+                            input.onchange = (e)=>{
+                                if (e.target.files) {
+                                    handleFiles(e.target.files);
+                                }
+                            };
+                            input.click();
+                            break bb100;
+                        }
                     default:
                         {
                             console.log("Action not implemented:", id_1);
@@ -5453,89 +5642,167 @@ function AEVideoEditor() {
             }
         })["AEVideoEditor[handleMenuAction]"];
         $[31] = activeLayerId;
-        $[32] = handleSplitLayer;
-        $[33] = history;
-        $[34] = layers;
-        $[35] = setLayers;
-        $[36] = t15;
+        $[32] = handleFiles;
+        $[33] = handleSplitLayer;
+        $[34] = history;
+        $[35] = layers;
+        $[36] = setLayers;
+        $[37] = t15;
     } else {
-        t15 = $[36];
+        t15 = $[37];
     }
     const handleMenuAction = t15;
     let t16;
     let t17;
-    if ($[37] !== handleMenuAction || $[38] !== history) {
+    if ($[38] !== handleMenuAction || $[39] !== history) {
         t16 = ({
             "AEVideoEditor[useEffect()]": ()=>{
                 const handleKeyDown = {
-                    "AEVideoEditor[useEffect() > handleKeyDown]": (e)=>{
-                        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
-                            if (e.shiftKey) {
-                                history.redo();
-                            } else {
-                                history.undo();
+                    "AEVideoEditor[useEffect() > handleKeyDown]": (e_0)=>{
+                        if (e_0.ctrlKey || e_0.metaKey) {
+                            const key = e_0.key.toLowerCase();
+                            if (e_0.shiftKey && key === "d") {
+                                e_0.preventDefault();
+                                handleMenuAction("EDIT_SPLIT");
+                                return;
                             }
-                            e.preventDefault();
-                        } else {
-                            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
-                                history.redo();
-                                e.preventDefault();
+                            bb186: switch(key){
+                                case "z":
+                                    {
+                                        e_0.preventDefault();
+                                        if (e_0.shiftKey) {
+                                            history.redo();
+                                        } else {
+                                            history.undo();
+                                        }
+                                        break bb186;
+                                    }
+                                case "y":
+                                    {
+                                        e_0.preventDefault();
+                                        history.redo();
+                                        break bb186;
+                                    }
+                                case "n":
+                                    {
+                                        e_0.preventDefault();
+                                        if (e_0.altKey) {
+                                            handleMenuAction("FILE_NEW");
+                                        } else {
+                                            handleMenuAction("COMP_NEW");
+                                        }
+                                        break bb186;
+                                    }
+                                case "s":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("FILE_SAVE");
+                                        break bb186;
+                                    }
+                                case "d":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("EDIT_DUPLICATE");
+                                        break bb186;
+                                    }
+                                case "k":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("COMP_SETTINGS");
+                                        break bb186;
+                                    }
+                                case "m":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("COMP_RENDER");
+                                        break bb186;
+                                    }
+                                case "i":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("FILE_IMPORT");
+                                        break bb186;
+                                    }
+                                case "a":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("EDIT_SELECT_ALL");
+                                        break bb186;
+                                    }
+                                case "0":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("VIEW_FIT");
+                                        break bb186;
+                                    }
+                                case "=":
+                                case "+":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("VIEW_ZOOM_IN");
+                                        break bb186;
+                                    }
+                                case "-":
+                                    {
+                                        e_0.preventDefault();
+                                        handleMenuAction("VIEW_ZOOM_OUT");
+                                    }
                             }
                         }
-                        bb178: switch(e.key){
+                        bb222: switch(e_0.key){
                             case "F1":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     setModalConfig({
                                         isOpen: true,
                                         type: "HELP",
                                         title: "Bolt Video Editor - Help"
                                     });
-                                    break bb178;
+                                    break bb222;
                                 }
                             case "F3":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     handleMenuAction("EDIT_DUPLICATE");
-                                    break bb178;
+                                    break bb222;
                                 }
                             case "F4":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     handleMenuAction("EDIT_DELETE");
-                                    break bb178;
+                                    break bb222;
                                 }
                             case "F5":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     setModalConfig({
                                         isOpen: true,
                                         type: "RENDER",
                                         title: "Render Queue"
                                     });
-                                    break bb178;
+                                    break bb222;
                                 }
                             case "F6":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     setShowProject(_AEVideoEditorUseEffectHandleKeyDownSetShowProject);
-                                    break bb178;
+                                    break bb222;
                                 }
                             case "F7":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     setShowTimeline(_AEVideoEditorUseEffectHandleKeyDownSetShowTimeline);
-                                    break bb178;
+                                    break bb222;
                                 }
                             case "F8":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     setShowEffects(_AEVideoEditorUseEffectHandleKeyDownSetShowEffects);
-                                    break bb178;
+                                    break bb222;
                                 }
                             case "F11":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     if (typeof document !== "undefined") {
                                         if (!document.fullscreenElement) {
                                             document.documentElement.requestFullscreen().catch(_AEVideoEditorUseEffectHandleKeyDownAnonymous);
@@ -5545,18 +5812,18 @@ function AEVideoEditor() {
                                             }
                                         }
                                     }
-                                    break bb178;
+                                    break bb222;
                                 }
                             case "F12":
                                 {
-                                    e.preventDefault();
+                                    e_0.preventDefault();
                                     setIsMintModalOpen(true);
-                                    break bb178;
+                                    break bb222;
                                 }
                             case " ":
                                 {
                                     if (document.activeElement?.tagName !== "INPUT") {
-                                        e.preventDefault();
+                                        e_0.preventDefault();
                                         handleTogglePlayback();
                                     }
                                 }
@@ -5572,17 +5839,17 @@ function AEVideoEditor() {
             handleMenuAction,
             handleTogglePlayback
         ];
-        $[37] = handleMenuAction;
-        $[38] = history;
-        $[39] = t16;
-        $[40] = t17;
+        $[38] = handleMenuAction;
+        $[39] = history;
+        $[40] = t16;
+        $[41] = t17;
     } else {
-        t16 = $[39];
-        t17 = $[40];
+        t16 = $[40];
+        t17 = $[41];
     }
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t16, t17);
     let t18;
-    if ($[41] === Symbol.for("react.memo_cache_sentinel")) {
+    if ($[42] === Symbol.for("react.memo_cache_sentinel")) {
         t18 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "px-3 h-full flex items-center bg-[#d391fc]/10 border-r border-black/20",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5592,25 +5859,25 @@ function AEVideoEditor() {
                     children: "Ae"
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 647,
+                    lineNumber: 776,
                     columnNumber: 181
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                lineNumber: 647,
+                lineNumber: 776,
                 columnNumber: 99
             }, this)
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 647,
+            lineNumber: 776,
             columnNumber: 11
         }, this);
-        $[41] = t18;
+        $[42] = t18;
     } else {
-        t18 = $[41];
+        t18 = $[42];
     }
     let t19;
-    if ($[42] !== handleMenuAction) {
+    if ($[43] !== handleMenuAction) {
         t19 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-center h-full",
             children: [
@@ -5619,53 +5886,53 @@ function AEVideoEditor() {
                     onAction: handleMenuAction
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 654,
+                    lineNumber: 783,
                     columnNumber: 58
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 654,
+            lineNumber: 783,
             columnNumber: 11
         }, this);
-        $[42] = handleMenuAction;
-        $[43] = t19;
+        $[43] = handleMenuAction;
+        $[44] = t19;
     } else {
-        t19 = $[43];
+        t19 = $[44];
     }
     const t20 = `w-1.5 h-1.5 rounded-full ${synced ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" : "bg-red-500 animate-pulse"}`;
     let t21;
-    if ($[44] !== t20) {
+    if ($[45] !== t20) {
         t21 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: t20
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 663,
+            lineNumber: 792,
             columnNumber: 11
         }, this);
-        $[44] = t20;
-        $[45] = t21;
+        $[45] = t20;
+        $[46] = t21;
     } else {
-        t21 = $[45];
+        t21 = $[46];
     }
     const t22 = synced ? "Live Link Active" : "Searching Peers";
     let t23;
-    if ($[46] !== t22) {
+    if ($[47] !== t22) {
         t23 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
             className: "text-[9px] font-black uppercase tracking-widest text-gray-500",
             children: t22
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 672,
+            lineNumber: 801,
             columnNumber: 11
         }, this);
-        $[46] = t22;
-        $[47] = t23;
+        $[47] = t22;
+        $[48] = t23;
     } else {
-        t23 = $[47];
+        t23 = $[48];
     }
     let t24;
-    if ($[48] !== t21 || $[49] !== t23) {
+    if ($[49] !== t21 || $[50] !== t23) {
         t24 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-center gap-2 bg-black/20 px-3 py-1 rounded-full border border-white/5",
             children: [
@@ -5674,18 +5941,18 @@ function AEVideoEditor() {
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 680,
+            lineNumber: 809,
             columnNumber: 11
         }, this);
-        $[48] = t21;
-        $[49] = t23;
-        $[50] = t24;
+        $[49] = t21;
+        $[50] = t23;
+        $[51] = t24;
     } else {
-        t24 = $[50];
+        t24 = $[51];
     }
     let t25;
     let t26;
-    if ($[51] === Symbol.for("react.memo_cache_sentinel")) {
+    if ($[52] === Symbol.for("react.memo_cache_sentinel")) {
         t25 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
             onClick: {
                 "AEVideoEditor[<button>.onClick]": ()=>setIsMintModalOpen(true)
@@ -5694,7 +5961,7 @@ function AEVideoEditor() {
             children: "Mint Asset"
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 690,
+            lineNumber: 819,
             columnNumber: 11
         }, this);
         t26 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5702,17 +5969,17 @@ function AEVideoEditor() {
             children: "Render"
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 693,
+            lineNumber: 822,
             columnNumber: 11
         }, this);
-        $[51] = t25;
-        $[52] = t26;
+        $[52] = t25;
+        $[53] = t26;
     } else {
-        t25 = $[51];
-        t26 = $[52];
+        t25 = $[52];
+        t26 = $[53];
     }
     let t27;
-    if ($[53] !== t24) {
+    if ($[54] !== t24) {
         t27 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-center gap-3",
             children: [
@@ -5722,16 +5989,16 @@ function AEVideoEditor() {
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 702,
+            lineNumber: 831,
             columnNumber: 11
         }, this);
-        $[53] = t24;
-        $[54] = t27;
+        $[54] = t24;
+        $[55] = t27;
     } else {
-        t27 = $[54];
+        t27 = $[55];
     }
     let t28;
-    if ($[55] !== t19 || $[56] !== t27) {
+    if ($[56] !== t19 || $[57] !== t27) {
         t28 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "h-9 bg-[#2d2d2d] border-b border-black flex items-center justify-between",
             children: [
@@ -5740,17 +6007,17 @@ function AEVideoEditor() {
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 710,
+            lineNumber: 839,
             columnNumber: 11
         }, this);
-        $[55] = t19;
-        $[56] = t27;
-        $[57] = t28;
+        $[56] = t19;
+        $[57] = t27;
+        $[58] = t28;
     } else {
-        t28 = $[57];
+        t28 = $[58];
     }
     let t29;
-    if ($[58] !== activeLayer || $[59] !== handleFiles || $[60] !== handleUpdateLayer || $[61] !== layers || $[62] !== showEffects || $[63] !== showProject) {
+    if ($[59] !== activeLayer || $[60] !== handleFiles || $[61] !== handleUpdateLayer || $[62] !== layers || $[63] !== showEffects || $[64] !== showProject) {
         t29 = (showProject || showEffects) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "w-[320px] flex flex-col border-r border-black shrink-0 z-30",
             children: [
@@ -5761,12 +6028,12 @@ function AEVideoEditor() {
                         onFilesDrop: handleFiles
                     }, void 0, false, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                        lineNumber: 719,
+                        lineNumber: 848,
                         columnNumber: 186
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 719,
+                    lineNumber: 848,
                     columnNumber: 136
                 }, this),
                 showEffects && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5776,32 +6043,32 @@ function AEVideoEditor() {
                         onUpdateLayer: handleUpdateLayer
                     }, void 0, false, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                        lineNumber: 719,
+                        lineNumber: 848,
                         columnNumber: 342
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 719,
+                    lineNumber: 848,
                     columnNumber: 267
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 719,
+            lineNumber: 848,
             columnNumber: 43
         }, this);
-        $[58] = activeLayer;
-        $[59] = handleFiles;
-        $[60] = handleUpdateLayer;
-        $[61] = layers;
-        $[62] = showEffects;
-        $[63] = showProject;
-        $[64] = t29;
+        $[59] = activeLayer;
+        $[60] = handleFiles;
+        $[61] = handleUpdateLayer;
+        $[62] = layers;
+        $[63] = showEffects;
+        $[64] = showProject;
+        $[65] = t29;
     } else {
-        t29 = $[64];
+        t29 = $[65];
     }
     let t30;
-    if ($[65] !== activeLayerId || $[66] !== handleFiles || $[67] !== layers || $[68] !== playback) {
+    if ($[66] !== activeLayerId || $[67] !== handleFiles || $[68] !== layers || $[69] !== playback || $[70] !== zoom) {
         t30 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex-grow flex flex-col bg-[#161616] relative",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$apps$2f$web$2f$src$2f$components$2f$video$2d$editor$2f$CompositionView$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -5811,27 +6078,29 @@ function AEVideoEditor() {
                 onSelectLayer: setActiveLayerId,
                 onTogglePlayback: handleTogglePlayback,
                 onSeek: handleSeek,
-                onFilesDrop: handleFiles
+                onFilesDrop: handleFiles,
+                zoom: zoom
             }, void 0, false, {
                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                lineNumber: 732,
+                lineNumber: 861,
                 columnNumber: 74
             }, this)
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 732,
+            lineNumber: 861,
             columnNumber: 11
         }, this);
-        $[65] = activeLayerId;
-        $[66] = handleFiles;
-        $[67] = layers;
-        $[68] = playback;
-        $[69] = t30;
+        $[66] = activeLayerId;
+        $[67] = handleFiles;
+        $[68] = layers;
+        $[69] = playback;
+        $[70] = zoom;
+        $[71] = t30;
     } else {
-        t30 = $[69];
+        t30 = $[71];
     }
     let t31;
-    if ($[70] !== activeLayerId || $[71] !== handleAddLayer || $[72] !== handleSplitLayer || $[73] !== handleToggleLayerProp || $[74] !== layers || $[75] !== playback || $[76] !== showTimeline) {
+    if ($[72] !== activeLayerId || $[73] !== handleAddLayer || $[74] !== handleSplitLayer || $[75] !== handleToggleLayerProp || $[76] !== layers || $[77] !== playback || $[78] !== showTimeline) {
         t31 = showTimeline && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "h-[400px] border-t border-black z-20",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$apps$2f$web$2f$src$2f$components$2f$video$2d$editor$2f$AETimeline$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -5845,27 +6114,27 @@ function AEVideoEditor() {
                 onSeek: handleSeek
             }, void 0, false, {
                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                lineNumber: 743,
+                lineNumber: 873,
                 columnNumber: 81
             }, this)
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 743,
+            lineNumber: 873,
             columnNumber: 27
         }, this);
-        $[70] = activeLayerId;
-        $[71] = handleAddLayer;
-        $[72] = handleSplitLayer;
-        $[73] = handleToggleLayerProp;
-        $[74] = layers;
-        $[75] = playback;
-        $[76] = showTimeline;
-        $[77] = t31;
+        $[72] = activeLayerId;
+        $[73] = handleAddLayer;
+        $[74] = handleSplitLayer;
+        $[75] = handleToggleLayerProp;
+        $[76] = layers;
+        $[77] = playback;
+        $[78] = showTimeline;
+        $[79] = t31;
     } else {
-        t31 = $[77];
+        t31 = $[79];
     }
     let t32;
-    if ($[78] !== t30 || $[79] !== t31) {
+    if ($[80] !== t30 || $[81] !== t31) {
         t32 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex flex-col flex-grow relative",
             children: [
@@ -5874,17 +6143,17 @@ function AEVideoEditor() {
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 757,
+            lineNumber: 887,
             columnNumber: 11
         }, this);
-        $[78] = t30;
-        $[79] = t31;
-        $[80] = t32;
+        $[80] = t30;
+        $[81] = t31;
+        $[82] = t32;
     } else {
-        t32 = $[80];
+        t32 = $[82];
     }
     let t33;
-    if ($[81] !== t29 || $[82] !== t32) {
+    if ($[83] !== t29 || $[84] !== t32) {
         t33 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex flex-grow overflow-hidden",
             children: [
@@ -5893,17 +6162,17 @@ function AEVideoEditor() {
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 766,
+            lineNumber: 896,
             columnNumber: 11
         }, this);
-        $[81] = t29;
-        $[82] = t32;
-        $[83] = t33;
+        $[83] = t29;
+        $[84] = t32;
+        $[85] = t33;
     } else {
-        t33 = $[83];
+        t33 = $[85];
     }
     let t34;
-    if ($[84] !== t28 || $[85] !== t33) {
+    if ($[86] !== t28 || $[87] !== t33) {
         t34 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex flex-col h-screen bg-[#1e1e1e] overflow-hidden select-none text-white font-sans",
             children: [
@@ -5912,30 +6181,30 @@ function AEVideoEditor() {
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 775,
+            lineNumber: 905,
             columnNumber: 11
         }, this);
-        $[84] = t28;
-        $[85] = t33;
-        $[86] = t34;
+        $[86] = t28;
+        $[87] = t33;
+        $[88] = t34;
     } else {
-        t34 = $[86];
+        t34 = $[88];
     }
     let t35;
-    if ($[87] !== modalConfig) {
+    if ($[89] !== modalConfig) {
         t35 = ({
             "AEVideoEditor[<VideoModal>.onClose]": ()=>setModalConfig({
                     ...modalConfig,
                     isOpen: false
                 })
         })["AEVideoEditor[<VideoModal>.onClose]"];
-        $[87] = modalConfig;
-        $[88] = t35;
+        $[89] = modalConfig;
+        $[90] = t35;
     } else {
-        t35 = $[88];
+        t35 = $[90];
     }
     let t36;
-    if ($[89] !== modalConfig) {
+    if ($[91] !== modalConfig) {
         t36 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex gap-3",
             children: [
@@ -5950,7 +6219,7 @@ function AEVideoEditor() {
                     children: "Cancel"
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 797,
+                    lineNumber: 927,
                     columnNumber: 39
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5964,22 +6233,22 @@ function AEVideoEditor() {
                     children: "OK"
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 802,
+                    lineNumber: 932,
                     columnNumber: 151
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 797,
+            lineNumber: 927,
             columnNumber: 11
         }, this);
-        $[89] = modalConfig;
-        $[90] = t36;
+        $[91] = modalConfig;
+        $[92] = t36;
     } else {
-        t36 = $[90];
+        t36 = $[92];
     }
     let t37;
-    if ($[91] !== modalConfig.type) {
+    if ($[93] !== modalConfig.type) {
         t37 = modalConfig.type === "COMP_SETTINGS" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "space-y-6",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5993,7 +6262,7 @@ function AEVideoEditor() {
                                 children: "Composition Name"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                lineNumber: 815,
+                                lineNumber: 945,
                                 columnNumber: 156
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -6002,13 +6271,13 @@ function AEVideoEditor() {
                                 className: "w-full bg-[#1a1a1a] border border-white/5 rounded px-3 py-2 text-white italic outline-none focus:border-[#d391fc]/50"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                lineNumber: 815,
+                                lineNumber: 945,
                                 columnNumber: 262
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                        lineNumber: 815,
+                        lineNumber: 945,
                         columnNumber: 129
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6019,7 +6288,7 @@ function AEVideoEditor() {
                                 children: "Frame Rate"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                lineNumber: 815,
+                                lineNumber: 945,
                                 columnNumber: 467
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -6029,7 +6298,7 @@ function AEVideoEditor() {
                                         children: "24 fps"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                        lineNumber: 815,
+                                        lineNumber: 945,
                                         columnNumber: 697
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -6037,26 +6306,26 @@ function AEVideoEditor() {
                                         children: "30 fps"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                        lineNumber: 815,
+                                        lineNumber: 945,
                                         columnNumber: 720
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                         children: "60 fps"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                        lineNumber: 815,
+                                        lineNumber: 945,
                                         columnNumber: 759
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                lineNumber: 815,
+                                lineNumber: 945,
                                 columnNumber: 567
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                        lineNumber: 815,
+                        lineNumber: 945,
                         columnNumber: 440
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6067,7 +6336,7 @@ function AEVideoEditor() {
                                 children: "Resolution"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                lineNumber: 815,
+                                lineNumber: 945,
                                 columnNumber: 824
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6079,7 +6348,7 @@ function AEVideoEditor() {
                                         className: "w-full bg-[#1a1a1a] border border-white/5 rounded px-2 py-1.5 text-white outline-none"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                        lineNumber: 815,
+                                        lineNumber: 945,
                                         columnNumber: 965
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -6087,7 +6356,7 @@ function AEVideoEditor() {
                                         children: "x"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                        lineNumber: 815,
+                                        lineNumber: 945,
                                         columnNumber: 1106
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -6096,19 +6365,19 @@ function AEVideoEditor() {
                                         className: "w-full bg-[#1a1a1a] border border-white/5 rounded px-2 py-1.5 text-white outline-none"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                        lineNumber: 815,
+                                        lineNumber: 945,
                                         columnNumber: 1146
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                lineNumber: 815,
+                                lineNumber: 945,
                                 columnNumber: 924
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                        lineNumber: 815,
+                        lineNumber: 945,
                         columnNumber: 797
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6119,7 +6388,7 @@ function AEVideoEditor() {
                                 children: "Duration"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                lineNumber: 815,
+                                lineNumber: 945,
                                 columnNumber: 1326
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -6128,33 +6397,33 @@ function AEVideoEditor() {
                                 className: "w-full bg-[#1a1a1a] border border-white/5 rounded px-3 py-2 text-[#d391fc] font-mono outline-none"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                lineNumber: 815,
+                                lineNumber: 945,
                                 columnNumber: 1424
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                        lineNumber: 815,
+                        lineNumber: 945,
                         columnNumber: 1299
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                lineNumber: 815,
+                lineNumber: 945,
                 columnNumber: 78
             }, this)
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 815,
+            lineNumber: 945,
             columnNumber: 51
         }, this);
-        $[91] = modalConfig.type;
-        $[92] = t37;
+        $[93] = modalConfig.type;
+        $[94] = t37;
     } else {
-        t37 = $[92];
+        t37 = $[94];
     }
     let t38;
-    if ($[93] !== modalConfig.type) {
+    if ($[95] !== modalConfig.type) {
         t38 = modalConfig.type === "PREFERENCES" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "space-y-8",
             children: [
@@ -6166,7 +6435,7 @@ function AEVideoEditor() {
                             children: "Previews"
                         }, void 0, false, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 823,
+                            lineNumber: 953,
                             columnNumber: 103
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6177,7 +6446,7 @@ function AEVideoEditor() {
                                     children: "Adaptive Resolution"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 823,
+                                    lineNumber: 953,
                                     columnNumber: 292
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6186,24 +6455,24 @@ function AEVideoEditor() {
                                         className: "absolute right-0.5 top-0.5 w-3 h-3 bg-[#1e1e1e] rounded-full"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                        lineNumber: 823,
+                                        lineNumber: 953,
                                         columnNumber: 404
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 823,
+                                    lineNumber: 953,
                                     columnNumber: 344
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 823,
+                            lineNumber: 953,
                             columnNumber: 196
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 823,
+                    lineNumber: 953,
                     columnNumber: 76
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6214,7 +6483,7 @@ function AEVideoEditor() {
                             children: "Media & Disk Cache"
                         }, void 0, false, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 823,
+                            lineNumber: 953,
                             columnNumber: 529
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6228,7 +6497,7 @@ function AEVideoEditor() {
                                             children: "Maximum Cache Size:"
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                            lineNumber: 823,
+                                            lineNumber: 953,
                                             columnNumber: 759
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -6236,13 +6505,13 @@ function AEVideoEditor() {
                                             children: "46.0 GB"
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                            lineNumber: 823,
+                                            lineNumber: 953,
                                             columnNumber: 817
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 823,
+                                    lineNumber: 953,
                                     columnNumber: 709
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6251,39 +6520,39 @@ function AEVideoEditor() {
                                         className: "h-full bg-[#d391fc] w-[65%]"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                        lineNumber: 823,
+                                        lineNumber: 953,
                                         columnNumber: 928
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 823,
+                                    lineNumber: 953,
                                     columnNumber: 866
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 823,
+                            lineNumber: 953,
                             columnNumber: 636
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 823,
+                    lineNumber: 953,
                     columnNumber: 502
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 823,
+            lineNumber: 953,
             columnNumber: 49
         }, this);
-        $[93] = modalConfig.type;
-        $[94] = t38;
+        $[95] = modalConfig.type;
+        $[96] = t38;
     } else {
-        t38 = $[94];
+        t38 = $[96];
     }
     let t39;
-    if ($[95] !== modalConfig.type) {
+    if ($[97] !== modalConfig.type) {
         t39 = modalConfig.type === "RENDER" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "text-center py-8 space-y-4",
             children: [
@@ -6293,12 +6562,12 @@ function AEVideoEditor() {
                         className: "w-8 h-8 border-2 border-[#d391fc] border-t-transparent rounded-full animate-spin"
                     }, void 0, false, {
                         fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                        lineNumber: 831,
+                        lineNumber: 961,
                         columnNumber: 212
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 831,
+                    lineNumber: 961,
                     columnNumber: 88
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6309,7 +6578,7 @@ function AEVideoEditor() {
                             children: "Preparing Render Engine"
                         }, void 0, false, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 831,
+                            lineNumber: 961,
                             columnNumber: 345
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6317,28 +6586,28 @@ function AEVideoEditor() {
                             children: "Allocating virtual memory for BOLTChain sequence export..."
                         }, void 0, false, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 831,
+                            lineNumber: 961,
                             columnNumber: 425
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 831,
+                    lineNumber: 961,
                     columnNumber: 318
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 831,
+            lineNumber: 961,
             columnNumber: 44
         }, this);
-        $[95] = modalConfig.type;
-        $[96] = t39;
+        $[97] = modalConfig.type;
+        $[98] = t39;
     } else {
-        t39 = $[96];
+        t39 = $[98];
     }
     let t40;
-    if ($[97] !== modalConfig.type) {
+    if ($[99] !== modalConfig.type) {
         t40 = modalConfig.type === "HELP" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "space-y-4",
             children: [
@@ -6353,222 +6622,22 @@ function AEVideoEditor() {
                                     children: "F1"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
+                                    lineNumber: 969,
                                     columnNumber: 198
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     className: "text-gray-300",
-                                    children: "Help / Keybinds"
+                                    children: "Help Center"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
+                                    lineNumber: 969,
                                     columnNumber: 250
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
+                            lineNumber: 969,
                             columnNumber: 131
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between border-b border-white/5 py-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[#d391fc] font-bold",
-                                    children: "F7"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 377
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-gray-300",
-                                    children: "Toggle Timeline"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 429
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 310
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between border-b border-white/5 py-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[#d391fc] font-bold",
-                                    children: "F3"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 556
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-gray-300",
-                                    children: "Duplicate Layer"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 608
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 489
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between border-b border-white/5 py-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[#d391fc] font-bold",
-                                    children: "F8"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 735
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-gray-300",
-                                    children: "Toggle Effects"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 787
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 668
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between border-b border-white/5 py-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[#d391fc] font-bold",
-                                    children: "F4"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 913
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-gray-300",
-                                    children: "Delete Layer"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 965
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 846
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between border-b border-white/5 py-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[#d391fc] font-bold",
-                                    children: "F11"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1089
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-gray-300",
-                                    children: "Fullscreen"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1142
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 1022
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between border-b border-white/5 py-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[#d391fc] font-bold",
-                                    children: "F5"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1264
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-gray-300",
-                                    children: "Render Queue"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1316
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 1197
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between border-b border-white/5 py-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[#d391fc] font-bold",
-                                    children: "F12"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1440
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-gray-300",
-                                    children: "Mint Asset (On-Chain)"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1493
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 1373
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between border-b border-white/5 py-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[#d391fc] font-bold",
-                                    children: "F6"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1626
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-gray-300",
-                                    children: "Toggle Project Panel"
-                                }, void 0, false, {
-                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1678
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 1559
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex justify-between border-b border-white/5 py-1",
@@ -6578,50 +6647,250 @@ function AEVideoEditor() {
                                     children: "Space"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1810
+                                    lineNumber: 969,
+                                    columnNumber: 373
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     className: "text-gray-300",
                                     children: "Play / Pause"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                                    lineNumber: 839,
-                                    columnNumber: 1865
+                                    lineNumber: 969,
+                                    columnNumber: 428
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                            lineNumber: 839,
-                            columnNumber: 1743
+                            lineNumber: 969,
+                            columnNumber: 306
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between border-b border-white/5 py-1",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-[#d391fc] font-bold",
+                                    children: "Ctrl + D"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 552
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-gray-300",
+                                    children: "Duplicate Layer"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 610
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                            lineNumber: 969,
+                            columnNumber: 485
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between border-b border-white/5 py-1",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-[#d391fc] font-bold",
+                                    children: "Ctrl + Shift + D"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 737
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-gray-300",
+                                    children: "Split Layer"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 803
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                            lineNumber: 969,
+                            columnNumber: 670
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between border-b border-white/5 py-1",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-[#d391fc] font-bold",
+                                    children: "Ctrl + K"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 926
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-gray-300",
+                                    children: "Comp Settings"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 984
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                            lineNumber: 969,
+                            columnNumber: 859
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between border-b border-white/5 py-1",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-[#d391fc] font-bold",
+                                    children: "Ctrl + M / F5"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1109
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-gray-300",
+                                    children: "Render Queue"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1172
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                            lineNumber: 969,
+                            columnNumber: 1042
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between border-b border-white/5 py-1",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-[#d391fc] font-bold",
+                                    children: "Ctrl + N / Alt+N"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1296
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-gray-300",
+                                    children: "New Comp / Project"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1362
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                            lineNumber: 969,
+                            columnNumber: 1229
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between border-b border-white/5 py-1",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-[#d391fc] font-bold",
+                                    children: "Ctrl + A / Shift+A"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1492
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-gray-300",
+                                    children: "Select / Deselect"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1560
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                            lineNumber: 969,
+                            columnNumber: 1425
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between border-b border-white/5 py-1",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-[#d391fc] font-bold",
+                                    children: "Ctrl + / -"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1689
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-gray-300",
+                                    children: "Zoom In / Out"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1749
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                            lineNumber: 969,
+                            columnNumber: 1622
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between border-b border-white/5 py-1",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-[#d391fc] font-bold",
+                                    children: "Ctrl + 0"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1874
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-gray-300",
+                                    children: "Fit in Window"
+                                }, void 0, false, {
+                                    fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                                    lineNumber: 969,
+                                    columnNumber: 1932
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
+                            lineNumber: 969,
+                            columnNumber: 1807
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 839,
+                    lineNumber: 969,
                     columnNumber: 69
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "p-3 bg-[#d391fc]/10 border border-[#d391fc]/20 rounded-md text-[10px] text-[#d391fc] font-medium leading-relaxed",
-                    children: "Pro Tip: Use F11 for an immersive editing experience. All shortcuts are built for professional BOLT workflows."
+                    children: "Pro Tip: Use industry-standard After Effects shortcuts for maximum velocity. Press F11 for an immersive fullscreen experience."
                 }, void 0, false, {
                     fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-                    lineNumber: 839,
-                    columnNumber: 1928
+                    lineNumber: 969,
+                    columnNumber: 1996
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 839,
+            lineNumber: 969,
             columnNumber: 42
         }, this);
-        $[97] = modalConfig.type;
-        $[98] = t40;
+        $[99] = modalConfig.type;
+        $[100] = t40;
     } else {
-        t40 = $[98];
+        t40 = $[100];
     }
     let t41;
-    if ($[99] !== modalConfig.isOpen || $[100] !== modalConfig.title || $[101] !== t35 || $[102] !== t36 || $[103] !== t37 || $[104] !== t38 || $[105] !== t39 || $[106] !== t40) {
+    if ($[101] !== modalConfig.isOpen || $[102] !== modalConfig.title || $[103] !== t35 || $[104] !== t36 || $[105] !== t37 || $[106] !== t38 || $[107] !== t39 || $[108] !== t40) {
         t41 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$apps$2f$web$2f$src$2f$components$2f$video$2d$editor$2f$VideoModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
             isOpen: modalConfig.isOpen,
             onClose: t35,
@@ -6635,44 +6904,44 @@ function AEVideoEditor() {
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 847,
+            lineNumber: 977,
             columnNumber: 11
         }, this);
-        $[99] = modalConfig.isOpen;
-        $[100] = modalConfig.title;
-        $[101] = t35;
-        $[102] = t36;
-        $[103] = t37;
-        $[104] = t38;
-        $[105] = t39;
-        $[106] = t40;
-        $[107] = t41;
+        $[101] = modalConfig.isOpen;
+        $[102] = modalConfig.title;
+        $[103] = t35;
+        $[104] = t36;
+        $[105] = t37;
+        $[106] = t38;
+        $[107] = t39;
+        $[108] = t40;
+        $[109] = t41;
     } else {
-        t41 = $[107];
+        t41 = $[109];
     }
     let t42;
-    if ($[108] !== isMinting) {
+    if ($[110] !== isMinting) {
         t42 = ({
             "AEVideoEditor[<MintingModal>.onClose]": ()=>!isMinting && setIsMintModalOpen(false)
         })["AEVideoEditor[<MintingModal>.onClose]"];
-        $[108] = isMinting;
-        $[109] = t42;
+        $[110] = isMinting;
+        $[111] = t42;
     } else {
-        t42 = $[109];
+        t42 = $[111];
     }
     let t43;
-    if ($[110] === Symbol.for("react.memo_cache_sentinel")) {
+    if ($[112] === Symbol.for("react.memo_cache_sentinel")) {
         t43 = {
             id: "video-project-1",
             name: "Video Composition",
             previewUrl: ""
         };
-        $[110] = t43;
+        $[112] = t43;
     } else {
-        t43 = $[110];
+        t43 = $[112];
     }
     let t44;
-    if ($[111] !== handleMint || $[112] !== isMintModalOpen || $[113] !== isMinting || $[114] !== t42) {
+    if ($[113] !== handleMint || $[114] !== isMintModalOpen || $[115] !== isMinting || $[116] !== t42) {
         t44 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$apps$2f$web$2f$src$2f$components$2f$profile$2f$MintingModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
             isOpen: isMintModalOpen,
             onClose: t42,
@@ -6681,19 +6950,19 @@ function AEVideoEditor() {
             isMinting: isMinting
         }, void 0, false, {
             fileName: "[project]/Documents/BOLTChainvas/apps/web/src/app/video/page.tsx",
-            lineNumber: 883,
+            lineNumber: 1013,
             columnNumber: 11
         }, this);
-        $[111] = handleMint;
-        $[112] = isMintModalOpen;
-        $[113] = isMinting;
-        $[114] = t42;
-        $[115] = t44;
+        $[113] = handleMint;
+        $[114] = isMintModalOpen;
+        $[115] = isMinting;
+        $[116] = t42;
+        $[117] = t44;
     } else {
-        t44 = $[115];
+        t44 = $[117];
     }
     let t45;
-    if ($[116] !== t34 || $[117] !== t41 || $[118] !== t44) {
+    if ($[118] !== t34 || $[119] !== t41 || $[120] !== t44) {
         t45 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
             children: [
                 t34,
@@ -6701,16 +6970,16 @@ function AEVideoEditor() {
                 t44
             ]
         }, void 0, true);
-        $[116] = t34;
-        $[117] = t41;
-        $[118] = t44;
-        $[119] = t45;
+        $[118] = t34;
+        $[119] = t41;
+        $[120] = t44;
+        $[121] = t45;
     } else {
-        t45 = $[119];
+        t45 = $[121];
     }
     return t45;
 }
-_s(AEVideoEditor, "KpErtUk5fJKZjRh7Dodw7lYgC2k=", false, function() {
+_s(AEVideoEditor, "Y0Ua4VPtz6H+h/XqgDtziJ+QcYA=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$apps$2f$web$2f$src$2f$hooks$2f$useYjs$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useYjs"],
         __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$BOLTChainvas$2f$apps$2f$web$2f$src$2f$hooks$2f$useMinting$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMinting"],
@@ -6720,23 +6989,29 @@ _s(AEVideoEditor, "KpErtUk5fJKZjRh7Dodw7lYgC2k=", false, function() {
 _c = AEVideoEditor;
 function _AEVideoEditorUseEffectHandleKeyDownAnonymous2() {}
 function _AEVideoEditorUseEffectHandleKeyDownAnonymous() {}
-function _AEVideoEditorUseEffectHandleKeyDownSetShowEffects(prev_13) {
-    return !prev_13;
-}
-function _AEVideoEditorUseEffectHandleKeyDownSetShowTimeline(prev_14) {
-    return !prev_14;
-}
-function _AEVideoEditorUseEffectHandleKeyDownSetShowProject(prev_15) {
+function _AEVideoEditorUseEffectHandleKeyDownSetShowEffects(prev_15) {
     return !prev_15;
 }
-function _AEVideoEditorHandleMenuActionSetShowTimeline(prev_8) {
-    return !prev_8;
+function _AEVideoEditorUseEffectHandleKeyDownSetShowTimeline(prev_16) {
+    return !prev_16;
 }
-function _AEVideoEditorHandleMenuActionSetShowEffects(prev_9) {
-    return !prev_9;
+function _AEVideoEditorUseEffectHandleKeyDownSetShowProject(prev_17) {
+    return !prev_17;
 }
-function _AEVideoEditorHandleMenuActionSetShowProject(prev_10) {
+function _AEVideoEditorHandleMenuActionSetZoom2(prev_8) {
+    return Math.max(prev_8 - 10, 10);
+}
+function _AEVideoEditorHandleMenuActionSetZoom(prev_9) {
+    return Math.min(prev_9 + 10, 400);
+}
+function _AEVideoEditorHandleMenuActionSetShowTimeline(prev_10) {
     return !prev_10;
+}
+function _AEVideoEditorHandleMenuActionSetShowEffects(prev_11) {
+    return !prev_11;
+}
+function _AEVideoEditorHandleMenuActionSetShowProject(prev_12) {
+    return !prev_12;
 }
 function _AEVideoEditorHandleTogglePlaybackSetPlayback(prev_0) {
     return {

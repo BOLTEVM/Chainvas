@@ -47,6 +47,7 @@ export default function AEVideoEditor() {
         isPlaying: false,
         fps: 30
     });
+    const [zoom, setZoom] = useState(100);
 
     // Modal State
     const [modalConfig, setModalConfig] = useState<{
@@ -258,6 +259,30 @@ export default function AEVideoEditor() {
             case "FILE_HELP":
                 setModalConfig({ isOpen: true, type: "HELP", title: "Bolt Video Editor - Help" });
                 break;
+            case "COMP_NEW":
+                setModalConfig({ isOpen: true, type: "COMP_SETTINGS", title: "New Composition" });
+                break;
+            case "EDIT_SELECT_ALL":
+                if (layers.length > 0) {
+                    setActiveLayerId(layers[layers.length - 1].id);
+                }
+                break;
+            case "EDIT_DESELECT":
+                setActiveLayerId(null);
+                break;
+            case "VIEW_ZOOM_IN": setZoom(prev => Math.min(prev + 10, 400)); break;
+            case "VIEW_ZOOM_OUT": setZoom(prev => Math.max(prev - 10, 10)); break;
+            case "VIEW_FIT": setZoom(100); break;
+            case "FILE_IMPORT":
+                const input = document.createElement("input");
+                input.type = "file";
+                input.multiple = true;
+                input.accept = "video/*,audio/*,image/*";
+                input.onchange = (e: any) => {
+                    if (e.target.files) handleFiles(e.target.files);
+                };
+                input.click();
+                break;
             default:
                 console.log("Action not implemented:", id);
         }
@@ -266,14 +291,70 @@ export default function AEVideoEditor() {
     // Keyboard Shortcuts
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            // Undo/Redo
-            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
-                if (e.shiftKey) history.redo();
-                else history.undo();
-                e.preventDefault();
-            } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
-                history.redo();
-                e.preventDefault();
+            // CTRL/META Shortcuts
+            if (e.ctrlKey || e.metaKey) {
+                const key = e.key.toLowerCase();
+
+                // Special case for Split (Ctrl+Shift+D)
+                if (e.shiftKey && key === "d") {
+                    e.preventDefault();
+                    handleMenuAction("EDIT_SPLIT");
+                    return;
+                }
+
+                switch (key) {
+                    case "z":
+                        e.preventDefault();
+                        if (e.shiftKey) history.redo();
+                        else history.undo();
+                        break;
+                    case "y":
+                        e.preventDefault();
+                        history.redo();
+                        break;
+                    case "n":
+                        e.preventDefault();
+                        if (e.altKey) handleMenuAction("FILE_NEW");
+                        else handleMenuAction("COMP_NEW");
+                        break;
+                    case "s":
+                        e.preventDefault();
+                        handleMenuAction("FILE_SAVE");
+                        break;
+                    case "d":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_DUPLICATE");
+                        break;
+                    case "k":
+                        e.preventDefault();
+                        handleMenuAction("COMP_SETTINGS");
+                        break;
+                    case "m":
+                        e.preventDefault();
+                        handleMenuAction("COMP_RENDER");
+                        break;
+                    case "i":
+                        e.preventDefault();
+                        handleMenuAction("FILE_IMPORT");
+                        break;
+                    case "a":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_SELECT_ALL");
+                        break;
+                    case "0":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_FIT");
+                        break;
+                    case "=":
+                    case "+":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_ZOOM_IN");
+                        break;
+                    case "-":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_ZOOM_OUT");
+                        break;
+                }
             }
 
             // F1-F12 Keybinds
@@ -390,6 +471,7 @@ export default function AEVideoEditor() {
                                 onTogglePlayback={handleTogglePlayback}
                                 onSeek={handleSeek}
                                 onFilesDrop={handleFiles}
+                                zoom={zoom}
                             />
                         </div>
 
@@ -509,47 +591,47 @@ export default function AEVideoEditor() {
                         <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-[11px]">
                             <div className="flex justify-between border-b border-white/5 py-1">
                                 <span className="text-[#d391fc] font-bold">F1</span>
-                                <span className="text-gray-300">Help / Keybinds</span>
-                            </div>
-                            <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#d391fc] font-bold">F7</span>
-                                <span className="text-gray-300">Toggle Timeline</span>
-                            </div>
-                            <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#d391fc] font-bold">F3</span>
-                                <span className="text-gray-300">Duplicate Layer</span>
-                            </div>
-                            <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#d391fc] font-bold">F8</span>
-                                <span className="text-gray-300">Toggle Effects</span>
-                            </div>
-                            <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#d391fc] font-bold">F4</span>
-                                <span className="text-gray-300">Delete Layer</span>
-                            </div>
-                            <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#d391fc] font-bold">F11</span>
-                                <span className="text-gray-300">Fullscreen</span>
-                            </div>
-                            <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#d391fc] font-bold">F5</span>
-                                <span className="text-gray-300">Render Queue</span>
-                            </div>
-                            <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#d391fc] font-bold">F12</span>
-                                <span className="text-gray-300">Mint Asset (On-Chain)</span>
-                            </div>
-                            <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#d391fc] font-bold">F6</span>
-                                <span className="text-gray-300">Toggle Project Panel</span>
+                                <span className="text-gray-300">Help Center</span>
                             </div>
                             <div className="flex justify-between border-b border-white/5 py-1">
                                 <span className="text-[#d391fc] font-bold">Space</span>
                                 <span className="text-gray-300">Play / Pause</span>
                             </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Ctrl + D</span>
+                                <span className="text-gray-300">Duplicate Layer</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Ctrl + Shift + D</span>
+                                <span className="text-gray-300">Split Layer</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Ctrl + K</span>
+                                <span className="text-gray-300">Comp Settings</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Ctrl + M / F5</span>
+                                <span className="text-gray-300">Render Queue</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Ctrl + N / Alt+N</span>
+                                <span className="text-gray-300">New Comp / Project</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Ctrl + A / Shift+A</span>
+                                <span className="text-gray-300">Select / Deselect</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Ctrl + / -</span>
+                                <span className="text-gray-300">Zoom In / Out</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Ctrl + 0</span>
+                                <span className="text-gray-300">Fit in Window</span>
+                            </div>
                         </div>
                         <div className="p-3 bg-[#d391fc]/10 border border-[#d391fc]/20 rounded-md text-[10px] text-[#d391fc] font-medium leading-relaxed">
-                            Pro Tip: Use F11 for an immersive editing experience. All shortcuts are built for professional BOLT workflows.
+                            Pro Tip: Use industry-standard After Effects shortcuts for maximum velocity. Press F11 for an immersive fullscreen experience.
                         </div>
                     </div>
                 )}
