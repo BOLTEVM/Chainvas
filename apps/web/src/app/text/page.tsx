@@ -211,6 +211,29 @@ export default function InDesignTextEditor() {
             case "FILE_HELP":
                 setModalConfig({ isOpen: true, type: "HELP", title: "Bolt InDesign Editor - Help" });
                 break;
+            case "EDIT_SELECT_ALL":
+                setObjects(prev => prev.map(o => ({ ...o, isSelected: true })));
+                break;
+            case "EDIT_DESELECT":
+                setObjects(prev => prev.map(o => ({ ...o, isSelected: false })));
+                break;
+            case "EDIT_LOCK":
+                setObjects(prev => prev.map(o => o.isSelected ? { ...o, locked: !o.locked } : o));
+                break;
+            case "VIEW_ZOOM_IN": setZoom(prev => Math.min(prev + 25, 400)); break;
+            case "VIEW_ZOOM_OUT": setZoom(prev => Math.max(prev - 25, 25)); break;
+            case "VIEW_FIT": setZoom(100); break;
+            case "FILE_PLACE":
+                const input = document.createElement("input");
+                input.type = "file";
+                input.multiple = true;
+                input.accept = "image/*,application/pdf,text/*";
+                input.onchange = (e: any) => {
+                    // Placeholder for actual file placement logic
+                    alert("File placement triggered");
+                };
+                input.click();
+                break;
             default:
                 console.log("Action not implemented:", id);
         }
@@ -219,11 +242,86 @@ export default function InDesignTextEditor() {
     // Keyboard Shortcuts
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            // Undo/Redo (Generic)
-            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
-                if (e.shiftKey) handleMenuAction("EDIT_REDO");
-                else handleMenuAction("EDIT_UNDO");
-                e.preventDefault();
+            // CTRL/META Shortcuts
+            if (e.ctrlKey || e.metaKey) {
+                const key = e.key.toLowerCase();
+
+                // Special case for Alt+Ctrl+P (Document Setup)
+                if (e.altKey && key === "p") {
+                    e.preventDefault();
+                    handleMenuAction("FILE_SETUP");
+                    return;
+                }
+
+                // Special case for Shift+Ctrl+G (Ungroup)
+                if (e.shiftKey && key === "g") {
+                    e.preventDefault();
+                    handleMenuAction("EDIT_UNGROUP");
+                    return;
+                }
+
+                switch (key) {
+                    case "z":
+                        e.preventDefault();
+                        if (e.shiftKey) handleMenuAction("EDIT_REDO");
+                        else handleMenuAction("EDIT_UNDO");
+                        break;
+                    case "y":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_REDO");
+                        break;
+                    case "n":
+                        e.preventDefault();
+                        handleMenuAction("FILE_NEW");
+                        break;
+                    case "s":
+                        e.preventDefault();
+                        handleMenuAction("FILE_SAVE");
+                        break;
+                    case "d":
+                        e.preventDefault();
+                        if (activeTool === "SELECT") handleMenuAction("EDIT_DUPLICATE");
+                        else handleMenuAction("FILE_PLACE");
+                        break;
+                    case "l":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_LOCK");
+                        break;
+                    case "g":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_GROUP");
+                        break;
+                    case "f":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_FIND");
+                        break;
+                    case "p":
+                        e.preventDefault();
+                        handleMenuAction("FILE_PRINT");
+                        break;
+                    case "a":
+                        e.preventDefault();
+                        if (e.shiftKey) handleMenuAction("EDIT_DESELECT");
+                        else handleMenuAction("EDIT_SELECT_ALL");
+                        break;
+                    case "0":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_FIT");
+                        break;
+                    case "=":
+                    case "+":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_ZOOM_IN");
+                        break;
+                    case "-":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_ZOOM_OUT");
+                        break;
+                    case "k":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_PREFERENCES");
+                        break;
+                }
             }
 
             // F1-F12 Keybinds
@@ -499,39 +597,39 @@ export default function InDesignTextEditor() {
                         <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-[11px]">
                             <div className="flex justify-between border-b border-white/5 py-1">
                                 <span className="text-[#ff6b00] font-bold">F1</span>
-                                <span className="text-gray-300">Help / Keybinds</span>
+                                <span className="text-gray-300">Help Center</span>
                             </div>
                             <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#ff6b00] font-bold">F7</span>
-                                <span className="text-gray-300">Toggle Sidebar Panels</span>
+                                <span className="text-[#ff6b00] font-bold">Ctrl + N / S</span>
+                                <span className="text-gray-300">New / Save</span>
                             </div>
                             <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#ff6b00] font-bold">F3</span>
-                                <span className="text-gray-300">Duplicate Object</span>
+                                <span className="text-[#ff6b00] font-bold">Ctrl + L</span>
+                                <span className="text-gray-300">Lock Object</span>
                             </div>
                             <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#ff6b00] font-bold">F8</span>
-                                <span className="text-gray-300">Toggle Options Bar</span>
+                                <span className="text-[#ff6b00] font-bold">Ctrl + G / Shift+G</span>
+                                <span className="text-gray-300">Group / Ungroup</span>
                             </div>
                             <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#ff6b00] font-bold">F4</span>
-                                <span className="text-gray-300">Delete Object</span>
+                                <span className="text-[#ff6b00] font-bold">Ctrl + A / Shift+A</span>
+                                <span className="text-gray-300">Select / Deselect All</span>
                             </div>
                             <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#ff6b00] font-bold">F11</span>
-                                <span className="text-gray-300">Fullscreen</span>
+                                <span className="text-[#ff6b00] font-bold">Ctrl + D</span>
+                                <span className="text-gray-300">Duplicate / Place</span>
                             </div>
                             <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#ff6b00] font-bold">F6</span>
-                                <span className="text-gray-300">Toggle Toolbar</span>
+                                <span className="text-[#ff6b00] font-bold">Ctrl + F</span>
+                                <span className="text-gray-300">Find / Change</span>
                             </div>
                             <div className="flex justify-between border-b border-white/5 py-1">
-                                <span className="text-[#ff6b00] font-bold">F12</span>
-                                <span className="text-gray-300">Mint Asset (On-Chain)</span>
+                                <span className="text-[#ff6b00] font-bold">Ctrl + 0 / + / -</span>
+                                <span className="text-gray-300">Zoom Canvas</span>
                             </div>
                         </div>
                         <div className="p-3 bg-[#ff6b00]/10 border border-[#ff6b00]/20 rounded-md text-[10px] text-[#ff6b00] font-medium leading-relaxed">
-                            Pro Tip: Use F6 to quickly toggle the toolbar for a focused layout design workspace.
+                            Pro Tip: Use industry-standard InDesign shortcuts for layout velocity. Press F11 for an immersive experience.
                         </div>
                     </div>
                 )}
