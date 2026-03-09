@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/banner.png" alt="Chainvas Banner" width="100%" />
+  <img src="apps/web/public/banner.png" alt="Chainvas Banner" width="100%" />
 
   # ⚡ Chainvas
   ### *The decentralized nexus for collaborative creation.*
