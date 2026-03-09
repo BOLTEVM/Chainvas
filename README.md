@@ -29,11 +29,26 @@
 
 | Feature | Description | Status |
 | :--- | :--- | :--- |
-| **🖼️ Photo Engine** | High-performance canvas editing with layers, filters, and P2P sync. | `STABLE` |
-| **📝 Text Nexus** | Real-time collaborative document editing with conflict resolution. | `BETA` |
-| **⛓️ On-Chain Assets** | native Hardhat integration for seamless NFT minting and metadata. | `STABLE` |
+| **🖼️ Photo Engine** | Professional canvas editing with layers, filters, and P2P sync. | `STABLE` |
+| **🎬 Video Studio** | After Effects style timeline editing with layers and effects. | `BETA` |
+| **📄 InDesign Text** | Precision page layout and collaborative document typography. | `BETA` |
+| **⛓️ On-Chain Assets** | Native Hardhat integration for seamless NFT minting and metadata. | `STABLE` |
 | **📡 P2P Sync** | Zero-latency collaboration using Y.js and WebRTC. | `STABLE` |
 | **☁️ Cloud DB** | Relational data persistence powered by SpacetimeDB. | `INTEGRATED` |
+
+<br />
+
+## ⚡ Professional Creative Workflow
+
+Chainvas is designed for power users. All editors (Photo, Video, and InDesign) share a standardized professional control scheme for maximum velocity:
+
+- **F1**: Help Center / Dynamic Keybind Reference
+- **F3 / F4**: Instant Object Duplication & Deletion
+- **F6 - F9**: Toggle UI Panels (Distraction-Free Mode)
+- **F11 / F12**: Fullscreen Immersive Editing & On-Chain Minting
+- **Space**: Playback Transport (Video) / Quick Selection
+
+<br />
 
 <br />
 
