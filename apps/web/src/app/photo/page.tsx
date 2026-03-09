@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useYjs } from "@/hooks/useYjs";
 import * as Y from "yjs";
@@ -477,7 +477,7 @@ export default function PhotoEditor() {
         }
     };
 
-    const handleMenuAction = (id: string) => {
+    const handleMenuAction = useCallback((id: string) => {
         switch (id) {
             case "FILE_NEW":
                 setModalConfig({ isOpen: true, type: "NEW", title: "New Document" });
@@ -513,6 +513,31 @@ export default function PhotoEditor() {
                     setActiveObject(null);
                 }
                 break;
+            case "EDIT_SELECT_ALL":
+                if (fabricCanvas.current) {
+                    fabricCanvas.current.discardActiveObject();
+                    const sel = new fabric.ActiveSelection(fabricCanvas.current.getObjects(), {
+                        canvas: fabricCanvas.current,
+                    });
+                    fabricCanvas.current.setActiveObject(sel);
+                    fabricCanvas.current.requestRenderAll();
+                }
+                break;
+            case "EDIT_DESELECT":
+                if (fabricCanvas.current) {
+                    fabricCanvas.current.discardActiveObject();
+                    fabricCanvas.current.requestRenderAll();
+                }
+                break;
+            case "EDIT_TRANSFORM":
+                if (activeObject) {
+                    activeObject.set({
+                        hasControls: !activeObject.hasControls,
+                        hasBorders: !activeObject.hasBorders
+                    });
+                    fabricCanvas.current?.requestRenderAll();
+                }
+                break;
             case "FILE_EXPORT_PNG":
                 if (fabricCanvas.current) {
                     const dataURL = fabricCanvas.current.toDataURL({ format: "png", quality: 1 });
@@ -522,6 +547,9 @@ export default function PhotoEditor() {
                     link.click();
                 }
                 break;
+            case "VIEW_ZOOM_IN": setZoom(prev => Math.min(prev + 10, 400)); break;
+            case "VIEW_ZOOM_OUT": setZoom(prev => Math.max(prev - 10, 10)); break;
+            case "VIEW_FIT": setZoom(100); break;
             case "WINDOW_TOOLBAR": setShowToolbar(prev => !prev); break;
             case "WINDOW_LAYERS": setShowLayers(prev => !prev); break;
             case "WINDOW_PROPERTIES": setShowProperties(prev => !prev); break;
@@ -533,20 +561,62 @@ export default function PhotoEditor() {
             default:
                 console.log("Action not implemented:", id);
         }
-    };
+    }, [activeObject, undoManager, yObjects, canvasWidth, canvasHeight]);
 
 
     // Keyboard Shortcuts
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            // Undo/Redo
-            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
-                if (e.shiftKey) undoManager.redo();
-                else undoManager.undo();
-                e.preventDefault();
-            } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
-                undoManager.redo();
-                e.preventDefault();
+            // CTRL/META Shortcuts
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key.toLowerCase()) {
+                    case "z":
+                        e.preventDefault();
+                        if (e.shiftKey) undoManager.redo();
+                        else undoManager.undo();
+                        break;
+                    case "y":
+                        e.preventDefault();
+                        undoManager.redo();
+                        break;
+                    case "n":
+                        e.preventDefault();
+                        handleMenuAction("FILE_NEW");
+                        break;
+                    case "s":
+                        e.preventDefault();
+                        handleMenuAction("FILE_SAVE");
+                        break;
+                    case "j":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_DUPLICATE");
+                        break;
+                    case "t":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_TRANSFORM");
+                        break;
+                    case "d":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_DESELECT");
+                        break;
+                    case "a":
+                        e.preventDefault();
+                        handleMenuAction("EDIT_SELECT_ALL");
+                        break;
+                    case "0":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_FIT");
+                        break;
+                    case "=":
+                    case "+":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_ZOOM_IN");
+                        break;
+                    case "-":
+                        e.preventDefault();
+                        handleMenuAction("VIEW_ZOOM_OUT");
+                        break;
+                }
             }
 
             // F1-F12 Keybinds
