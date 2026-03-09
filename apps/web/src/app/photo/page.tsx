@@ -60,10 +60,16 @@ export default function PhotoEditor() {
     const [layerList, setLayerList] = useState<LayerData[]>([]);
     const [remoteCursors, setRemoteCursors] = useState<RemoteCursor[]>([]);
 
+    // UI Visibility State
+    const [showToolbar, setShowToolbar] = useState(true);
+    const [showLayers, setShowLayers] = useState(true);
+    const [showProperties, setShowProperties] = useState(true);
+    const [showNavigator, setShowNavigator] = useState(true);
+
     // Modal State
     const [modalConfig, setModalConfig] = useState<{
         isOpen: boolean;
-        type: "NEW" | "PREFERENCES" | "EXPORT" | null;
+        type: "NEW" | "PREFERENCES" | "EXPORT" | "HELP" | null;
         title: string;
     }>({ isOpen: false, type: null, title: "" });
 
@@ -434,25 +440,6 @@ export default function PhotoEditor() {
         });
     };
 
-    // Keyboard Shortcuts
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
-                if (e.shiftKey) {
-                    undoManager.redo();
-                } else {
-                    undoManager.undo();
-                }
-                e.preventDefault();
-            } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
-                undoManager.redo();
-                e.preventDefault();
-            }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [undoManager]);
 
     // --- Actions ---
 
@@ -499,7 +486,6 @@ export default function PhotoEditor() {
                 setModalConfig({ isOpen: true, type: "PREFERENCES", title: "Preferences" });
                 break;
             case "FILE_SAVE":
-                // Logic for manual save if needed
                 alert("Project state synced to BOLTChain");
                 break;
             case "EDIT_UNDO":
@@ -508,10 +494,115 @@ export default function PhotoEditor() {
             case "EDIT_REDO":
                 undoManager.redo();
                 break;
+            case "EDIT_DUPLICATE":
+                if (activeObject) {
+                    activeObject.clone((cloned: fabric.Object) => {
+                        fabricCanvas.current?.add(cloned);
+                        const id = Math.random().toString(36).substr(2, 9);
+                        (cloned as FabricObject).id = id;
+                        cloned.set({ left: (cloned.left || 0) + 20, top: (cloned.top || 0) + 20 });
+                        fabricCanvas.current?.setActiveObject(cloned);
+                        yObjects.set(id, (cloned as any).toObject(["id", "name", "locked"]));
+                    });
+                }
+                break;
+            case "EDIT_DELETE":
+                if (activeObject && activeObject.id) {
+                    yObjects.delete(activeObject.id);
+                    fabricCanvas.current?.remove(activeObject);
+                    setActiveObject(null);
+                }
+                break;
+            case "FILE_EXPORT_PNG":
+                if (fabricCanvas.current) {
+                    const dataURL = fabricCanvas.current.toDataURL({ format: "png", quality: 1 });
+                    const link = document.createElement("a");
+                    link.download = "bolt-composition.png";
+                    link.href = dataURL;
+                    link.click();
+                }
+                break;
+            case "WINDOW_TOOLBAR": setShowToolbar(prev => !prev); break;
+            case "WINDOW_LAYERS": setShowLayers(prev => !prev); break;
+            case "WINDOW_PROPERTIES": setShowProperties(prev => !prev); break;
+            case "WINDOW_NAVIGATOR": setShowNavigator(prev => !prev); break;
+            case "FILE_MINT": setIsMintModalOpen(true); break;
+            case "FILE_HELP":
+                setModalConfig({ isOpen: true, type: "HELP", title: "Bolt Photo Editor - Help" });
+                break;
             default:
                 console.log("Action not implemented:", id);
         }
     };
+
+
+    // Keyboard Shortcuts
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Undo/Redo
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
+                if (e.shiftKey) undoManager.redo();
+                else undoManager.undo();
+                e.preventDefault();
+            } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
+                undoManager.redo();
+                e.preventDefault();
+            }
+
+            // F1-F12 Keybinds
+            switch (e.key) {
+                case "F1":
+                    e.preventDefault();
+                    setModalConfig({ isOpen: true, type: "HELP", title: "Bolt Photo Editor - Help" });
+                    break;
+                case "F3":
+                    e.preventDefault();
+                    handleMenuAction("EDIT_DUPLICATE");
+                    break;
+                case "F4":
+                    e.preventDefault();
+                    handleMenuAction("EDIT_DELETE");
+                    break;
+                case "F5":
+                    e.preventDefault();
+                    handleMenuAction("FILE_EXPORT_PNG");
+                    break;
+                case "F6":
+                    e.preventDefault();
+                    setShowToolbar(prev => !prev);
+                    break;
+                case "F7":
+                    e.preventDefault();
+                    setShowLayers(prev => !prev);
+                    break;
+                case "F8":
+                    e.preventDefault();
+                    setShowProperties(prev => !prev);
+                    break;
+                case "F9":
+                    e.preventDefault();
+                    setShowNavigator(prev => !prev);
+                    break;
+                case "F11":
+                    e.preventDefault();
+                    if (typeof document !== 'undefined') {
+                        if (!document.fullscreenElement) {
+                            document.documentElement.requestFullscreen().catch(() => { });
+                        } else if (document.exitFullscreen) {
+                            document.exitFullscreen().catch(() => { });
+                        }
+                    }
+                    break;
+                case "F12":
+                    e.preventDefault();
+                    setIsMintModalOpen(true);
+                    break;
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [undoManager, setModalConfig, handleMenuAction, setShowToolbar, setShowLayers, setShowProperties, setShowNavigator, setIsMintModalOpen]);
 
     const setDimensions = (w: number, h: number) => {
         yConfig.set("width", w);
@@ -546,9 +637,13 @@ export default function PhotoEditor() {
                 </div>
 
                 {/* Main Application Area */}
-                <div className="flex flex-grow overflow-hidden">
+                <div className="flex flex-grow overflow-hidden relative">
                     {/* 1. Left Toolbar */}
-                    <Toolbar activeTool={activeTool} onToolSelect={handleToolSelect} />
+                    {showToolbar && (
+                        <div className="flex-shrink-0 z-30">
+                            <Toolbar activeTool={activeTool} onToolSelect={handleToolSelect} />
+                        </div>
+                    )}
 
                     {/* 2. Center Column (Options Bar + Workspace) */}
                     <div className="flex flex-col flex-grow bg-[#1e1e1e] relative overflow-hidden">
@@ -605,30 +700,36 @@ export default function PhotoEditor() {
                     </div>
 
                     {/* 3. Right Sidebar Panels */}
-                    <div className="w-[300px] bg-[#2d2d2d] border-l border-[#1e1e1e] flex flex-col">
-                        <NavigatorPanel zoom={zoom} onZoomChange={setZoom} />
+                    {(showNavigator || showProperties || showLayers) && (
+                        <div className="w-[300px] bg-[#2d2d2d] border-l border-[#1e1e1e] flex flex-col z-30">
+                            {showNavigator && <NavigatorPanel zoom={zoom} onZoomChange={setZoom} />}
 
-                        <div className="flex-grow flex flex-col">
-                            <div className="flex-grow">
-                                <PropertiesPanel activeObject={activeObject} onPropertyChange={handlePropertyChange} />
-                            </div>
-                            <div className="h-[300px] border-t border-[#1e1e1e]">
-                                <LayerPanel
-                                    layers={layerList}
-                                    activeLayerId={activeObject?.id || null}
-                                    onSelect={(id) => {
-                                        const obj = fabricCanvas.current?.getObjects().find((o: any) => (o as FabricObject).id === id);
-                                        if (obj) {
-                                            fabricCanvas.current?.setActiveObject(obj);
-                                            fabricCanvas.current?.requestRenderAll();
-                                        }
-                                    }}
-                                    onToggleVisibility={handleLayerVisibility}
-                                    onToggleLock={handleLayerLock}
-                                />
+                            <div className="flex-grow flex flex-col overflow-hidden">
+                                {showProperties && (
+                                    <div className="flex-grow overflow-hidden">
+                                        <PropertiesPanel activeObject={activeObject} onPropertyChange={handlePropertyChange} />
+                                    </div>
+                                )}
+                                {showLayers && (
+                                    <div className="h-[300px] border-t border-[#1e1e1e]">
+                                        <LayerPanel
+                                            layers={layerList}
+                                            activeLayerId={activeObject?.id || null}
+                                            onSelect={(id) => {
+                                                const obj = fabricCanvas.current?.getObjects().find((o: any) => (o as FabricObject).id === id);
+                                                if (obj) {
+                                                    fabricCanvas.current?.setActiveObject(obj);
+                                                    fabricCanvas.current?.requestRenderAll();
+                                                }
+                                            }}
+                                            onToggleVisibility={handleLayerVisibility}
+                                            onToggleLock={handleLayerLock}
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
             </div>
@@ -718,6 +819,55 @@ export default function PhotoEditor() {
                                     <div className="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full" />
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                )}
+                {modalConfig.type === "HELP" && (
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-[11px]">
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F1</span>
+                                <span className="text-gray-300">Help / Keybinds</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F7</span>
+                                <span className="text-gray-300">Toggle Layers</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F2</span>
+                                <span className="text-gray-300">Rename Layer</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F8</span>
+                                <span className="text-gray-300">Toggle Properties</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F3</span>
+                                <span className="text-gray-300">Duplicate Layer</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F9</span>
+                                <span className="text-gray-300">Toggle Navigator</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F4</span>
+                                <span className="text-gray-300">Delete Layer</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F11</span>
+                                <span className="text-gray-300">Fullscreen</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F5</span>
+                                <span className="text-gray-300">Quick Export PNG</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-gray-500 font-bold">F12</span>
+                                <span className="text-gray-300">Mint Asset (On-Chain)</span>
+                            </div>
+                        </div>
+                        <div className="p-3 bg-secondary/10 border border-secondary/20 rounded-md text-[10px] text-secondary font-medium leading-relaxed">
+                            Pro Tip: Use F6 to quickly toggle the toolbar for a focused creative workspace.
                         </div>
                     </div>
                 )}

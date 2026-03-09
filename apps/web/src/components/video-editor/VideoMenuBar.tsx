@@ -36,9 +36,10 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "Save As...", shortcut: "Shift+Ctrl+S", action: () => onAction?.("FILE_SAVE_AS") },
                 { separator: true },
                 { label: "Import", shortcut: "Ctrl+I", action: () => onAction?.("FILE_IMPORT") },
-                { label: "Export" },
+                { label: "Quick Render", shortcut: "F5", action: () => onAction?.("COMP_RENDER") },
                 { separator: true },
                 { label: "Project Settings...", shortcut: "Alt+Shift+Ctrl+K", action: () => onAction?.("FILE_SETTINGS") },
+                { label: "Mint Asset", shortcut: "F12", action: () => onAction?.("FILE_MINT") },
             ]
         },
         {
@@ -51,10 +52,10 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "Copy", shortcut: "Ctrl+C", action: () => onAction?.("EDIT_COPY") },
                 { label: "Paste", shortcut: "Ctrl+V", action: () => onAction?.("EDIT_PASTE") },
                 { separator: true },
-                { label: "Duplicate", shortcut: "Ctrl+D", action: () => onAction?.("EDIT_DUPLICATE") },
-                { label: "Split Layer", shortcut: "Shift+Ctrl+D", action: () => onAction?.("EDIT_SPLIT") },
+                { label: "Duplicate", shortcut: "F3", action: () => onAction?.("EDIT_DUPLICATE") },
+                { label: "Split Layer", shortcut: "F4", action: () => onAction?.("EDIT_SPLIT") },
                 { separator: true },
-                { label: "Preferences", action: () => onAction?.("EDIT_PREFERENCES") },
+                { label: "Preferences", shortcut: "Ctrl+K", action: () => onAction?.("EDIT_PREFERENCES") },
             ]
         },
         {
@@ -63,10 +64,10 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "New Composition...", shortcut: "Ctrl+N", action: () => onAction?.("COMP_NEW") },
                 { label: "Composition Settings...", shortcut: "Ctrl+K", action: () => onAction?.("COMP_SETTINGS") },
                 { separator: true },
-                { label: "Preview" },
+                { label: "Preview", shortcut: "Space" },
                 { label: "Save Frame As" },
                 { separator: true },
-                { label: "Add to Render Queue", shortcut: "Ctrl+M", action: () => onAction?.("COMP_RENDER") },
+                { label: "Add to Render Queue", shortcut: "F5", action: () => onAction?.("COMP_RENDER") },
             ]
         },
         {
@@ -75,10 +76,8 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "New" },
                 { label: "Layer Settings...", shortcut: "Shift+Ctrl+Y" },
                 { separator: true },
-                { label: "Open Layer", shortcut: "Enter" },
-                { separator: true },
-                { label: "Mask" },
-                { label: "Transform" },
+                { label: "Duplicate", shortcut: "F3", action: () => onAction?.("EDIT_DUPLICATE") },
+                { label: "Delete", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
                 { separator: true },
                 { label: "Pre-compose...", shortcut: "Shift+Ctrl+C" },
             ]
@@ -93,22 +92,6 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "Distort" },
                 { label: "Generate" },
                 { label: "Keying" },
-                { label: "Noise & Grain" },
-                { label: "Perspective" },
-                { label: "Stylize" },
-                { label: "Transition" },
-            ]
-        },
-        {
-            label: "Animation",
-            items: [
-                { label: "Save Animation Preset..." },
-                { label: "Apply Animation Preset..." },
-                { separator: true },
-                { label: "Keyframe Assistant" },
-                { label: "Keyframe Interpolation..." },
-                { separator: true },
-                { label: "Add Expression" },
             ]
         },
         {
@@ -117,27 +100,21 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "Zoom In", shortcut: "Ctrl++" },
                 { label: "Zoom Out", shortcut: "Ctrl+-" },
                 { separator: true },
+                { label: "Fullscreen", shortcut: "F11" },
+                { separator: true },
                 { label: "Show Rulers", shortcut: "Ctrl+R" },
                 { label: "Show Guides", shortcut: "Ctrl+;" },
-                { separator: true },
-                { label: "Set Poster Time" },
             ]
         },
         {
             label: "Window",
             items: [
-                { label: "Workspace" },
+                { label: "Project Panel", shortcut: "F6", action: () => onAction?.("WINDOW_PROJECT") },
+                { label: "Timeline", shortcut: "F7", action: () => onAction?.("WINDOW_TIMELINE") },
+                { label: "Effects Control", shortcut: "F8", action: () => onAction?.("WINDOW_EFFECTS") },
                 { separator: true },
-                { label: "Align" },
-                { label: "Audio" },
-                { label: "Character" },
-                { label: "Effects & Presets" },
-                { label: "Info" },
-                { label: "Libraries" },
-                { label: "Paragraph" },
-                { label: "Preview" },
-                { label: "Project" },
-                { label: "Timeline" },
+                { label: "Help Center", shortcut: "F1", action: () => onAction?.("FILE_HELP") },
+                { label: "Mint Asset", shortcut: "F12", action: () => onAction?.("FILE_MINT") },
             ]
         }
     ];

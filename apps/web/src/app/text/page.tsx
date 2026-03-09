@@ -42,9 +42,14 @@ export default function InDesignTextEditor() {
         color: "#ffffff" // Added back from original typographyOptions
     });
 
+    // UI Visibility State
+    const [showToolbar, setShowToolbar] = useState(true);
+    const [showOptions, setShowOptions] = useState(true);
+    const [showSidebar, setShowSidebar] = useState(true);
+
     const [modalConfig, setModalConfig] = useState<{
         isOpen: boolean;
-        type: "NEW" | "PREFERENCES" | "SETUP" | null;
+        type: "NEW" | "PREFERENCES" | "SETUP" | "HELP" | null;
         title: string;
     }>({ isOpen: false, type: null, title: "" });
 
@@ -178,13 +183,95 @@ export default function InDesignTextEditor() {
                 alert("Document layout saved to BOLTChain");
                 break;
             case "EDIT_UNDO":
+                // In a full implementation, this would trigger ProseMirror or Yjs undo
                 break;
             case "EDIT_REDO":
+                break;
+            case "EDIT_DUPLICATE":
+                const selectedObj = objects.find(o => o.isSelected);
+                if (selectedObj) {
+                    const newObj: CanvasObject = {
+                        ...selectedObj,
+                        id: Math.random().toString(36).substring(2, 11),
+                        contentId: `text-fragment-${Math.random().toString(36).substring(2, 11)}`,
+                        x: selectedObj.x + 20,
+                        y: selectedObj.y + 20,
+                        isSelected: true
+                    };
+                    setObjects(prev => [...prev.map(o => ({ ...o, isSelected: false })), newObj]);
+                }
+                break;
+            case "EDIT_DELETE":
+                setObjects(prev => prev.filter(o => !o.isSelected));
+                break;
+            case "WINDOW_TOOLBAR": setShowToolbar(prev => !prev); break;
+            case "WINDOW_OPTIONS": setShowOptions(prev => !prev); break;
+            case "WINDOW_SIDEBAR": setShowSidebar(prev => !prev); break;
+            case "FILE_MINT": setIsMintModalOpen(true); break;
+            case "FILE_HELP":
+                setModalConfig({ isOpen: true, type: "HELP", title: "Bolt InDesign Editor - Help" });
                 break;
             default:
                 console.log("Action not implemented:", id);
         }
     };
+
+    // Keyboard Shortcuts
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Undo/Redo (Generic)
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
+                if (e.shiftKey) handleMenuAction("EDIT_REDO");
+                else handleMenuAction("EDIT_UNDO");
+                e.preventDefault();
+            }
+
+            // F1-F12 Keybinds
+            switch (e.key) {
+                case "F1":
+                    e.preventDefault();
+                    setModalConfig({ isOpen: true, type: "HELP", title: "Bolt InDesign Editor - Help" });
+                    break;
+                case "F3":
+                    e.preventDefault();
+                    handleMenuAction("EDIT_DUPLICATE");
+                    break;
+                case "F4":
+                    e.preventDefault();
+                    handleMenuAction("EDIT_DELETE");
+                    break;
+                case "F6":
+                    e.preventDefault();
+                    setShowToolbar(prev => !prev);
+                    break;
+                case "F7":
+                    e.preventDefault();
+                    setShowSidebar(prev => !prev);
+                    break;
+                case "F8":
+                    e.preventDefault();
+                    setShowOptions(prev => !prev);
+                    break;
+                case "F11":
+                    e.preventDefault();
+                    if (typeof document !== 'undefined') {
+                        if (!document.fullscreenElement) {
+                            document.documentElement.requestFullscreen().catch(() => { });
+                        } else if (document.exitFullscreen) {
+                            document.exitFullscreen().catch(() => { });
+                        }
+                    }
+                    break;
+                case "F12":
+                    e.preventDefault();
+                    setIsMintModalOpen(true);
+                    break;
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [objects, handleMenuAction]);
 
     return (
         <>
@@ -211,13 +298,13 @@ export default function InDesignTextEditor() {
                 </div>
 
                 {/* Main Application Area */}
-                <div className="flex flex-grow overflow-hidden">
+                <div className="flex flex-grow overflow-hidden relative">
                     {/* 1. Left Toolbar */}
-                    <InDesignToolbar activeTool={activeTool} onToolSelect={setActiveTool} />
+                    {showToolbar && <InDesignToolbar activeTool={activeTool} onToolSelect={setActiveTool} />}
 
                     {/* 2. Center Column (Options Bar + Workspace) */}
                     <div className="flex flex-col flex-grow bg-[#1e1e1e] relative overflow-hidden">
-                        <TypographyOptionsBar options={typography} onOptionsChange={handleOptionsChange} />
+                        {showOptions && <TypographyOptionsBar options={typography} onOptionsChange={handleOptionsChange} />}
 
                         {/* Workspace Wrapper */}
                         <div
@@ -303,23 +390,25 @@ export default function InDesignTextEditor() {
                     </div>
 
                     {/* 3. Right Sidebar Panels */}
-                    <div className="w-[300px] bg-[#2d2d2d] border-l border-[#1e1e1e] flex flex-col">
-                        <div className="flex-grow flex flex-col">
-                            <div className="flex-grow min-h-[50%]">
-                                <CharacterPanel options={typography} onOptionsChange={handleOptionsChange} />
-                            </div>
-                            <div className="h-[200px] border-t border-[#1e1e1e]">
-                                <ParagraphPanel options={typography} onOptionsChange={handleOptionsChange} />
-                            </div>
-                            <div className="h-[250px] border-t border-[#1e1e1e]">
-                                <PagesPanel
-                                    pages={pages}
-                                    activePageId={activePageId}
-                                    onPageSelect={setActivePageId}
-                                />
+                    {showSidebar && (
+                        <div className="w-[300px] bg-[#2d2d2d] border-l border-black flex flex-col z-30">
+                            <div className="flex-grow flex flex-col">
+                                <div className="flex-grow min-h-[50%]">
+                                    <CharacterPanel options={typography} onOptionsChange={handleOptionsChange} />
+                                </div>
+                                <div className="h-[200px] border-t border-black/50">
+                                    <ParagraphPanel options={typography} onOptionsChange={handleOptionsChange} />
+                                </div>
+                                <div className="h-[250px] border-t border-black/50">
+                                    <PagesPanel
+                                        pages={pages}
+                                        activePageId={activePageId}
+                                        onPageSelect={setActivePageId}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
             </div>
@@ -401,6 +490,48 @@ export default function InDesignTextEditor() {
                                     <div className="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full transition-all" />
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {modalConfig.type === "HELP" && (
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-[11px]">
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#ff6b00] font-bold">F1</span>
+                                <span className="text-gray-300">Help / Keybinds</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#ff6b00] font-bold">F7</span>
+                                <span className="text-gray-300">Toggle Sidebar Panels</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#ff6b00] font-bold">F3</span>
+                                <span className="text-gray-300">Duplicate Object</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#ff6b00] font-bold">F8</span>
+                                <span className="text-gray-300">Toggle Options Bar</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#ff6b00] font-bold">F4</span>
+                                <span className="text-gray-300">Delete Object</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#ff6b00] font-bold">F11</span>
+                                <span className="text-gray-300">Fullscreen</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#ff6b00] font-bold">F6</span>
+                                <span className="text-gray-300">Toggle Toolbar</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#ff6b00] font-bold">F12</span>
+                                <span className="text-gray-300">Mint Asset (On-Chain)</span>
+                            </div>
+                        </div>
+                        <div className="p-3 bg-[#ff6b00]/10 border border-[#ff6b00]/20 rounded-md text-[10px] text-[#ff6b00] font-medium leading-relaxed">
+                            Pro Tip: Use F6 to quickly toggle the toolbar for a focused layout design workspace.
                         </div>
                     </div>
                 )}

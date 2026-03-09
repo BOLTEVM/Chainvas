@@ -34,13 +34,13 @@ export default function TextMenuBar({ onAction }: TextMenuBarProps) {
                 { label: "Close", shortcut: "Ctrl+W", action: () => onAction?.("FILE_CLOSE") },
                 { label: "Save", shortcut: "Ctrl+S", action: () => onAction?.("FILE_SAVE") },
                 { label: "Save As...", shortcut: "Shift+Ctrl+S", action: () => onAction?.("FILE_SAVE_AS") },
-                { label: "Check In..." },
                 { separator: true },
                 { label: "Place...", shortcut: "Ctrl+D", action: () => onAction?.("FILE_PLACE") },
                 { separator: true },
                 { label: "Export...", shortcut: "Ctrl+E", action: () => onAction?.("FILE_EXPORT") },
                 { label: "Document Setup...", shortcut: "Alt+Ctrl+P", action: () => onAction?.("FILE_SETUP") },
                 { separator: true },
+                { label: "Mint Asset", shortcut: "F12", action: () => onAction?.("FILE_MINT") },
                 { label: "Print...", shortcut: "Ctrl+P", action: () => onAction?.("FILE_PRINT") },
             ]
         },
@@ -53,41 +53,21 @@ export default function TextMenuBar({ onAction }: TextMenuBarProps) {
                 { label: "Cut", shortcut: "Ctrl+X", action: () => onAction?.("EDIT_CUT") },
                 { label: "Copy", shortcut: "Ctrl+C", action: () => onAction?.("EDIT_COPY") },
                 { label: "Paste", shortcut: "Ctrl+V", action: () => onAction?.("EDIT_PASTE") },
-                { label: "Paste in Place", shortcut: "Alt+Shift+Ctrl+V", action: () => onAction?.("EDIT_PASTE_IN_PLACE") },
+                { separator: true },
+                { label: "Duplicate", shortcut: "F3", action: () => onAction?.("EDIT_DUPLICATE") },
+                { label: "Delete", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
                 { separator: true },
                 { label: "Find/Change...", shortcut: "Ctrl+F", action: () => onAction?.("EDIT_FIND") },
-                { label: "Spelling" },
                 { separator: true },
                 { label: "Preferences", shortcut: "Ctrl+K", action: () => onAction?.("EDIT_PREFERENCES") },
             ]
         },
         {
-            label: "Layout",
-            items: [
-                { label: "Pages" },
-                { label: "Margins and Columns..." },
-                { label: "Ruler Guides..." },
-                { separator: true },
-                { label: "Create Guides..." },
-                { separator: true },
-                { label: "First Page", shortcut: "Shift+Ctrl+PageUp" },
-                { label: "Previous Page" },
-                { label: "Next Page" },
-                { label: "Last Page", shortcut: "Shift+Ctrl+PageDown" },
-            ]
-        },
-        {
             label: "Type",
             items: [
-                { label: "Font" },
-                { label: "Size" },
-                { separator: true },
                 { label: "Character", shortcut: "Ctrl+T" },
                 { label: "Paragraph", shortcut: "Alt+Ctrl+T" },
                 { label: "Tabs", shortcut: "Shift+Ctrl+T" },
-                { label: "Glyphs" },
-                { separator: true },
-                { label: "Create Outlines", shortcut: "Shift+Ctrl+O" },
                 { separator: true },
                 { label: "Fill with Placeholder Text" },
             ]
@@ -99,48 +79,35 @@ export default function TextMenuBar({ onAction }: TextMenuBarProps) {
                 { label: "Arrange" },
                 { label: "Select" },
                 { separator: true },
+                { label: "Duplicate", shortcut: "F3", action: () => onAction?.("EDIT_DUPLICATE") },
+                { label: "Delete", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
+                { separator: true },
                 { label: "Group", shortcut: "Ctrl+G" },
                 { label: "Ungroup", shortcut: "Shift+Ctrl+G" },
                 { label: "Lock", shortcut: "Ctrl+L" },
-                { label: "Unlock All on Spread" },
-                { separator: true },
-                { label: "Text Frame Options...", shortcut: "Ctrl+B" },
-            ]
-        },
-        {
-            label: "Table",
-            items: [
-                { label: "Insert Table..." },
-                { label: "Convert Text to Table..." },
-                { separator: true },
-                { label: "Table Options" },
-                { label: "Cell Options" },
             ]
         },
         {
             label: "View",
             items: [
-                { label: "Overprint Preview", shortcut: "Alt+Shift+Ctrl+Y" },
-                { separator: true },
                 { label: "Zoom In", shortcut: "Ctrl++" },
                 { label: "Zoom Out", shortcut: "Ctrl+-" },
                 { label: "Fit Page in Window", shortcut: "Ctrl+0" },
                 { separator: true },
-                { label: "Screen Mode" },
+                { label: "Fullscreen", shortcut: "F11" },
+                { separator: true },
                 { label: "Grids & Guides" },
             ]
         },
         {
             label: "Window",
             items: [
-                { label: "Control", shortcut: "Alt+Ctrl+6" },
+                { label: "Tools", shortcut: "F6", action: () => onAction?.("WINDOW_TOOLBAR") },
+                { label: "Control", shortcut: "F8", action: () => onAction?.("WINDOW_OPTIONS") },
+                { label: "Pages / Sidebar", shortcut: "F7", action: () => onAction?.("WINDOW_SIDEBAR") },
                 { separator: true },
-                { label: "Pages", shortcut: "F12" },
-                { label: "Layers", shortcut: "F7" },
-                { label: "Links", shortcut: "Shift+Ctrl+D" },
-                { separator: true },
-                { label: "Type & Tables" },
-                { label: "Styles" },
+                { label: "Help Center", shortcut: "F1", action: () => onAction?.("FILE_HELP") },
+                { label: "Mint Asset", shortcut: "F12", action: () => onAction?.("FILE_MINT") },
             ]
         }
     ];

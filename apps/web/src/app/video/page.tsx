@@ -34,10 +34,16 @@ export default function AEVideoEditor() {
         if (success) setIsMintModalOpen(false);
     };
 
+    // UI Visibility State
+    const [showProject, setShowProject] = useState(true);
+    const [showEffects, setShowEffects] = useState(true);
+    const [showTimeline, setShowTimeline] = useState(true);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+
     // State
     const [playback, setPlayback] = useState<PlaybackState>({
         currentTime: 0,
-        duration: 10, // 30 seconds default composition
+        duration: 10, // 10 seconds default composition
         isPlaying: false,
         fps: 30
     });
@@ -45,7 +51,7 @@ export default function AEVideoEditor() {
     // Modal State
     const [modalConfig, setModalConfig] = useState<{
         isOpen: boolean;
-        type: "NEW_PROJECT" | "COMP_SETTINGS" | "PREFERENCES" | "RENDER" | null;
+        type: "NEW_PROJECT" | "COMP_SETTINGS" | "PREFERENCES" | "RENDER" | "HELP" | null;
         title: string;
     }>({ isOpen: false, type: null, title: "" });
 
@@ -226,6 +232,32 @@ export default function AEVideoEditor() {
             case "EDIT_REDO":
                 history.redo();
                 break;
+            case "EDIT_DUPLICATE":
+                if (activeLayerId) {
+                    const layer = layers.find(l => l.id === activeLayerId);
+                    if (layer) {
+                        const newLayer = { ...layer, id: Math.random().toString(36).substr(2, 9), name: `${layer.name} Copy` };
+                        setLayers(prev => [...prev, newLayer]);
+                        setActiveLayerId(newLayer.id);
+                    }
+                }
+                break;
+            case "EDIT_DELETE":
+                if (activeLayerId) {
+                    setLayers(prev => prev.filter(l => l.id !== activeLayerId));
+                    setActiveLayerId(null);
+                }
+                break;
+            case "EDIT_SPLIT":
+                handleSplitLayer();
+                break;
+            case "WINDOW_PROJECT": setShowProject(prev => !prev); break;
+            case "WINDOW_EFFECTS": setShowEffects(prev => !prev); break;
+            case "WINDOW_TIMELINE": setShowTimeline(prev => !prev); break;
+            case "FILE_MINT": setIsMintModalOpen(true); break;
+            case "FILE_HELP":
+                setModalConfig({ isOpen: true, type: "HELP", title: "Bolt Video Editor - Help" });
+                break;
             default:
                 console.log("Action not implemented:", id);
         }
@@ -234,22 +266,73 @@ export default function AEVideoEditor() {
     // Keyboard Shortcuts
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            // Undo/Redo
             if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
-                if (e.shiftKey) {
-                    history.redo();
-                } else {
-                    history.undo();
-                }
+                if (e.shiftKey) history.redo();
+                else history.undo();
                 e.preventDefault();
             } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
                 history.redo();
                 e.preventDefault();
             }
+
+            // F1-F12 Keybinds
+            switch (e.key) {
+                case "F1":
+                    e.preventDefault();
+                    setModalConfig({ isOpen: true, type: "HELP", title: "Bolt Video Editor - Help" });
+                    break;
+                case "F3":
+                    e.preventDefault();
+                    handleMenuAction("EDIT_DUPLICATE");
+                    break;
+                case "F4":
+                    e.preventDefault();
+                    handleMenuAction("EDIT_DELETE");
+                    break;
+                case "F5":
+                    e.preventDefault();
+                    setModalConfig({ isOpen: true, type: "RENDER", title: "Render Queue" });
+                    break;
+                case "F6":
+                    e.preventDefault();
+                    setShowProject(prev => !prev);
+                    break;
+                case "F7":
+                    e.preventDefault();
+                    setShowTimeline(prev => !prev);
+                    break;
+                case "F8":
+                    e.preventDefault();
+                    setShowEffects(prev => !prev);
+                    break;
+                case "F11":
+                    e.preventDefault();
+                    if (typeof document !== 'undefined') {
+                        if (!document.fullscreenElement) {
+                            document.documentElement.requestFullscreen().catch(() => { });
+                        } else if (document.exitFullscreen) {
+                            document.exitFullscreen().catch(() => { });
+                        }
+                    }
+                    break;
+                case "F12":
+                    e.preventDefault();
+                    setIsMintModalOpen(true);
+                    break;
+                case " ":
+                    // Space for playback
+                    if (document.activeElement?.tagName !== "INPUT") {
+                        e.preventDefault();
+                        handleTogglePlayback();
+                    }
+                    break;
+            }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [history]);
+    }, [history, handleMenuAction, handleTogglePlayback]);
 
     return (
         <>
@@ -280,19 +363,25 @@ export default function AEVideoEditor() {
                 {/* Main Application Area */}
                 <div className="flex flex-grow overflow-hidden">
                     {/* Left Sidebar (Project & Effects) */}
-                    <div className="w-[320px] flex flex-col border-r border-black shrink-0">
-                        <div className="h-1/2">
-                            <ProjectPanel layers={layers} onFilesDrop={handleFiles} />
+                    {(showProject || showEffects) && (
+                        <div className="w-[320px] flex flex-col border-r border-black shrink-0 z-30">
+                            {showProject && (
+                                <div className={showEffects ? "h-1/2" : "h-full"}>
+                                    <ProjectPanel layers={layers} onFilesDrop={handleFiles} />
+                                </div>
+                            )}
+                            {showEffects && (
+                                <div className={showProject ? "h-1/2 border-t border-black/50" : "h-full"}>
+                                    <EffectsControl activeLayer={activeLayer} onUpdateLayer={handleUpdateLayer} />
+                                </div>
+                            )}
                         </div>
-                        <div className="h-1/2">
-                            <EffectsControl activeLayer={activeLayer} onUpdateLayer={handleUpdateLayer} />
-                        </div>
-                    </div>
+                    )}
 
                     {/* Right Area (Composition & Timeline) */}
-                    <div className="flex flex-col flex-grow">
+                    <div className="flex flex-col flex-grow relative">
                         {/* Upper: Composition Preview */}
-                        <div className="flex-grow flex flex-col bg-[#161616]">
+                        <div className="flex-grow flex flex-col bg-[#161616] relative">
                             <CompositionView
                                 playback={playback}
                                 layers={layers}
@@ -305,16 +394,20 @@ export default function AEVideoEditor() {
                         </div>
 
                         {/* Lower: Professional Timeline */}
-                        <AETimeline
-                            playback={playback}
-                            layers={layers}
-                            activeLayerId={activeLayerId}
-                            onSelectLayer={setActiveLayerId}
-                            onToggleLayerProp={handleToggleLayerProp}
-                            onAddLayer={handleAddLayer}
-                            onSplit={handleSplitLayer}
-                            onSeek={handleSeek}
-                        />
+                        {showTimeline && (
+                            <div className="h-[400px] border-t border-black z-20">
+                                <AETimeline
+                                    playback={playback}
+                                    layers={layers}
+                                    activeLayerId={activeLayerId}
+                                    onSelectLayer={setActiveLayerId}
+                                    onToggleLayerProp={handleToggleLayerProp}
+                                    onAddLayer={handleAddLayer}
+                                    onSplit={handleSplitLayer}
+                                    onSeek={handleSeek}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -407,6 +500,56 @@ export default function AEVideoEditor() {
                         <div className="space-y-1">
                             <h4 className="text-lg font-bold text-white italic">Preparing Render Engine</h4>
                             <p className="text-gray-500 text-xs">Allocating virtual memory for BOLTChain sequence export...</p>
+                        </div>
+                    </div>
+                )}
+
+                {modalConfig.type === "HELP" && (
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-[11px]">
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F1</span>
+                                <span className="text-gray-300">Help / Keybinds</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F7</span>
+                                <span className="text-gray-300">Toggle Timeline</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F3</span>
+                                <span className="text-gray-300">Duplicate Layer</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F8</span>
+                                <span className="text-gray-300">Toggle Effects</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F4</span>
+                                <span className="text-gray-300">Delete Layer</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F11</span>
+                                <span className="text-gray-300">Fullscreen</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F5</span>
+                                <span className="text-gray-300">Render Queue</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F12</span>
+                                <span className="text-gray-300">Mint Asset (On-Chain)</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">F6</span>
+                                <span className="text-gray-300">Toggle Project Panel</span>
+                            </div>
+                            <div className="flex justify-between border-b border-white/5 py-1">
+                                <span className="text-[#d391fc] font-bold">Space</span>
+                                <span className="text-gray-300">Play / Pause</span>
+                            </div>
+                        </div>
+                        <div className="p-3 bg-[#d391fc]/10 border border-[#d391fc]/20 rounded-md text-[10px] text-[#d391fc] font-medium leading-relaxed">
+                            Pro Tip: Use F11 for an immersive editing experience. All shortcuts are built for professional BOLT workflows.
                         </div>
                     </div>
                 )}

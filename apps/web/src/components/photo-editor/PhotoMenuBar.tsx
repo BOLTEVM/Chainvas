@@ -36,7 +36,7 @@ export default function PhotoMenuBar({ onAction }: PhotoMenuBarProps) {
                 { label: "Save As...", shortcut: "Shift+Ctrl+S", action: () => onAction?.("FILE_SAVE_AS") },
                 { separator: true },
                 { label: "Export As...", shortcut: "Alt+Shift+Ctrl+W", action: () => onAction?.("FILE_EXPORT") },
-                { label: "Quick Export as PNG", action: () => onAction?.("FILE_EXPORT_PNG") },
+                { label: "Quick Export as PNG", shortcut: "F5", action: () => onAction?.("FILE_EXPORT_PNG") },
                 { separator: true },
                 { label: "Exit", shortcut: "Ctrl+Q" },
             ]
@@ -46,6 +46,9 @@ export default function PhotoMenuBar({ onAction }: PhotoMenuBarProps) {
             items: [
                 { label: "Undo", shortcut: "Ctrl+Z", action: () => onAction?.("EDIT_UNDO") },
                 { label: "Redo", shortcut: "Ctrl+Y", action: () => onAction?.("EDIT_REDO") },
+                { separator: true },
+                { label: "Duplicate Layer", shortcut: "F3", action: () => onAction?.("EDIT_DUPLICATE") },
+                { label: "Delete Layer", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
                 { separator: true },
                 { label: "Cut", shortcut: "Ctrl+X", action: () => onAction?.("EDIT_CUT") },
                 { label: "Copy", shortcut: "Ctrl+C", action: () => onAction?.("EDIT_COPY") },
@@ -64,39 +67,18 @@ export default function PhotoMenuBar({ onAction }: PhotoMenuBarProps) {
                 { separator: true },
                 { label: "Image Size...", shortcut: "Alt+Ctrl+I" },
                 { label: "Canvas Size...", shortcut: "Alt+Ctrl+C" },
-                { label: "Image Rotation" },
-                { separator: true },
-                { label: "Duplicate..." },
             ]
         },
         {
             label: "Layer",
             items: [
                 { label: "New Layer", shortcut: "Shift+Ctrl+N" },
-                { label: "Duplicate Layer...", shortcut: "Ctrl+J" },
-                { label: "Delete Layer" },
-                { separator: true },
-                { label: "Quick Mask Mode" },
-                { separator: true },
-                { label: "Group Layers", shortcut: "Ctrl+G" },
-                { label: "Ungroup Layers", shortcut: "Shift+Ctrl+G" },
+                { label: "Duplicate Layer", shortcut: "F3", action: () => onAction?.("EDIT_DUPLICATE") },
+                { label: "Delete Layer", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
+                { label: "Rename Layer", shortcut: "F2" },
                 { separator: true },
                 { label: "Merge Layers", shortcut: "Ctrl+E" },
                 { label: "Flatten Image" },
-            ]
-        },
-        {
-            label: "Filter",
-            items: [
-                { label: "Last Filter", shortcut: "Alt+Ctrl+F" },
-                { separator: true },
-                { label: "Blur" },
-                { label: "Distort" },
-                { label: "Noise" },
-                { label: "Pixelate" },
-                { label: "Render" },
-                { label: "Sharpen" },
-                { label: "Stylize" },
             ]
         },
         {
@@ -105,21 +87,21 @@ export default function PhotoMenuBar({ onAction }: PhotoMenuBarProps) {
                 { label: "Zoom In", shortcut: "Ctrl++" },
                 { label: "Zoom Out", shortcut: "Ctrl+-" },
                 { label: "Fit on Screen", shortcut: "Ctrl+0" },
+                { label: "Fullscreen", shortcut: "F11" },
                 { separator: true },
                 { label: "Rulers", shortcut: "Ctrl+R" },
-                { label: "Guides" },
             ]
         },
         {
             label: "Window",
             items: [
-                { label: "Workspace" },
+                { label: "Toolbar", shortcut: "F6", action: () => onAction?.("WINDOW_TOOLBAR") },
+                { label: "Layers", shortcut: "F7", action: () => onAction?.("WINDOW_LAYERS") },
+                { label: "Properties", shortcut: "F8", action: () => onAction?.("WINDOW_PROPERTIES") },
+                { label: "Navigator", shortcut: "F9", action: () => onAction?.("WINDOW_NAVIGATOR") },
                 { separator: true },
-                { label: "Layers", shortcut: "F7" },
-                { label: "Properties" },
-                { label: "History" },
-                { label: "Navigator" },
-                { label: "Toolbar" },
+                { label: "Help Center", shortcut: "F1", action: () => onAction?.("FILE_HELP") },
+                { label: "Mint Asset", shortcut: "F12", action: () => onAction?.("FILE_MINT") },
             ]
         }
     ];
