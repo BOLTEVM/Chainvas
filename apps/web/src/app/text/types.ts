@@ -4,7 +4,7 @@ export type TextToolType =
     | "LINE"
     | "RECTANGLE_FRAME" | "ELLIPSE_FRAME" | "POLYGON_FRAME"
     | "RECTANGLE" | "ELLIPSE" | "POLYGON"
-    | "HAND" | "ZOOM";
+    | "HAND" | "ZOOM" | "SIGNATURE";
 
 export interface ToolGroup {
     id: TextToolType;
@@ -46,4 +46,7 @@ export interface CanvasObject {
         borderWidth?: number;
         borderRadius?: string;
     };
+    signatureData?: string; // Base64 image
+    signerAddress?: string;
+    integrityHash?: string;
 }

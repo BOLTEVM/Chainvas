@@ -57,6 +57,8 @@ export default function TextMenuBar({ onAction }: TextMenuBarProps) {
                 { label: "Select All", shortcut: "Ctrl+A", action: () => onAction?.("EDIT_SELECT_ALL") },
                 { label: "Deselect All", shortcut: "Shift+Ctrl+A", action: () => onAction?.("EDIT_DESELECT") },
                 { separator: true },
+                { label: "Sign Document", shortcut: "J", action: () => onAction?.("EDIT_SIGN") },
+                { separator: true },
                 { label: "Duplicate Object", shortcut: "F3", action: () => onAction?.("EDIT_DUPLICATE") },
                 { label: "Delete Object", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
                 { separator: true },

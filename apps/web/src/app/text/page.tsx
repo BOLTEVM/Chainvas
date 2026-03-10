@@ -14,6 +14,8 @@ import ParagraphPanel from "@/components/text-editor/ParagraphPanel";
 import PagesPanel from "@/components/text-editor/PagesPanel";
 import TextMenuBar from "@/components/text-editor/TextMenuBar";
 import TextModal from "@/components/text-editor/TextModal";
+import SignatureModal from "@/components/text-editor/SignatureModal";
+import { ethers } from "ethers";
 
 // Types
 import { TextToolType, TypographyOptions, PageData, CanvasObject } from "./types";
@@ -62,6 +64,12 @@ export default function InDesignTextEditor() {
     // Minting State
     const { mintAsset, isMinting } = useMinting();
     const [isMintModalOpen, setIsMintModalOpen] = useState(false);
+
+    // Signature State
+    const [signatureModal, setSignatureModal] = useState<{
+        isOpen: boolean;
+        pendingObject: CanvasObject | null;
+    }>({ isOpen: false, pendingObject: null });
 
     const handleMint = async (type: TokenType, config: { name: string; symbol: string; amount?: number }) => {
         const dummyUri = "ipfs://text-document-data";
@@ -157,8 +165,28 @@ export default function InDesignTextEditor() {
 
             setObjects(prev => [...prev.map(o => ({ ...o, isSelected: false } as CanvasObject)), newObj]);
 
-            if (activeTool === "TEXT" || activeTool === "RECTANGLE_FRAME" || activeTool === "RECTANGLE" || activeTool === "ELLIPSE" || activeTool === "ELLIPSE_FRAME") {
+            if (activeTool === "TEXT" || activeTool === "RECTANGLE_FRAME" || activeTool === "RECTANGLE" || activeTool === "ELLIPSE" || activeTool === "ELLIPSE_FRAME" || activeTool === "SIGNATURE") {
                 setActiveTool("SELECT"); // Switch to selection tool after drawing
+            }
+
+            if (activeTool === "SIGNATURE") {
+                const x = Math.min(drawStart.x, drawCurrent.x);
+                const y = Math.min(drawStart.y, drawCurrent.y);
+                const width = Math.max(Math.abs(drawCurrent.x - drawStart.x), 150);
+                const height = Math.max(Math.abs(drawCurrent.y - drawStart.y), 80);
+
+                const pendingObj: CanvasObject = {
+                    id: Math.random().toString(36).substring(2, 11),
+                    type: "SIGNATURE",
+                    x,
+                    y,
+                    width,
+                    height,
+                    pageId: activePageId,
+                    isSelected: true,
+                };
+
+                setSignatureModal({ isOpen: true, pendingObject: pendingObj });
             }
         }
     };
@@ -210,6 +238,12 @@ export default function InDesignTextEditor() {
             case "FILE_MINT": setIsMintModalOpen(true); break;
             case "FILE_HELP":
                 setModalConfig({ isOpen: true, type: "HELP", title: "Bolt InDesign Editor - Help" });
+                break;
+            case "EDIT_SIGN":
+                const selectedSig = objects.find(o => o.isSelected && o.type === "SIGNATURE");
+                if (selectedSig) {
+                    setSignatureModal({ isOpen: true, pendingObject: selectedSig });
+                }
                 break;
             case "EDIT_SELECT_ALL":
                 setObjects(prev => prev.map(o => ({ ...o, isSelected: true })));
@@ -364,6 +398,11 @@ export default function InDesignTextEditor() {
                     e.preventDefault();
                     setIsMintModalOpen(true);
                     break;
+                case "j":
+                case "J":
+                    e.preventDefault();
+                    setActiveTool("SIGNATURE");
+                    break;
             }
         };
 
@@ -435,9 +474,10 @@ export default function InDesignTextEditor() {
                                             typography={typography}
                                             ydoc={ydoc}
                                             provider={provider}
-                                            isActiveTool={["TEXT", "TEXT_ON_PATH", "SELECT", "DIRECT_SELECT"].includes(activeTool)}
+                                            isActiveTool={["TEXT", "TEXT_ON_PATH", "SELECT", "DIRECT_SELECT", "SIGNATURE"].includes(activeTool)}
+                                            allObjects={objects}
                                             onSelect={() => {
-                                                if (["SELECT", "DIRECT_SELECT"].includes(activeTool)) {
+                                                if (["SELECT", "DIRECT_SELECT", "SIGNATURE"].includes(activeTool)) {
                                                     setObjects((prev) =>
                                                         prev.map((o) => ({ ...o, isSelected: o.id === obj.id }))
                                                     );
@@ -640,6 +680,49 @@ export default function InDesignTextEditor() {
                 asset={{ id: ydoc.guid || "text-doc", name: "Text Document", previewUrl: "" }}
                 onMint={handleMint}
                 isMinting={isMinting}
+            />
+            <SignatureModal
+                isOpen={signatureModal.isOpen}
+                onClose={() => setSignatureModal({ isOpen: false, pendingObject: null })}
+                documentId={ydoc.guid || "BOLT-TX-001"}
+                onSign={async (data) => {
+                    if (!signatureModal.pendingObject) return;
+
+                    let signerAddress = "Anonymous BOLT User";
+                    let integrityHash = "UNVERIFIED";
+
+                    try {
+                        // Attempt to get signer address if window.ethereum is available
+                        if (typeof window !== "undefined" && (window as any).ethereum) {
+                            const provider = new ethers.BrowserProvider((window as any).ethereum);
+                            const signer = await provider.getSigner();
+                            signerAddress = await signer.getAddress();
+                        }
+
+                        // Calculate integrity hash of current objects (simplified)
+                        const docState = JSON.stringify(objects.map(o => ({ id: o.id, x: o.x, y: o.y, type: o.type })));
+                        integrityHash = ethers.keccak256(ethers.toUtf8Bytes(docState));
+                    } catch (e) {
+                        console.error("Signing error:", e);
+                    }
+
+                    const finalizedObj: CanvasObject = {
+                        ...signatureModal.pendingObject,
+                        signatureData: data,
+                        signerAddress,
+                        integrityHash,
+                    };
+
+                    setObjects(prev => {
+                        const exists = prev.find(o => o.id === finalizedObj.id);
+                        if (exists) {
+                            return prev.map(o => o.id === finalizedObj.id ? finalizedObj : o);
+                        }
+                        return [...prev.map(o => ({ ...o, isSelected: false })), finalizedObj];
+                    });
+
+                    setSignatureModal({ isOpen: false, pendingObject: null });
+                }}
             />
         </>
     );

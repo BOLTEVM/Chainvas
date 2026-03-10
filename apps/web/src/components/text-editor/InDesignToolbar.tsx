@@ -71,6 +71,7 @@ export default function InDesignToolbar({ activeTool, onToolSelect }: InDesignTo
         },
         { id: "HAND", icon: Hand, label: "Hand Tool (H)" },
         { id: "ZOOM", icon: ZoomIn, label: "Zoom Tool (Z)" },
+        { id: "SIGNATURE", icon: Stamp, label: "Signature Tool (J)" },
     ];
 
     const handleMouseDown = (id: TextToolType, e: React.MouseEvent) => {

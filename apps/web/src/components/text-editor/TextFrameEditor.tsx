@@ -8,6 +8,8 @@ import { keymap } from "prosemirror-keymap";
 import { baseKeymap } from "prosemirror-commands";
 import { ySyncPlugin, yCursorPlugin, yUndoPlugin, undo, redo } from "y-prosemirror";
 import { CanvasObject, TypographyOptions } from "@/app/text/types";
+import { ethers } from "ethers";
+import { ShieldAlert, ShieldCheck } from "lucide-react";
 
 interface TextFrameEditorProps {
     object: CanvasObject;
@@ -16,6 +18,7 @@ interface TextFrameEditorProps {
     provider: any;
     onSelect?: () => void;
     isActiveTool: boolean;
+    allObjects: CanvasObject[]; // Added for integrity check
 }
 
 export default function TextFrameEditor({
@@ -24,7 +27,8 @@ export default function TextFrameEditor({
     ydoc,
     provider,
     onSelect,
-    isActiveTool
+    isActiveTool,
+    allObjects
 }: TextFrameEditorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
     const [view, setView] = useState<EditorView | null>(null);
@@ -82,6 +86,17 @@ export default function TextFrameEditor({
     }, [typography]);
 
     const isText = object.type === "TEXT" || object.type === "TEXT_ON_PATH";
+    const isSignature = object.type === "SIGNATURE";
+
+    // Verify Integrity
+    const getIntegrityStatus = () => {
+        if (!object.integrityHash) return null;
+        const docState = JSON.stringify(allObjects.filter(o => o.type !== "SIGNATURE").map(o => ({ id: o.id, x: o.x, y: o.y, type: o.type })));
+        const currentHash = ethers.keccak256(ethers.toUtf8Bytes(docState));
+        return currentHash === object.integrityHash;
+    };
+
+    const isVerified = getIntegrityStatus();
 
     return (
         <div
@@ -122,6 +137,32 @@ export default function TextFrameEditor({
                     {/* Placeholder cross for shape frames */}
                     <div className="absolute w-full h-[1px] bg-gray-400/30 transform origin-center rotate-45" />
                     <div className="absolute w-full h-[1px] bg-gray-400/30 transform origin-center -rotate-45" />
+
+                    {isSignature && object.signatureData && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center p-2 bg-black/40 backdrop-blur-sm group overflow-hidden">
+                            <img src={object.signatureData} alt="Signature" className="max-w-full max-h-full object-contain invert" />
+
+                            {/* Integrity Badge */}
+                            <div className={`absolute bottom-1 right-1 px-1.5 py-0.5 rounded-sm flex items-center gap-1 border ${isVerified
+                                    ? "bg-green-500/10 border-green-500/30 text-green-400"
+                                    : "bg-red-500/10 border-red-500/30 text-red-400"
+                                }`}>
+                                {isVerified ? <ShieldCheck className="w-2.5 h-2.5" /> : <ShieldAlert className="w-2.5 h-2.5" />}
+                                <span className="text-[7px] font-black uppercase tracking-tighter">
+                                    {isVerified ? "Verified Integrity" : "Integrity Compromised"}
+                                </span>
+                            </div>
+
+                            {/* Signer Info Hover */}
+                            <div className="absolute inset-0 bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center p-3 gap-1">
+                                <span className="text-[8px] font-black text-[#ff6b00] uppercase tracking-widest">Signer Address</span>
+                                <span className="text-[7px] font-mono text-white break-all">{object.signerAddress}</span>
+                                <div className="h-px bg-white/10 my-1" />
+                                <span className="text-[8px] font-black text-[#ff6b00] uppercase tracking-widest">Integrity Hash</span>
+                                <span className="text-[7px] font-mono text-gray-500 truncate">{object.integrityHash}</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
 
