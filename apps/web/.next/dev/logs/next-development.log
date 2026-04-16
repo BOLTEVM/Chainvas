@@ -1,15 +1,1040 @@
-[00:00:03.236] Server  LOG     ✓ Ready in 2.5s
-[00:00:06.348] Server  LOG     ○ Compiling / ...
-[00:00:15.075] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:15.992] Browser WARN    Image with src "/bolt-logo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:20.988] Browser DEBUG   Detected injected providers: [{"icon":"data:image/png;base64,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","name":"Brave Wallet","rdns":"com.brave.wallet","uuid":"150b8b61-2ef8-4c1f-bfbf-72e6588e80fe"}]
-[00:00:45.192] Server  LOG     ○ Compiling /video ...
-[00:01:56.420] Server  LOG     ✓ Finished writing to filesystem cache in 11.6s
-[00:02:16.904] Server  LOG     ✓ Finished filesystem cache database compaction in 20.5s
-[00:55:30.319] Server  LOG     ✓ Finished filesystem cache database compaction in 17.3s
-[01:01:14.556] Server  LOG     ✓ Compiled in 10.9s
-[01:01:38.374] Server  LOG     ✓ Finished writing to filesystem cache in 22.0s
-[01:01:39.494] Server  LOG     ✓ Compiled in 1157ms
-[01:01:55.474] Server  LOG     ✓ Compiled in 1829ms
-[01:02:39.868] Server  LOG     ✓ Compiled in 838ms
-[01:02:45.621] Server  LOG     ✓ Compiled in 1002ms
+[00:00:21.005] Server  LOG     ✓ Ready in 18.1s
+[00:05:34.282] Server  LOG     ○ Compiling /video ...
+[00:08:08.628] Server  ERROR   ⨯ ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-client] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+
+
+./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-ssr] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+
+[00:08:13.120] Server  LOG     ○ Compiling /_error ...
+[00:08:39.828] Server  LOG     ✓ Finished writing to filesystem cache in 15.7s
+[00:08:49.985] Server  LOG     ✓ Finished filesystem cache database compaction in 10.0s
+[00:09:28.783] Server  LOG     ✓ Finished filesystem cache database compaction in 37.7s
+[00:10:31.319] Server  ERROR   ⨯ ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-client] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+
+
+./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-ssr] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+
+[00:10:33.940] Browser ERROR   uncaughtError: Error: ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-client] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+
+[00:10:49.320] Server  ERROR   ⨯ ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-client] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+
+
+./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-ssr] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+
+[00:10:51.867] Browser ERROR   uncaughtError: Error: ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-client] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+
+[00:10:52.056] Browser ERROR   ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-client] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+[00:10:52.057] Browser ERROR   ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-ssr] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+[00:10:52.219] Browser ERROR   ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-client] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+[00:10:52.219] Browser ERROR   ./apps/web/src/components/video-editor/VideoEditorModals.tsx:3:1
+Export VideoModal doesn't exist in target module
+  1 | "use client";
+  2 |
+> 3 | import { VideoModal } from "./VideoModal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | interface VideoEditorModalsProps {
+  6 |     modalConfig: {
+
+The export VideoModal was not found in module [project]/apps/web/src/components/video-editor/VideoModal.tsx [app-ssr] (ecmascript).
+Did you mean to import default?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Client Component Browser]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/src/components/video-editor/VideoEditorModals.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Client Component SSR]
+    ./apps/web/src/app/video/page.tsx [Server Component]
+[00:11:43.983] Server  LOG     ✓ Compiled in 5.6s
+[00:12:14.056] Server  LOG     ✓ Finished filesystem cache database compaction in 74s
+[00:12:24.976] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:12:27.059] Server  LOG     ✓ Finished filesystem cache database compaction in 32.8s
+[00:14:33.258] Server  LOG     ✓ Finished writing to filesystem cache in 48s
+[00:16:15.035] Server  LOG     ✓ Finished filesystem cache database compaction in 102s
+[00:17:20.938] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:17:27.132] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/video" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+                          className="dark"
+-                         data-jetski-tab-id="1112787138"
+                        >
+                  ...
+
+[00:17:33.161] Browser DEBUG   Detected injected providers: [{"icon":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22none%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22url%28%27%23paint0_linear_1098_5380%27%29%22%20rx%3D%22170.667%22%2F%3E%3Crect%20width%3D%22426.667%22%20height%3D%22426.667%22%20x%3D%2242.667%22%20y%3D%2242.667%22%20fill%3D%22%232461ED%22%20rx%3D%22170.667%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20d%3D%22M286.757%20250.326c-41.73-22.55-92.506-51.794-130.72-75.629-11.276-8.123-5.553-25.364%208.074-25.364h189.086c10.548%200%2017.604%2011.761%2012.318%2020.66-12.706%2021.944-31.256%2049.805-46.75%2071.895-8.317%2011.857-21.872%2013.894-32.008%208.438m-60.862%207.323c40.349%2021.508%2096.895%2054.218%20137.074%2078.951%2012.415%207.663%207.468%2026.042-7.032%2026.042-23.728%200-62.285.007-100.641.013-37.961.006-75.725.012-98.726.012-11.59%200-17.531-12.027-12.609-20.417%2016.634-28.346%2035.33-56.959%2050.872-78.321%206.911-9.529%2020.975-11.663%2031.062-6.28%22%20clip-rule%3D%22evenodd%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_1098_5380%22%20x1%3D%220%22%20x2%3D%22604.983%22%20y1%3D%220%22%20y2%3D%22352.348%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%232962EF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23255CE5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E","name":"Zerion","rdns":"io.zerion.wallet","uuid":"429b5a06-66fb-4862-94b0-0306044a824e"}]
+[00:17:35.284] Browser DEBUG   {"expected":6,"initialized":4,"message":"Unable to initialize all expected connectors before timeout"}
+[00:34:59.786] Server  LOG     ✓ Compiled in 3.3s
+[00:36:11.485] Server  LOG     ✓ Finished filesystem cache database compaction in 37.8s
+[00:36:11.826] Server  LOG     ✓ Finished writing to filesystem cache in 30.0s
+[00:36:14.009] Server  LOG     ✓ Compiled in 2.7s
+[00:36:41.730] Server  LOG     ○ Compiling /photo ...
+[00:39:09.211] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:39:12.404] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:39:13.582] Server  LOG     ✓ Finished writing to filesystem cache in 34.1s
+[00:39:29.184] Server  LOG     ✓ Finished filesystem cache database compaction in 29.2s
+[00:39:29.464] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:39:30.186] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:39:30.328] Server  LOG     ✓ Finished writing to filesystem cache in 28.4s
+[00:39:53.547] Server  LOG     ✓ Finished filesystem cache database compaction in 21.8s
+[00:39:55.634] Server  LOG     ✓ Finished writing to filesystem cache in 13.3s
+[00:40:03.393] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:40:03.606] Browser DEBUG   Detected injected providers: [{"icon":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22none%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22url%28%27%23paint0_linear_1098_5380%27%29%22%20rx%3D%22170.667%22%2F%3E%3Crect%20width%3D%22426.667%22%20height%3D%22426.667%22%20x%3D%2242.667%22%20y%3D%2242.667%22%20fill%3D%22%232461ED%22%20rx%3D%22170.667%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20d%3D%22M286.757%20250.326c-41.73-22.55-92.506-51.794-130.72-75.629-11.276-8.123-5.553-25.364%208.074-25.364h189.086c10.548%200%2017.604%2011.761%2012.318%2020.66-12.706%2021.944-31.256%2049.805-46.75%2071.895-8.317%2011.857-21.872%2013.894-32.008%208.438m-60.862%207.323c40.349%2021.508%2096.895%2054.218%20137.074%2078.951%2012.415%207.663%207.468%2026.042-7.032%2026.042-23.728%200-62.285.007-100.641.013-37.961.006-75.725.012-98.726.012-11.59%200-17.531-12.027-12.609-20.417%2016.634-28.346%2035.33-56.959%2050.872-78.321%206.911-9.529%2020.975-11.663%2031.062-6.28%22%20clip-rule%3D%22evenodd%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_1098_5380%22%20x1%3D%220%22%20x2%3D%22604.983%22%20y1%3D%220%22%20y2%3D%22352.348%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%232962EF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23255CE5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E","name":"Zerion","rdns":"io.zerion.wallet","uuid":"8c82f942-676f-4eeb-8c6e-7f5c8942daef"}]
+[00:40:08.422] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:40:37.956] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:42.421] Browser WARN    Image with src "/bolt-logo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:40:42.421] Browser DEBUG   Detected injected providers: [{"icon":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22none%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22url%28%27%23paint0_linear_1098_5380%27%29%22%20rx%3D%22170.667%22%2F%3E%3Crect%20width%3D%22426.667%22%20height%3D%22426.667%22%20x%3D%2242.667%22%20y%3D%2242.667%22%20fill%3D%22%232461ED%22%20rx%3D%22170.667%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20d%3D%22M286.757%20250.326c-41.73-22.55-92.506-51.794-130.72-75.629-11.276-8.123-5.553-25.364%208.074-25.364h189.086c10.548%200%2017.604%2011.761%2012.318%2020.66-12.706%2021.944-31.256%2049.805-46.75%2071.895-8.317%2011.857-21.872%2013.894-32.008%208.438m-60.862%207.323c40.349%2021.508%2096.895%2054.218%20137.074%2078.951%2012.415%207.663%207.468%2026.042-7.032%2026.042-23.728%200-62.285.007-100.641.013-37.961.006-75.725.012-98.726.012-11.59%200-17.531-12.027-12.609-20.417%2016.634-28.346%2035.33-56.959%2050.872-78.321%206.911-9.529%2020.975-11.663%2031.062-6.28%22%20clip-rule%3D%22evenodd%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_1098_5380%22%20x1%3D%220%22%20x2%3D%22604.983%22%20y1%3D%220%22%20y2%3D%22352.348%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%232962EF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23255CE5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E","name":"Zerion","rdns":"io.zerion.wallet","uuid":"3298f7de-96b4-4851-b8cb-b8a1337cd9fd"}]
+[00:40:42.422] Browser DEBUG   {"expected":6,"initialized":3,"message":"Unable to initialize all expected connectors before timeout"}
+[00:40:42.549] Server  LOG     ✓ Finished filesystem cache database compaction in 48s
+[00:40:42.563] Server  LOG     ✓ Finished writing to filesystem cache in 45s
+[00:40:45.243] Browser DEBUG   {"expected":6,"initialized":4,"message":"Unable to initialize all expected connectors before timeout"}
+[00:40:46.810] Browser WARN    Unable to access iframe: {}
+[00:41:11.138] Browser WARN    Unable to access iframe: {}
+[00:41:33.688] Browser WARN    Unable to access iframe: {}
+[00:42:00.809] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:42:03.577] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:42:24.443] Browser DEBUG   Detected injected providers: [{"icon":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22none%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22url%28%27%23paint0_linear_1098_5380%27%29%22%20rx%3D%22170.667%22%2F%3E%3Crect%20width%3D%22426.667%22%20height%3D%22426.667%22%20x%3D%2242.667%22%20y%3D%2242.667%22%20fill%3D%22%232461ED%22%20rx%3D%22170.667%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20d%3D%22M286.757%20250.326c-41.73-22.55-92.506-51.794-130.72-75.629-11.276-8.123-5.553-25.364%208.074-25.364h189.086c10.548%200%2017.604%2011.761%2012.318%2020.66-12.706%2021.944-31.256%2049.805-46.75%2071.895-8.317%2011.857-21.872%2013.894-32.008%208.438m-60.862%207.323c40.349%2021.508%2096.895%2054.218%20137.074%2078.951%2012.415%207.663%207.468%2026.042-7.032%2026.042-23.728%200-62.285.007-100.641.013-37.961.006-75.725.012-98.726.012-11.59%200-17.531-12.027-12.609-20.417%2016.634-28.346%2035.33-56.959%2050.872-78.321%206.911-9.529%2020.975-11.663%2031.062-6.28%22%20clip-rule%3D%22evenodd%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_1098_5380%22%20x1%3D%220%22%20x2%3D%22604.983%22%20y1%3D%220%22%20y2%3D%22352.348%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%232962EF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23255CE5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E","name":"Zerion","rdns":"io.zerion.wallet","uuid":"2f0e0d31-dc82-4626-a6e8-6fe4712ad747"}]
+[00:42:24.444] Browser DEBUG   {"expected":6,"initialized":3,"message":"Unable to initialize all expected connectors before timeout"}
+[00:42:24.444] Browser DEBUG   {"expected":6,"initialized":5,"message":"Unable to initialize all expected connectors before timeout"}
+[00:42:29.103] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:42:29.634] Browser ERROR   Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500
+[00:42:44.455] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:42:45.561] Browser ERROR   Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500
+[00:43:21.924] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:43:33.694] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\video\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:54:29.664] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:54:37.994] Server  LOG     ○ Compiling /_not-found/page ...
+[00:58:04.583] Server  LOG     ✓ Finished writing to filesystem cache in 3.1min
+[00:58:52.547] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:59:24.457] Server  ERROR   Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+[00:59:27.595] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\photo\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:59:29.823] Server  LOG     ✓ Finished filesystem cache database compaction in 71s
+[00:59:29.839] Server  LOG     ✓ Finished writing to filesystem cache in 80s
+[00:59:33.812] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:59:37.291] Server  LOG     ✓ Compiled in 2.5s
+[00:59:37.309] Browser ERROR   unhandledRejection: Error: No link element found for chunk /_next/static/chunks/%5Broot-of-the-server%5D__3f3ed522._.css
+[00:59:42.083] Browser DEBUG   Detected injected providers: [{"icon":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22none%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22url%28%27%23paint0_linear_1098_5380%27%29%22%20rx%3D%22170.667%22%2F%3E%3Crect%20width%3D%22426.667%22%20height%3D%22426.667%22%20x%3D%2242.667%22%20y%3D%2242.667%22%20fill%3D%22%232461ED%22%20rx%3D%22170.667%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20d%3D%22M286.757%20250.326c-41.73-22.55-92.506-51.794-130.72-75.629-11.276-8.123-5.553-25.364%208.074-25.364h189.086c10.548%200%2017.604%2011.761%2012.318%2020.66-12.706%2021.944-31.256%2049.805-46.75%2071.895-8.317%2011.857-21.872%2013.894-32.008%208.438m-60.862%207.323c40.349%2021.508%2096.895%2054.218%20137.074%2078.951%2012.415%207.663%207.468%2026.042-7.032%2026.042-23.728%200-62.285.007-100.641.013-37.961.006-75.725.012-98.726.012-11.59%200-17.531-12.027-12.609-20.417%2016.634-28.346%2035.33-56.959%2050.872-78.321%206.911-9.529%2020.975-11.663%2031.062-6.28%22%20clip-rule%3D%22evenodd%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_1098_5380%22%20x1%3D%220%22%20x2%3D%22604.983%22%20y1%3D%220%22%20y2%3D%22352.348%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%232962EF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23255CE5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E","name":"Zerion","rdns":"io.zerion.wallet","uuid":"bed3f9af-ed8b-475f-b894-b6b30a71059f"}]
+[00:59:42.295] Browser DEBUG   {"expected":6,"initialized":3,"message":"Unable to initialize all expected connectors before timeout"}
+[00:59:51.746] Server  ERROR   Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+[00:59:53.967] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\photo\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[00:59:54.069] Browser DEBUG   {"expected":6,"initialized":5,"message":"Unable to initialize all expected connectors before timeout"}
+[00:59:54.800] Browser ERROR   Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500
+[01:00:00.630] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__80b835e6._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\photo\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[01:00:01.116] Browser ERROR   Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500
+[01:00:13.830] Server  LOG     ✓ Finished filesystem cache database compaction in 51s
+[01:00:20.632] Server  LOG     ✓ Finished writing to filesystem cache in 55s
+[01:00:28.815] Server  LOG     ○ Compiling /photo ...
+[01:00:43.428] Browser ERROR   uncaughtError: ReferenceError: PropertiesPanel is not defined
+[01:00:57.847] Server  LOG     ✓ Finished filesystem cache database compaction in 37.2s
+[01:01:01.291] Server  LOG     ✓ Finished writing to filesystem cache in 30.4s
+[01:01:35.854] Server  LOG     ✓ Finished filesystem cache database compaction in 34.6s
+[01:01:37.171] Server  LOG     ✓ Finished writing to filesystem cache in 33.8s
+[01:01:49.903] Server  ERROR   Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+[01:01:57.559] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__955272dc._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\photo\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[01:02:00.031] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:02:03.926] Browser ERROR   uncaughtError: ReferenceError: PropertiesPanel is not defined
+[01:02:11.491] Server  LOG     ✓ Finished filesystem cache database compaction in 34.3s
+[01:02:49.925] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:49.946] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:50.080] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:50.292] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:57.864] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__955272dc._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\photo\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[01:02:59.270] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:59.281] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:59.290] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:59.301] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:59.326] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:59.338] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:59.483] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:02:59.506] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:03:43.230] Server  ERROR   Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+[01:03:43.803] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:03:43.807] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:03:43.810] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:03:43.813] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:03:43.824] Server  LOG     ✓ Finished filesystem cache database compaction in 65s
+[01:03:43.831] Server  LOG     ✓ Finished writing to filesystem cache in 14.4s
+[01:03:46.875] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__955272dc._.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[turbopack]_runtime.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\app\photo\page.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\require.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\load-components.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\options.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\swc\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\config.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\next.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\next\dist\server\lib\start-server.js
+[01:03:52.826] Server  ERROR   ⨯ Error: Failed to load external module jsdom-4cccfac9827ebcfe: Error: Cannot find module '../build/Release/canvas.node'
+Require stack:
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\bindings.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\lib\canvas.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\canvas\index.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\utils.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\MouseEvent-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\MouseEvent.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\living\interfaces.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\jsdom\browser\Window.js
+- C:\Users\wonfi\Documents\BOLTChainvas\node_modules\jsdom\lib\api.js
+- C:\Users\wonfi\Documents\BOLTChainvas\apps\web\.next\dev\server\chunks\ssr\[root-of-the-server]__955272dc._.js
+[01:04:03.762] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:04:08.701] Browser ERROR   uncaughtError: ReferenceError: PropertiesPanel is not defined
+[01:04:57.035] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:04:57.035] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/video" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+                          className="dark"
+-                         data-jetski-tab-id="1112787139"
+                        >
+                  ...
+
+[01:04:58.121] Browser DEBUG   Detected injected providers: [{"icon":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22none%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22url%28%27%23paint0_linear_1098_5380%27%29%22%20rx%3D%22170.667%22%2F%3E%3Crect%20width%3D%22426.667%22%20height%3D%22426.667%22%20x%3D%2242.667%22%20y%3D%2242.667%22%20fill%3D%22%232461ED%22%20rx%3D%22170.667%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20d%3D%22M286.757%20250.326c-41.73-22.55-92.506-51.794-130.72-75.629-11.276-8.123-5.553-25.364%208.074-25.364h189.086c10.548%200%2017.604%2011.761%2012.318%2020.66-12.706%2021.944-31.256%2049.805-46.75%2071.895-8.317%2011.857-21.872%2013.894-32.008%208.438m-60.862%207.323c40.349%2021.508%2096.895%2054.218%20137.074%2078.951%2012.415%207.663%207.468%2026.042-7.032%2026.042-23.728%200-62.285.007-100.641.013-37.961.006-75.725.012-98.726.012-11.59%200-17.531-12.027-12.609-20.417%2016.634-28.346%2035.33-56.959%2050.872-78.321%206.911-9.529%2020.975-11.663%2031.062-6.28%22%20clip-rule%3D%22evenodd%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_1098_5380%22%20x1%3D%220%22%20x2%3D%22604.983%22%20y1%3D%220%22%20y2%3D%22352.348%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%232962EF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23255CE5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E","name":"Zerion","rdns":"io.zerion.wallet","uuid":"4c70b73a-b593-4813-8ecb-95d4ab8d2969"}]
+[01:05:02.552] Browser DEBUG   {"expected":6,"initialized":3,"message":"Unable to initialize all expected connectors before timeout"}
+[01:05:08.223] Server  LOG     ✓ Compiled in 38.8s
+[01:05:32.205] Server  LOG     ✓ Finished writing to filesystem cache in 22.0s
+[01:06:14.742] Server  LOG     ✓ Finished filesystem cache database compaction in 43s
+[01:09:03.371] Server  LOG     ○ Compiling /kanban ...
+[01:09:46.619] Server  LOG     ✓ Finished writing to filesystem cache in 12.2s
+[01:10:18.500] Server  LOG     ✓ Finished writing to filesystem cache in 14.4s
+[01:10:40.214] Server  LOG     ✓ Finished filesystem cache database compaction in 21.7s
+[01:14:23.336] Browser ERROR   uncaughtError: ReferenceError: removeCard is not defined
+[01:14:26.189] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:14:26.237] Server  LOG     ✓ Compiled in 8.6s
+[01:14:26.490] Browser ERROR   uncaughtError: ReferenceError: removeCard is not defined
+[01:14:40.256] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:14:43.356] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:14:44.255] Server  LOG     ✓ Compiled in 289ms
+[01:14:45.330] Browser DEBUG   Detected injected providers: [{"icon":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22none%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22url%28%27%23paint0_linear_1098_5380%27%29%22%20rx%3D%22170.667%22%2F%3E%3Crect%20width%3D%22426.667%22%20height%3D%22426.667%22%20x%3D%2242.667%22%20y%3D%2242.667%22%20fill%3D%22%232461ED%22%20rx%3D%22170.667%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20d%3D%22M286.757%20250.326c-41.73-22.55-92.506-51.794-130.72-75.629-11.276-8.123-5.553-25.364%208.074-25.364h189.086c10.548%200%2017.604%2011.761%2012.318%2020.66-12.706%2021.944-31.256%2049.805-46.75%2071.895-8.317%2011.857-21.872%2013.894-32.008%208.438m-60.862%207.323c40.349%2021.508%2096.895%2054.218%20137.074%2078.951%2012.415%207.663%207.468%2026.042-7.032%2026.042-23.728%200-62.285.007-100.641.013-37.961.006-75.725.012-98.726.012-11.59%200-17.531-12.027-12.609-20.417%2016.634-28.346%2035.33-56.959%2050.872-78.321%206.911-9.529%2020.975-11.663%2031.062-6.28%22%20clip-rule%3D%22evenodd%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_1098_5380%22%20x1%3D%220%22%20x2%3D%22604.983%22%20y1%3D%220%22%20y2%3D%22352.348%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%232962EF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23255CE5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E","name":"Zerion","rdns":"io.zerion.wallet","uuid":"d5dfa396-2390-44b6-89a6-1f3f8ac0c456"}]
+[01:14:50.193] Server  LOG     ✓ Finished filesystem cache database compaction in 25.8s
+[01:14:50.948] Server  LOG     ✓ Finished writing to filesystem cache in 17.4s
+[01:14:52.614] Server  LOG     ✓ Compiled in 1443ms
+[01:14:52.772] Browser ERROR   uncaughtError: ReferenceError: isLoaded is not defined
+[01:15:03.606] Server  LOG     ✓ Finished filesystem cache database compaction in 12.7s
+[01:15:15.061] Server  LOG     ✓ Compiled in 6.2s
+[01:15:15.068] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:15:20.671] Server  ERROR   ⨯ ReferenceError: isLoaded is not defined
+[01:15:20.753] Browser ERROR   uncaughtError: ReferenceError: isLoaded is not defined
+[01:15:22.259] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:15:23.697] Browser ERROR   uncaughtError: ReferenceError: isLoaded is not defined
+[01:15:25.064] Server  LOG     ✓ Finished filesystem cache database compaction in 20.9s
+[01:15:42.682] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:15:42.812] Browser ERROR   unhandledRejection: Error: No link element found for chunk /_next/static/chunks/%5Broot-of-the-server%5D__3f3ed522._.css
+[01:15:49.380] Server  ERROR   ⨯ ReferenceError: isLoaded is not defined
+[01:15:49.450] Server  LOG     ✓ Compiled in 4.6s
+[01:15:49.452] Server  LOG     ✓ Finished filesystem cache database compaction in 21.9s
+[01:15:49.461] Server  LOG     ✓ Finished writing to filesystem cache in 20.4s
+[01:15:49.523] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:15:50.211] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:15:51.504] Browser ERROR   uncaughtError: ReferenceError: isLoaded is not defined
+[01:15:59.532] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:15:59.651] Browser ERROR   unhandledRejection: Error: No link element found for chunk /_next/static/chunks/%5Broot-of-the-server%5D__3f3ed522._.css
+[01:16:04.364] Server  ERROR   ⨯ ReferenceError: isLoaded is not defined
+[01:16:04.411] Server  LOG     ✓ Compiled in 1885ms
+[01:16:04.463] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:16:04.956] Server  LOG     ✓ Finished filesystem cache database compaction in 16.7s
+[01:16:05.135] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:16:06.048] Server  LOG     ✓ Finished writing to filesystem cache in 15.8s
+[01:16:06.516] Browser ERROR   uncaughtError: ReferenceError: isLoaded is not defined
+[02:37:13.876] Server  LOG     ✓ Compiled in 8.1s
+[02:37:14.556] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[02:37:29.221] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:37:33.195] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/kanban" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+                          className="dark"
+-                         data-jetski-tab-id="1112787139"
+                        >
+                  ...
+
+[02:37:36.609] Browser DEBUG   Detected injected providers: [{"icon":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22none%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22url%28%27%23paint0_linear_1098_5380%27%29%22%20rx%3D%22170.667%22%2F%3E%3Crect%20width%3D%22426.667%22%20height%3D%22426.667%22%20x%3D%2242.667%22%20y%3D%2242.667%22%20fill%3D%22%232461ED%22%20rx%3D%22170.667%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20d%3D%22M286.757%20250.326c-41.73-22.55-92.506-51.794-130.72-75.629-11.276-8.123-5.553-25.364%208.074-25.364h189.086c10.548%200%2017.604%2011.761%2012.318%2020.66-12.706%2021.944-31.256%2049.805-46.75%2071.895-8.317%2011.857-21.872%2013.894-32.008%208.438m-60.862%207.323c40.349%2021.508%2096.895%2054.218%20137.074%2078.951%2012.415%207.663%207.468%2026.042-7.032%2026.042-23.728%200-62.285.007-100.641.013-37.961.006-75.725.012-98.726.012-11.59%200-17.531-12.027-12.609-20.417%2016.634-28.346%2035.33-56.959%2050.872-78.321%206.911-9.529%2020.975-11.663%2031.062-6.28%22%20clip-rule%3D%22evenodd%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_1098_5380%22%20x1%3D%220%22%20x2%3D%22604.983%22%20y1%3D%220%22%20y2%3D%22352.348%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%232962EF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23255CE5%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E","name":"Zerion","rdns":"io.zerion.wallet","uuid":"26fe6dac-44da-42ff-a85d-d9c7cbc34be1"}]
+[02:37:38.447] Browser DEBUG   {"expected":6,"initialized":4,"message":"Unable to initialize all expected connectors before timeout"}
+[02:40:42.284] Server  LOG     ✓ Finished filesystem cache database compaction in 18.7s
+[02:42:01.536] Server  LOG     ✓ Compiled in 3.7s
+[02:42:21.848] Server  LOG     ✓ Finished filesystem cache database compaction in 17.0s

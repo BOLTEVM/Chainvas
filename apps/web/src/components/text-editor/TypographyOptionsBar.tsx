@@ -31,10 +31,19 @@ export default function TypographyOptionsBar({ options, onOptionsChange }: Typog
                 >
                     {fontFamilies.map(font => <option key={font} value={font}>{font}</option>)}
                 </select>
-                <select className="bg-[#3c3c3c] border border-transparent focus:border-[#ff6b00] outline-none px-2 py-0.5 rounded text-white font-bold w-20">
-                    <option>Regular</option>
-                    <option>Bold</option>
-                    <option>Italic</option>
+                <select
+                    value={options.italic ? "Italic" : options.fontWeight === "bold" ? "Bold" : "Regular"}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === "Regular") onOptionsChange({ fontWeight: "normal", italic: false, bold: false });
+                        else if (val === "Bold") onOptionsChange({ fontWeight: "bold", italic: false, bold: true });
+                        else if (val === "Italic") onOptionsChange({ fontWeight: "normal", italic: true, bold: false });
+                    }}
+                    className="bg-[#3c3c3c] border border-transparent focus:border-[#ff6b00] outline-none px-2 py-0.5 rounded text-white font-bold w-24"
+                >
+                    <option value="Regular">Regular</option>
+                    <option value="Bold">Bold</option>
+                    <option value="Italic">Italic</option>
                 </select>
             </div>
 
@@ -52,13 +61,22 @@ export default function TypographyOptionsBar({ options, onOptionsChange }: Typog
 
             {/* Styling */}
             <div className="flex items-center gap-1 border-r border-white/10 pr-4">
-                <button className={`p-1 rounded hover:bg-[#3c3c3c] transition-colors ${options.fontWeight === "bold" ? "bg-[#3c3c3c] text-[#ff6b00]" : ""}`}>
+                <button
+                    onClick={() => onOptionsChange({ bold: !options.bold, fontWeight: options.fontWeight === "bold" ? "normal" : "bold" })}
+                    className={`p-1 rounded hover:bg-[#3c3c3c] transition-colors ${options.bold || options.fontWeight === "bold" ? "bg-[#3c3c3c] text-[#ff6b00]" : ""}`}
+                >
                     <Bold className="w-3.5 h-3.5" />
                 </button>
-                <button className="p-1 rounded hover:bg-[#3c3c3c] transition-colors">
+                <button
+                    onClick={() => onOptionsChange({ italic: !options.italic })}
+                    className={`p-1 rounded hover:bg-[#3c3c3c] transition-colors ${options.italic ? "bg-[#3c3c3c] text-[#ff6b00]" : ""}`}
+                >
                     <Italic className="w-3.5 h-3.5" />
                 </button>
-                <button className="p-1 rounded hover:bg-[#3c3c3c] transition-colors">
+                <button
+                    onClick={() => onOptionsChange({ underline: !options.underline })}
+                    className={`p-1 rounded hover:bg-[#3c3c3c] transition-colors ${options.underline ? "bg-[#3c3c3c] text-[#ff6b00]" : ""}`}
+                >
                     <Underline className="w-3.5 h-3.5" />
                 </button>
             </div>

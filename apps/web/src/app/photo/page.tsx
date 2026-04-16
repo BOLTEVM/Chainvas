@@ -15,6 +15,7 @@ import PhotoModal from "@/components/photo-editor/PhotoModal";
 import PropertiesPanel from "@/components/photo-editor/PropertiesPanel";
 import LayerPanel from "@/components/photo-editor/LayerPanel";
 import MintingModal, { TokenType } from "@/components/profile/MintingModal";
+import { ElementKanbanPanel } from "@/components/shared/ElementKanbanPanel";
 import { useMinting } from "@/hooks/useMinting";
 
 // Types
@@ -34,10 +35,26 @@ export default function PhotoEditor() {
     const { mintAsset, isMinting } = useMinting();
     const [isMintModalOpen, setIsMintModalOpen] = useState(false);
 
-    const handleMint = async (type: TokenType, config: { name: string; symbol: string; amount?: number }) => {
-        const dummyUri = "ipfs://photo-document-data";
-        const success = await mintAsset(type, config, dummyUri);
-        if (success) setIsMintModalOpen(false);
+    const handleMint = async (type: TokenType, config: { name: string; symbol: string; amount?: number; mediaType?: number }) => {
+        if (!fabricCanvas.current) return;
+        
+        try {
+            // Capture high-res snapshot
+            const dataURL = fabricCanvas.current.toDataURL({ 
+                format: "png", 
+                quality: 1,
+                multiplier: toolOptions.exportScale || 1
+            });
+            
+            // Convert Base64 to Blob for IPFS upload
+            const response = await fetch(dataURL);
+            const blob = await response.blob();
+            
+            const success = await mintAsset(type, config, blob);
+            if (success) setIsMintModalOpen(false);
+        } catch (error) {
+            console.error("Export for minting failed:", error);
+        }
     };
 
     useEffect(() => {
@@ -50,7 +67,9 @@ export default function PhotoEditor() {
         fontColor: "#ffffff",
         shapeFill: "#00e0ff33",
         shapeStroke: "#00e0ff",
-        shapeStrokeWidth: 2
+        shapeStrokeWidth: 2,
+        hardness: 100,
+        exportScale: 2
     });
 
     const [canvasWidth, setCanvasWidth] = useState(800);
@@ -775,10 +794,20 @@ export default function PhotoEditor() {
                             {showNavigator && <NavigatorPanel zoom={zoom} onZoomChange={setZoom} />}
 
                             <div className="flex-grow flex flex-col overflow-hidden">
-                                {showProperties && (
+                                {activeObject ? (
                                     <div className="flex-grow overflow-hidden">
-                                        <PropertiesPanel activeObject={activeObject} onPropertyChange={handlePropertyChange} />
+                                        <ElementKanbanPanel 
+                                            elementRef={`PHOTO:${activeObject.id}`}
+                                            elementTitle={activeObject.name || "Photo Element"}
+                                            elementDescription={`Layer type: ${activeObject.type} at X: ${Math.round(activeObject.left || 0)}, Y: ${Math.round(activeObject.top || 0)}`}
+                                        />
                                     </div>
+                                ) : (
+                                    showProperties && (
+                                        <div className="flex-grow overflow-hidden">
+                                            <PropertiesPanel activeObject={activeObject} onPropertyChange={handlePropertyChange} />
+                                        </div>
+                                    )
                                 )}
                                 {showLayers && (
                                     <div className="h-[300px] border-t border-[#1e1e1e]">
@@ -949,6 +978,7 @@ export default function PhotoEditor() {
                 asset={{ id: ydoc.guid || "photo-doc", name: "Photo Composition", previewUrl: "" }}
                 onMint={handleMint}
                 isMinting={isMinting}
+                defaultMediaType={1}
             />
         </>
     );

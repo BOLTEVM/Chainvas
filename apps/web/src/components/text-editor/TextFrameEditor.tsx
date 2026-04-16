@@ -69,21 +69,29 @@ export default function TextFrameEditor({
         };
     }, [provider, ydoc, object.contentId]);
 
+    const activeTypography = object.typography || typography;
+
     // Update styles dynamically without recreating editor
     useEffect(() => {
         if (editorRef.current) {
             Object.assign(editorRef.current.style, {
-                fontFamily: typography.fontFamily,
-                fontSize: `${typography.fontSize}pt`,
-                textAlign: typography.textAlign,
-                color: typography.color,
-                lineHeight: `${typography.lineHeight}pt`,
-                letterSpacing: `${typography.letterSpacing}em`,
-                fontWeight: typography.bold ? "bold" : typography.fontWeight,
-                fontStyle: typography.italic ? "italic" : "normal"
+                fontFamily: activeTypography.fontFamily,
+                fontSize: `${activeTypography.fontSize}pt`,
+                textAlign: activeTypography.textAlign,
+                color: activeTypography.color,
+                lineHeight: activeTypography.lineHeight,
+                letterSpacing: `${activeTypography.letterSpacing}em`,
+                fontWeight: activeTypography.bold ? "bold" : activeTypography.fontWeight,
+                fontStyle: activeTypography.italic ? "italic" : "normal",
+                textDecoration: activeTypography.underline ? "underline" : "none",
+                // Paragraph Styles
+                paddingLeft: `${activeTypography.leftIndent || 0}pt`,
+                paddingRight: `${activeTypography.rightIndent || 0}pt`,
+                hyphens: activeTypography.hyphenate ? "auto" : "none",
+                transform: `translateY(${activeTypography.baselineShift || 0}pt)`
             });
         }
-    }, [typography]);
+    }, [activeTypography]);
 
     const isText = object.type === "TEXT" || object.type === "TEXT_ON_PATH";
     const isSignature = object.type === "SIGNATURE";
@@ -100,7 +108,8 @@ export default function TextFrameEditor({
 
     return (
         <div
-            className={`absolute z-10 ${object.isSelected ? 'outline outline-1 outline-[#ff6b00]' : 'border border-transparent hover:outline hover:outline-1 hover:outline-blue-500/50'}`}
+            data-id={object.id}
+            className={`absolute z-10 text-frame-container ${object.isSelected ? 'outline outline-1 outline-[#ff6b00]' : 'border border-transparent hover:outline hover:outline-1 hover:outline-blue-500/50'}`}
             style={{
                 left: object.x,
                 top: object.y,
@@ -120,17 +129,27 @@ export default function TextFrameEditor({
             {isText ? (
                 <div
                     ref={editorRef}
-                    className="w-full h-full outline-none p-1 font-sans leading-relaxed text-left cursor-text overflow-hidden [&_.ProseMirror]:min-h-full [&_.ProseMirror]:outline-none"
+                    className="w-full h-full outline-none p-1 font-sans leading-relaxed text-left cursor-text overflow-hidden [&_.ProseMirror]:min-h-full [&_.ProseMirror]:outline-none [&_.ProseMirror_p]:mt-[var(--space-before)] [&_.ProseMirror_p]:mb-[var(--space-after)] [&_.ProseMirror_p]:text-indent-[var(--first-line-indent)]"
                     style={{
-                        fontFamily: typography.fontFamily,
-                        fontSize: `${typography.fontSize}pt`,
-                        textAlign: typography.textAlign,
-                        color: typography.color,
-                        lineHeight: `${typography.lineHeight}pt`,
-                        letterSpacing: `${typography.letterSpacing}em`,
-                        fontWeight: typography.bold ? "bold" : typography.fontWeight,
-                        fontStyle: typography.italic ? "italic" : "normal"
-                    }}
+                        fontFamily: activeTypography.fontFamily,
+                        fontSize: `${activeTypography.fontSize}pt`,
+                        textAlign: activeTypography.textAlign,
+                        color: activeTypography.color,
+                        lineHeight: activeTypography.lineHeight,
+                        letterSpacing: `${activeTypography.letterSpacing}em`,
+                        fontWeight: activeTypography.bold ? "bold" : activeTypography.fontWeight,
+                        fontStyle: activeTypography.italic ? "italic" : "normal",
+                        textDecoration: activeTypography.underline ? "underline" : "none",
+                        // Paragraph Styles via CSS Variables for child paragraphs
+                        paddingLeft: `${activeTypography.leftIndent || 0}pt`,
+                        paddingRight: `${activeTypography.rightIndent || 0}pt`,
+                        hyphens: activeTypography.hyphenate ? "auto" : "none",
+                        transform: `translateY(${activeTypography.baselineShift || 0}pt)`,
+                        // @ts-ignore - CSS Variables
+                        "--space-before": `${activeTypography.spaceBefore || 0}pt`,
+                        "--space-after": `${activeTypography.spaceAfter || 0}pt`,
+                        "--first-line-indent": `${activeTypography.firstLineIndent || 0}pt`
+                    } as any}
                 />
             ) : (
                 <div className="w-full h-full flex items-center justify-center border border-gray-400/50 relative">

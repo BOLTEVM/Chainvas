@@ -31,7 +31,7 @@ export default function ProfilePage() {
     const { mintAsset, isMinting } = useMinting();
     const [selectedAssetToMint, setSelectedAssetToMint] = useState<any | null>(null);
 
-    const handleMintAsset = async (type: TokenType, config: { name: string; symbol: string; amount?: number }) => {
+    const handleMintAsset = async (type: TokenType, config: { name: string; symbol: string; amount?: number; mediaType?: number }) => {
         if (!selectedAssetToMint) return;
         const uri = selectedAssetToMint.uri || selectedAssetToMint.previewUrl || "";
         const success = await mintAsset(type, config, uri);

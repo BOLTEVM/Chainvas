@@ -39,12 +39,28 @@ export default function ParagraphPanel({ options, onOptionsChange }: ParagraphPa
                 {/* Indents & Spacing */}
                 <section className="flex flex-col gap-3">
                     <div className="grid grid-cols-2 gap-2">
-                        <ParagraphInput label={<IndentDecrease className="w-3 h-3 text-gray-500" />} defaultValue={0} />
-                        <ParagraphInput label={<IndentIncrease className="w-3 h-3 text-gray-500" />} defaultValue={0} />
+                        <ParagraphInput
+                            label={<IndentDecrease className="w-3 h-3 text-gray-500" />}
+                            value={options.leftIndent || 0}
+                            onChange={(v) => onOptionsChange({ leftIndent: v })}
+                        />
+                        <ParagraphInput
+                            label={<IndentIncrease className="w-3 h-3 text-gray-500" />}
+                            value={options.rightIndent || 0}
+                            onChange={(v) => onOptionsChange({ rightIndent: v })}
+                        />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                        <ParagraphInput label={<ArrowUpToLine className="w-3 h-3 text-gray-500" />} defaultValue={0} />
-                        <ParagraphInput label={<ArrowDownToLine className="w-3 h-3 text-gray-500" />} defaultValue={0} />
+                        <ParagraphInput
+                            label={<ArrowUpToLine className="w-3 h-3 text-gray-500" />}
+                            value={options.spaceBefore || 0}
+                            onChange={(v) => onOptionsChange({ spaceBefore: v })}
+                        />
+                        <ParagraphInput
+                            label={<ArrowDownToLine className="w-3 h-3 text-gray-500" />}
+                            value={options.spaceAfter || 0}
+                            onChange={(v) => onOptionsChange({ spaceAfter: v })}
+                        />
                     </div>
                 </section>
 
@@ -53,10 +69,16 @@ export default function ParagraphPanel({ options, onOptionsChange }: ParagraphPa
                 {/* Lists & Bullets */}
                 <section className="flex flex-col gap-2">
                     <div className="flex items-center gap-1">
-                        <ListButton active={false}>
+                        <ListButton
+                            active={options.bulletedList || false}
+                            onClick={() => onOptionsChange({ bulletedList: !options.bulletedList, numberedList: false })}
+                        >
                             <List className="w-3.5 h-3.5" />
                         </ListButton>
-                        <ListButton active={false}>
+                        <ListButton
+                            active={options.numberedList || false}
+                            onClick={() => onOptionsChange({ numberedList: !options.numberedList, bulletedList: false })}
+                        >
                             <span className="text-[9px] font-bold">1.</span>
                         </ListButton>
                     </div>
@@ -65,28 +87,37 @@ export default function ParagraphPanel({ options, onOptionsChange }: ParagraphPa
                 {/* Hyphenation */}
                 <div className="flex items-center justify-between bg-[#1e1e1e] p-2 rounded border border-white/5">
                     <label htmlFor="hyphenate" className="text-[10px] text-gray-400 font-black uppercase tracking-widest cursor-pointer select-none">Hyphenate</label>
-                    <input type="checkbox" className="accent-[#ff6b00] w-3.5 h-3.5" id="hyphenate" defaultChecked />
+                    <input
+                        type="checkbox"
+                        className="accent-[#ff6b00] w-3.5 h-3.5"
+                        id="hyphenate"
+                        checked={options.hyphenate}
+                        onChange={(e) => onOptionsChange({ hyphenate: e.target.checked })}
+                    />
                 </div>
             </div>
         </div>
     );
 }
 
-function ListButton({ children, active }: { children: React.ReactNode, active: boolean }) {
+function ListButton({ children, active, onClick }: { children: React.ReactNode, active: boolean, onClick: () => void }) {
     return (
-        <button className={`p-1.5 rounded transition-colors border ${active ? "bg-[#3c3c3c] text-[#ff6b00] border-transparent" : "text-gray-500 hover:text-white border-transparent hover:bg-[#3c3c3c]"}`}>
+        <button
+            onClick={onClick}
+            className={`p-1.5 rounded transition-colors border ${active ? "bg-[#3c3c3c] text-[#ff6b00] border-transparent" : "text-gray-500 hover:text-white border-transparent hover:bg-[#3c3c3c]"}`}>
             {children}
         </button>
     );
 }
 
-function ParagraphInput({ label, defaultValue }: { label: React.ReactNode, defaultValue: number }) {
+function ParagraphInput({ label, value, onChange }: { label: React.ReactNode, value: number, onChange: (v: number) => void }) {
     return (
         <div className="flex items-center bg-[#1e1e1e] border border-white/5 focus-within:border-[#ff6b00]/50 rounded px-2 py-1 gap-2 transition-all">
             <span className="w-4 flex justify-center flex-shrink-0">{label}</span>
             <input
                 type="number"
-                defaultValue={defaultValue}
+                value={value}
+                onChange={(e) => onChange(parseInt(e.target.value) || 0)}
                 className="bg-transparent border-none outline-none text-[11px] text-gray-200 w-full text-right font-mono"
             />
             <span className="text-[9px] text-gray-600 font-medium w-4 flex-shrink-0">pt</span>

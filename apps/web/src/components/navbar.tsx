@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { PenTool, Image as ImageIcon, Video } from "lucide-react";
+import { PenTool, Image as ImageIcon, Video, LayoutDashboard } from "lucide-react";
 import { ConnectButton } from "./ConnectButton";
 
 export function Navbar() {
@@ -23,6 +23,7 @@ export function Navbar() {
                         <NavLink href="/text" icon={<PenTool className="w-4 h-4" />} text="Text Editor" />
                         <NavLink href="/photo" icon={<ImageIcon className="w-4 h-4" />} text="Photo Editor" />
                         <NavLink href="/video" icon={<Video className="w-4 h-4" />} text="Video Editor" />
+                        <NavLink href="/kanban" icon={<LayoutDashboard className="w-4 h-4" />} text="Project Board" />
                     </div>
 
                     <div className="flex items-center gap-4">

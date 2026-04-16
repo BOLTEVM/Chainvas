@@ -115,6 +115,7 @@ export default function InDesignToolbar({ activeTool, onToolSelect }: InDesignTo
                 return (
                     <div key={group.id} className="relative group/item">
                         <button
+                            data-id={`tool-${group.id}`}
                             onMouseDown={(e) => handleMouseDown(group.id, e)}
                             onMouseUp={handleMouseUp}
                             onMouseLeave={handleMouseUp}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useYjs } from "@/hooks/useYjs";
 
 import TextFrameEditor from "@/components/text-editor/TextFrameEditor";
@@ -15,6 +15,7 @@ import PagesPanel from "@/components/text-editor/PagesPanel";
 import TextMenuBar from "@/components/text-editor/TextMenuBar";
 import TextModal from "@/components/text-editor/TextModal";
 import SignatureModal from "@/components/text-editor/SignatureModal";
+import { ElementKanbanPanel } from "@/components/shared/ElementKanbanPanel";
 import { ethers } from "ethers";
 
 // Types
@@ -23,6 +24,8 @@ import MintingModal, { TokenType } from "@/components/profile/MintingModal";
 import { useMinting } from "@/hooks/useMinting";
 
 import "./prosemirror.css";
+import { toPng } from "html-to-image";
+import { useToast } from "@/components/shared/ToastProvider";
 
 export default function InDesignTextEditor() {
     const [objects, setObjects] = useState<CanvasObject[]>([]);
@@ -39,9 +42,19 @@ export default function InDesignTextEditor() {
         textAlign: "left",
         bold: false,
         italic: false,
-        fontWeight: "normal", // Added back from original typographyOptions
-        letterSpacing: 0, // Added back from original typographyOptions
-        color: "#ffffff" // Added back from original typographyOptions
+        underline: false,
+        fontWeight: "normal",
+        letterSpacing: 0,
+        color: "#000000",
+        leftIndent: 0,
+        rightIndent: 0,
+        firstLineIndent: 0,
+        spaceBefore: 0,
+        spaceAfter: 0,
+        hyphenate: true,
+        baselineShift: 0,
+        bulletedList: false,
+        numberedList: false
     });
 
     // UI Visibility State
@@ -61,8 +74,32 @@ export default function InDesignTextEditor() {
     ]);
     const [activePageId, setActivePageId] = useState("1");
 
+    // Yjs Sync for Objects
+    useEffect(() => {
+        if (!synced) return;
+        const yObjects = ydoc.getArray<CanvasObject>("canvas-objects");
+        
+        const updateLocal = () => {
+            setObjects(yObjects.toArray());
+        };
+
+        yObjects.observe(updateLocal);
+        updateLocal();
+
+        return () => yObjects.unobserve(updateLocal);
+    }, [synced, ydoc]);
+
+    const syncObjects = (newObjects: CanvasObject[]) => {
+        const yObjects = ydoc.getArray<CanvasObject>("canvas-objects");
+        ydoc.transact(() => {
+            yObjects.delete(0, yObjects.length);
+            yObjects.insert(0, newObjects);
+        });
+    };
+
     // Minting State
     const { mintAsset, isMinting } = useMinting();
+    const { addToast } = useToast();
     const [isMintModalOpen, setIsMintModalOpen] = useState(false);
 
     // Signature State
@@ -70,11 +107,21 @@ export default function InDesignTextEditor() {
         isOpen: boolean;
         pendingObject: CanvasObject | null;
     }>({ isOpen: false, pendingObject: null });
-
-    const handleMint = async (type: TokenType, config: { name: string; symbol: string; amount?: number }) => {
-        const dummyUri = "ipfs://text-document-data";
-        const success = await mintAsset(type, config, dummyUri);
-        if (success) setIsMintModalOpen(false);
+    const handleMint = async (type: TokenType, config: { name: string; symbol: string; amount?: number; mediaType?: number }) => {
+        if (!pageRef.current) return;
+        
+        try {
+            addToast({ type: "info", title: "Rendering Document...", message: "Generating high-quality snapshot of your layout." });
+            const dataUrl = await toPng(pageRef.current, { quality: 1, backgroundColor: "#ffffff" });
+            const response = await fetch(dataUrl);
+            const blob = await response.blob();
+            
+            const success = await mintAsset(type, config, blob);
+            if (success) setIsMintModalOpen(false);
+        } catch (error) {
+            console.error("Snapshot failed:", error);
+            addToast({ type: "error", title: "Snapshot Failed", message: "Could not generate document image." });
+        }
     };
 
     // The global ProseMirror Editor has been replaced with modular floating TextFrames
@@ -96,29 +143,52 @@ export default function InDesignTextEditor() {
     const [isDrawing, setIsDrawing] = useState(false);
     const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
     const [drawCurrent, setDrawCurrent] = useState({ x: 0, y: 0 });
+    const [isDraggingObject, setIsDraggingObject] = useState(false);
+    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+    const [initialObjectPos, setInitialObjectPos] = useState({ x: 0, y: 0 });
 
     const workspaceRef = useRef<HTMLDivElement>(null);
 
     const handleMouseDown = (e: React.MouseEvent) => {
+        const pageRect = pageRef.current?.getBoundingClientRect();
+        const zoomFactor = zoom / 100;
+
         if (activeTool === "SELECT" || activeTool === "DIRECT_SELECT") {
+            const isClickOnObject = (e.target as HTMLElement).closest(".text-frame-container");
+            
+            if (isClickOnObject) {
+                const objectId = isClickOnObject.getAttribute("data-id");
+                const obj = objects.find(o => o.id === objectId);
+                
+                if (obj && !obj.locked) {
+                    setIsDraggingObject(true);
+                    setObjects(prev => prev.map(o => ({ ...o, isSelected: o.id === obj.id })));
+                    
+                    if (pageRect) {
+                        setDragStart({
+                            x: (e.clientX - pageRect.left) / zoomFactor,
+                            y: (e.clientY - pageRect.top) / zoomFactor
+                        });
+                        setInitialObjectPos({ x: obj.x, y: obj.y });
+                    }
+                    return;
+                }
+            }
+
             if (e.target === workspaceRef.current || (e.target as HTMLElement).closest(".workspace-pattern") === e.target) {
                 setObjects(prev => prev.map(o => ({ ...o, isSelected: false })));
             }
         } else if (activeTool === "HAND") {
             setIsPanning(true);
-        } else if (["TEXT", "TEXT_ON_PATH", "RECTANGLE", "RECTANGLE_FRAME", "ELLIPSE", "ELLIPSE_FRAME", "LINE", "POLYGON", "POLYGON_FRAME"].includes(activeTool)) {
-            setIsDrawing(true);
+        } else if (["TEXT", "TEXT_ON_PATH", "RECTANGLE", "RECTANGLE_FRAME", "ELLIPSE", "ELLIPSE_FRAME", "LINE", "POLYGON", "POLYGON_FRAME", "SIGNATURE"].includes(activeTool)) {
             const pageRect = pageRef.current?.getBoundingClientRect();
             if (pageRect) {
-                const zoomFactor = zoom / 100;
-                setDrawStart({
-                    x: (e.clientX - pageRect.left) / zoomFactor,
-                    y: (e.clientY - pageRect.top) / zoomFactor
-                });
-                setDrawCurrent({
-                    x: (e.clientX - pageRect.left) / zoomFactor,
-                    y: (e.clientY - pageRect.top) / zoomFactor
-                });
+                const x = (e.clientX - pageRect.left) / zoomFactor;
+                const y = (e.clientY - pageRect.top) / zoomFactor;
+                
+                setIsDrawing(true);
+                setDrawStart({ x, y });
+                setDrawCurrent({ x, y });
             }
         }
     };
@@ -134,11 +204,29 @@ export default function InDesignTextEditor() {
                 x: (e.clientX - pageRect.left) / zoomFactor,
                 y: (e.clientY - pageRect.top) / zoomFactor
             });
+        } else if (isDraggingObject && pageRef.current) {
+            const pageRect = pageRef.current.getBoundingClientRect();
+            const zoomFactor = zoom / 100;
+            const currentX = (e.clientX - pageRect.left) / zoomFactor;
+            const currentY = (e.clientY - pageRect.top) / zoomFactor;
+            
+            const dx = currentX - dragStart.x;
+            const dy = currentY - dragStart.y;
+            
+            setObjects(prev => prev.map(o => o.isSelected ? {
+                ...o,
+                x: initialObjectPos.x + dx,
+                y: initialObjectPos.y + dy
+            } : o));
         }
     };
 
     const handleMouseUp = () => {
+        if (isDraggingObject) {
+            syncObjects(objects);
+        }
         setIsPanning(false);
+        setIsDraggingObject(false);
         if (isDrawing) {
             setIsDrawing(false);
 
@@ -151,22 +239,26 @@ export default function InDesignTextEditor() {
             if (width < 20) width = 100;
             if (height < 20) height = 50;
 
-            const newObj: CanvasObject = {
-                id: Math.random().toString(36).substring(2, 11),
-                type: activeTool as TextToolType,
-                x,
-                y,
-                width,
-                height,
-                pageId: activePageId,
-                contentId: `text-fragment-${Math.random().toString(36).substring(2, 11)}`,
-                isSelected: true,
-            };
+            if (activeTool !== "SIGNATURE") {
+                const newObj: CanvasObject = {
+                    id: Math.random().toString(36).substring(2, 11),
+                    type: activeTool as TextToolType,
+                    x,
+                    y,
+                    width,
+                    height,
+                    pageId: activePageId,
+                    contentId: `text-fragment-${Math.random().toString(36).substring(2, 11)}`,
+                    isSelected: true,
+                };
 
-            setObjects(prev => [...prev.map(o => ({ ...o, isSelected: false } as CanvasObject)), newObj]);
+                const updatedObjects = [...objects.map(o => ({ ...o, isSelected: false } as CanvasObject)), newObj];
+                setObjects(updatedObjects);
+                syncObjects(updatedObjects);
 
-            if (activeTool === "TEXT" || activeTool === "RECTANGLE_FRAME" || activeTool === "RECTANGLE" || activeTool === "ELLIPSE" || activeTool === "ELLIPSE_FRAME" || activeTool === "SIGNATURE") {
-                setActiveTool("SELECT"); // Switch to selection tool after drawing
+                if (activeTool === "TEXT" || activeTool === "RECTANGLE_FRAME" || activeTool === "RECTANGLE" || activeTool === "ELLIPSE" || activeTool === "ELLIPSE_FRAME") {
+                    setActiveTool("SELECT"); // Switch to selection tool after drawing
+                }
             }
 
             if (activeTool === "SIGNATURE") {
@@ -192,11 +284,25 @@ export default function InDesignTextEditor() {
     };
 
     const handleOptionsChange = (newOptions: Partial<TypographyOptions>) => {
-        setTypography((prev: TypographyOptions) => ({ ...prev, ...newOptions }));
-        // In a complete implementation, this would also apply to the currently selected objects
+        setTypography((prev: TypographyOptions) => {
+            const updated = { ...prev, ...newOptions };
+            
+            // Apply to selected objects
+            const anySelected = objects.some(o => o.isSelected);
+            if (anySelected) {
+                const updatedObjects = objects.map(o => o.isSelected ? {
+                    ...o,
+                    typography: { ...(o.typography || prev), ...newOptions }
+                } : o);
+                setObjects(updatedObjects);
+                syncObjects(updatedObjects);
+            }
+            
+            return updated;
+        });
     };
 
-    const handleMenuAction = (id: string) => {
+    const handleMenuAction = React.useCallback((id: string) => {
         switch (id) {
             case "FILE_NEW":
                 setModalConfig({ isOpen: true, type: "NEW", title: "New Document" });
@@ -271,7 +377,7 @@ export default function InDesignTextEditor() {
             default:
                 console.log("Action not implemented:", id);
         }
-    };
+    }, [objects, activeTool]);
 
     // Keyboard Shortcuts
     useEffect(() => {
@@ -358,6 +464,28 @@ export default function InDesignTextEditor() {
                 }
             }
 
+            // Deletion
+            if (e.key === "Delete" || e.key === "Backspace") {
+                if ((e.target as HTMLElement).tagName !== "INPUT" && (e.target as HTMLElement).tagName !== "TEXTAREA" && !(e.target as HTMLElement).isContentEditable) {
+                    setObjects(prev => prev.filter(o => !o.isSelected));
+                }
+            }
+
+            // Tool Shortcuts (V, A, T, etc.)
+            if (!e.ctrlKey && !e.metaKey && (e.target as HTMLElement).tagName !== "INPUT" && (e.target as HTMLElement).tagName !== "TEXTAREA" && !(e.target as HTMLElement).isContentEditable) {
+                switch (e.key.toLowerCase()) {
+                    case "v": setActiveTool("SELECT"); break;
+                    case "a": setActiveTool("DIRECT_SELECT"); break;
+                    case "t": setActiveTool("TEXT"); break;
+                    case "l": setActiveTool("LINE"); break;
+                    case "f": setActiveTool("RECTANGLE_FRAME"); break;
+                    case "m": setActiveTool("RECTANGLE"); break;
+                    case "h": setActiveTool("HAND"); break;
+                    case "z": setActiveTool("ZOOM"); break;
+                    case "j": setActiveTool("SIGNATURE"); break;
+                }
+            }
+
             // F1-F12 Keybinds
             switch (e.key) {
                 case "F1":
@@ -408,7 +536,7 @@ export default function InDesignTextEditor() {
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [objects, handleMenuAction]);
+    }, [handleMenuAction, activeTool]);
 
     return (
         <>
@@ -461,7 +589,7 @@ export default function InDesignTextEditor() {
                                     width: "210mm",
                                     height: "297mm",
                                     transform: `scale(${zoom / 100})`,
-                                    transformOrigin: "center top"
+                                    transformOrigin: "top left"
                                 }}
                             >
                                 {/* Floating Artboard Elements */}
@@ -532,7 +660,15 @@ export default function InDesignTextEditor() {
                         <div className="w-[300px] bg-[#2d2d2d] border-l border-black flex flex-col z-30">
                             <div className="flex-grow flex flex-col">
                                 <div className="flex-grow min-h-[50%]">
-                                    <CharacterPanel options={typography} onOptionsChange={handleOptionsChange} />
+                                    {objects.find(o => o.isSelected) ? (
+                                        <ElementKanbanPanel 
+                                            elementRef={`TEXT:${objects.find(o => o.isSelected)?.id}`}
+                                            elementTitle={`${objects.find(o => o.isSelected)?.type} Element`}
+                                            elementDescription={`Text frame at X: ${Math.round(objects.find(o => o.isSelected)?.x || 0)}, Y: ${Math.round(objects.find(o => o.isSelected)?.y || 0)}`}
+                                        />
+                                    ) : (
+                                        <CharacterPanel options={typography} onOptionsChange={handleOptionsChange} />
+                                    )}
                                 </div>
                                 <div className="h-[200px] border-t border-black/50">
                                     <ParagraphPanel options={typography} onOptionsChange={handleOptionsChange} />
@@ -680,6 +816,7 @@ export default function InDesignTextEditor() {
                 asset={{ id: ydoc.guid || "text-doc", name: "Text Document", previewUrl: "" }}
                 onMint={handleMint}
                 isMinting={isMinting}
+                defaultMediaType={0}
             />
             <SignatureModal
                 isOpen={signatureModal.isOpen}

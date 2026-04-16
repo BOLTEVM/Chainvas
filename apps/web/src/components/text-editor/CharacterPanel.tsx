@@ -64,9 +64,9 @@ export default function CharacterPanel({ options, onOptionsChange }: CharacterPa
                         />
                         <InDesignInput
                             label={<Baseline className="w-3 h-3 text-gray-500" />}
-                            value={0}
+                            value={options.baselineShift || 0}
                             suffix="pt"
-                            onChange={() => { }}
+                            onChange={(v) => onOptionsChange({ baselineShift: v })}
                         />
                     </div>
                 </section>
@@ -88,20 +88,20 @@ export default function CharacterPanel({ options, onOptionsChange }: CharacterPa
 
                     <div className="grid grid-cols-6 gap-1">
                         <StyleButton
-                            active={options.fontWeight === "bold"}
-                            onClick={() => onOptionsChange({ fontWeight: options.fontWeight === "bold" ? "normal" : "bold" })}
+                            active={options.bold || options.fontWeight === "bold"}
+                            onClick={() => onOptionsChange({ bold: !options.bold, fontWeight: options.fontWeight === "bold" ? "normal" : "bold" })}
                         >
                             <Bold className="w-3 h-3" />
                         </StyleButton>
                         <StyleButton
-                            active={false}
-                            onClick={() => { }}
+                            active={options.italic}
+                            onClick={() => onOptionsChange({ italic: !options.italic })}
                         >
                             <Italic className="w-3 h-3" />
                         </StyleButton>
                         <StyleButton
-                            active={false}
-                            onClick={() => { }}
+                            active={options.underline}
+                            onClick={() => onOptionsChange({ underline: !options.underline })}
                         >
                             <Underline className="w-3 h-3" />
                         </StyleButton>

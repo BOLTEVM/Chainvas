@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { ToastProvider } from "@/components/shared/ToastProvider";
 import { Navbar } from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -21,10 +22,12 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} ${outfit.variable} antialiased`}>
         <Providers>
-          <Navbar />
-          <div className="pt-20 min-h-screen flex flex-col relative w-full overflow-hidden">
-            {children}
-          </div>
+          <ToastProvider>
+            <Navbar />
+            <div className="pt-20 min-h-screen flex flex-col relative w-full overflow-hidden">
+              {children}
+            </div>
+          </ToastProvider>
         </Providers>
       </body>
     </html>

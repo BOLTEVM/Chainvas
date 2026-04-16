@@ -1,26 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Cpu, Shapes, ShieldAlert } from "lucide-react";
 import { useActiveAccount } from "thirdweb/react";
 
 export type TokenType = "ERC20" | "ERC721";
 
+export interface MintableAsset {
+    id: string;
+    name?: string;
+    filename?: string;
+    uri?: string;
+    previewUrl?: string;
+}
+
 interface MintingModalProps {
     isOpen: boolean;
     onClose: () => void;
-    asset: any;
-    onMint: (type: TokenType, config: { name: string; symbol: string; amount?: number }) => void;
+    asset: MintableAsset | null;
+    onMint: (type: TokenType, config: { name: string; symbol: string; amount?: number; mediaType?: number }) => void;
     isMinting: boolean;
+    defaultMediaType?: number | undefined; 
 }
 
-export default function MintingModal({ isOpen, onClose, asset, onMint, isMinting }: MintingModalProps) {
+export default function MintingModal({ isOpen, onClose, asset, onMint, isMinting, defaultMediaType }: MintingModalProps) {
     const account = useActiveAccount();
     const [tokenType, setTokenType] = useState<TokenType>("ERC721");
     const [name, setName] = useState("");
     const [symbol, setSymbol] = useState("");
     const [amount, setAmount] = useState<number | "">("");
+
+    useEffect(() => {
+        if (isOpen) {
+            setTokenType("ERC721");
+            setName("");
+            setSymbol("");
+            setAmount("");
+        }
+    }, [isOpen]);
 
     const handleMint = () => {
         if (!name || !symbol) return;
@@ -29,7 +47,8 @@ export default function MintingModal({ isOpen, onClose, asset, onMint, isMinting
         onMint(tokenType, {
             name,
             symbol,
-            amount: tokenType === "ERC20" ? Number(amount) : undefined
+            amount: tokenType === "ERC20" ? Number(amount) : undefined,
+            mediaType: defaultMediaType
         });
     };
 

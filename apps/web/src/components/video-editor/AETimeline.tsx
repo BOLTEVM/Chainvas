@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import { PlaybackState, Layer } from "@/app/video/types";
 import { Eye, Lock, Volume2, Plus, Scissors, Timer } from "lucide-react";
 
@@ -12,17 +13,53 @@ interface AETimelineProps {
     onAddLayer: () => void;
     onSplit: () => void;
     onSeek: (time: number) => void;
+    onUpdateLayer: (id: string, updates: Partial<Layer>) => void;
+    zoom?: number;
 }
 
-export default function AETimeline({ playback, layers, activeLayerId, onSelectLayer, onToggleLayerProp, onAddLayer, onSplit, onSeek }: AETimelineProps) {
-    const pixelsPerSecond = 100;
+export default function AETimeline({ playback, layers, activeLayerId, onSelectLayer, onToggleLayerProp, onAddLayer, onSplit, onSeek, onUpdateLayer, zoom = 100 }: AETimelineProps) {
+    const pixelsPerSecond = 100 * (zoom / 100);
+    const [draggingLayerId, setDraggingLayerId] = useState<string | null>(null);
+    const dragStartX = useRef(0);
+    const dragStartStartTime = useRef(0);
 
     const handleTimelineClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (draggingLayerId) return; // Don't seek while dragging
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const time = x / pixelsPerSecond;
         onSeek(Math.max(0, Math.min(time, playback.duration)));
     };
+
+    const handleLayerMouseDown = (e: React.MouseEvent, layer: Layer) => {
+        e.stopPropagation();
+        onSelectLayer(layer.id);
+        setDraggingLayerId(layer.id);
+        dragStartX.current = e.clientX;
+        dragStartStartTime.current = layer.startTime;
+    };
+
+    useEffect(() => {
+        if (!draggingLayerId) return;
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const deltaX = e.clientX - dragStartX.current;
+            const deltaTime = deltaX / pixelsPerSecond;
+            const newStartTime = Math.max(0, dragStartStartTime.current + deltaTime);
+            onUpdateLayer(draggingLayerId, { startTime: newStartTime });
+        };
+
+        const handleMouseUp = () => {
+            setDraggingLayerId(null);
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseup", handleMouseUp);
+        };
+    }, [draggingLayerId, pixelsPerSecond]);
 
     return (
         <div className="h-[300px] bg-[#2d2d2d] flex flex-col border-t border-black select-none">
@@ -134,10 +171,10 @@ export default function AETimeline({ playback, layers, activeLayerId, onSelectLa
                         {layers.map((layer, index) => (
                             <div
                                 key={layer.id}
-                                onClick={() => onSelectLayer(layer.id)}
                                 className={`h-8 border-b border-black/10 relative cursor-pointer transition-colors ${activeLayerId === layer.id ? "bg-[#d391fc]/5" : index % 2 === 0 ? "bg-[#2d2d2d]/10" : "bg-transparent"}`}
                             >
                                 <div
+                                    onMouseDown={(e) => handleLayerMouseDown(e, layer)}
                                     className={`absolute top-1 bottom-1 rounded shadow-lg border-x-2 border-white/20 flex items-center px-2 cursor-move group ${activeLayerId === layer.id ? "ring-2 ring-white ring-offset-1 ring-offset-black/50 overflow-visible z-20" : ""}`}
                                     style={{
                                         left: `${layer.startTime * pixelsPerSecond}px`,

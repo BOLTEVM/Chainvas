@@ -19,6 +19,14 @@ export default function SignaturePad({ onSave, onClear }: SignaturePadProps) {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
+        // Handle HiDPI scaling
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        
+        ctx.scale(dpr, dpr);
         ctx.strokeStyle = "#ffffff";
         ctx.lineWidth = 2;
         ctx.lineCap = "round";

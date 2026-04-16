@@ -2,9 +2,10 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract MediaAsset is ERC721URIStorage, Ownable {
+contract MediaAsset is ERC721URIStorage, AccessControl {
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     uint256 private _nextTokenId;
 
     enum MediaType { TEXT, PHOTO, VIDEO }
@@ -19,9 +20,12 @@ contract MediaAsset is ERC721URIStorage, Ownable {
 
     event MediaMinted(uint256 indexed tokenId, MediaType mediaType, address indexed creator, string tokenURI);
 
-    constructor() ERC721("BOLTChainvasMedia", "BCVM") Ownable(msg.sender) {}
+    constructor() ERC721("BOLTChainvasMedia", "BCVM") {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
+    }
 
-    function mintMedia(address to, string memory uri, MediaType mediaType) public returns (uint256) {
+    function mintMedia(address to, string memory uri, MediaType mediaType) public onlyRole(MINTER_ROLE) returns (uint256) {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
@@ -39,5 +43,9 @@ contract MediaAsset is ERC721URIStorage, Ownable {
 
     function getMediaMetadata(uint256 tokenId) public view returns (MediaMetadata memory) {
         return mediaData[tokenId];
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721URIStorage, AccessControl) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 }

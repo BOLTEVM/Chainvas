@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { PlaybackState, Layer } from "@/app/video/types";
 import { Play, Pause, SkipBack, SkipForward, Maximize, Volume2, Settings, Lock } from "lucide-react";
@@ -27,6 +27,7 @@ export default function CompositionView({
     zoom = 100
 }: CompositionViewProps) {
     const [isDragging, setIsDragging] = useState(false);
+    const compositionRef = useRef<HTMLDivElement>(null);
 
     const formatTimecode = (seconds: number) => {
         const h = Math.floor(seconds / 3600);
@@ -38,19 +39,28 @@ export default function CompositionView({
 
     // Sync individual video elements with global playback
     useEffect(() => {
-        const videos = document.querySelectorAll('video');
+        if (!compositionRef.current) return;
+        const videos = compositionRef.current.querySelectorAll('video');
         videos.forEach(v => {
             if (playback.isPlaying) {
+                // Ensure video is in sync when starting playback
+                if (Math.abs(v.currentTime - playback.currentTime) > 0.1) {
+                    v.currentTime = playback.currentTime;
+                }
                 v.play().catch(() => { });
             } else {
                 v.pause();
+                // Ensure exact sync when paused
+                v.currentTime = playback.currentTime;
             }
         });
     }, [playback.isPlaying]);
 
     useEffect(() => {
-        const videos = document.querySelectorAll('video');
+        if (!compositionRef.current || !playback.isPlaying) return;
+        const videos = compositionRef.current.querySelectorAll('video');
         videos.forEach(v => {
+            // Only force sync if drift is noticeable (>100ms)
             if (Math.abs(v.currentTime - playback.currentTime) > 0.1) {
                 v.currentTime = playback.currentTime;
             }
@@ -99,6 +109,7 @@ export default function CompositionView({
 
                 {/* Simulated Final Canvas */}
                 <div
+                    ref={compositionRef}
                     className="relative aspect-video bg-black shadow-2xl overflow-hidden border border-white/5 w-[80%] max-w-[1200px] transition-transform duration-200 ease-out"
                     style={{ transform: `scale(${zoom / 100})` }}
                 >

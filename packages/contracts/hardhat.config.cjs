@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -15,4 +16,10 @@ module.exports = {
             }
         ],
     },
+    networks: {
+        arbitrumSepolia: {
+            url: process.env.VITE_RPC_URL || "https://sepolia-rollup.arbitrum.io/rpc",
+            accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
+        }
+    }
 };

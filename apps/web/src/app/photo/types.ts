@@ -10,6 +10,8 @@ export interface ToolOptions {
     shapeFill: string;
     shapeStroke: string;
     shapeStrokeWidth: number;
+    hardness: number;
+    exportScale: number;
 }
 
 export interface FabricObject extends fabric.Object {
