@@ -1,0 +1,15 @@
+{
+  "note": "Gas used per entry point, measured by test/MediaAsset.cjs. This detects CHANGE, not badness: a recorded baseline says what the contract costs today and nothing about whether that price is good. Regenerate with `npx hardhat test`.",
+  "recordedAt": "2026-10-21T15:59:43.422Z",
+  "solidity": "0.8.20",
+  "entryPoints": {
+    "deploy": 1716494,
+    "grantRole": 51462,
+    "mintMedia(type=0)": 168733,
+    "mintMedia(type=1)": 134545,
+    "mintMedia(type=2)": 134545,
+    "mintMedia(uri=16b)": 168781,
+    "mintMedia(uri=512b)": 502444,
+    "revokeRole": 29475
+  }
+}

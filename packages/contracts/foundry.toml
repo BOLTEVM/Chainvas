@@ -1,0 +1,26 @@
+[profile.default]
+# Quai Network EVM zones support Solidity <= 0.8.20 with the london hardfork.
+src = "contracts"
+test = "test/foundry"
+out = "out-forge"
+cache_path = "cache-forge"
+libs = ["lib"]
+solc = "0.8.20"
+evm_version = "london"
+optimizer = true
+optimizer_runs = 1000
+via_ir = false
+
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+    "forge-std/=lib/forge-std/src/",
+]
+
+[fmt]
+line_length = 120
+tab_width = 4
+bracket_spacing = true
+
+[rpc_endpoints]
+quai_mainnet = "https://rpc.quai.network/cyprus1"
+quai_orchard = "https://orchard.rpc.quai.network/cyprus1"
