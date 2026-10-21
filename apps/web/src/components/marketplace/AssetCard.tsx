@@ -1,6 +1,7 @@
 "use client";
 
 import { MarketplaceAsset } from "@/hooks/useSpacetimeDB";
+import { resolveIpfsUrl } from "@/lib/quai";
 import { ShoppingCart, Check, Play, FileText, ImageIcon, Music } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -38,7 +39,7 @@ export default function AssetCard({ asset, onPurchase }: AssetCardProps) {
             {/* Preview Image */}
             <div className="aspect-video relative overflow-hidden bg-black">
                 <img
-                    src={asset.previewUrl}
+                    src={resolveIpfsUrl(asset.previewUrl)}
                     alt={asset.name}
                     className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
                 />

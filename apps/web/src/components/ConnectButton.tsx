@@ -1,28 +1,42 @@
 "use client";
 
-import { usePrivy } from "@privy-io/react-auth";
 import { Zap, LogOut, User, Building2, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
+import { useQuaiWallet } from "@/hooks/useQuaiWallet";
 
 export function ConnectButton() {
-    const { login, logout, authenticated, user } = usePrivy();
+    const { address, isPelagusInstalled, isConnecting, connect, disconnect, network } = useQuaiWallet();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const address = user?.wallet?.address;
     const shortAddress = address
         ? `${address.slice(0, 6)}...${address.slice(-4)}`
         : "Connected";
 
-    if (!authenticated) {
+    if (!address) {
+        if (!isPelagusInstalled) {
+            return (
+                <a
+                    href="https://pelaguswallet.io"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-full font-medium transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_30px_rgba(249,115,22,0.6)]"
+                >
+                    <Zap className="w-4 h-4 fill-current" />
+                    <span>Install Pelagus</span>
+                </a>
+            );
+        }
         return (
             <button
-                onClick={login}
-                className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-full font-medium transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_30px_rgba(249,115,22,0.6)]"
+                onClick={connect}
+                disabled={isConnecting}
+                title={`Connect to ${network.name}`}
+                className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-full font-medium transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_30px_rgba(249,115,22,0.6)] disabled:opacity-50"
             >
                 <Zap className="w-4 h-4 fill-current" />
-                <span>Connect</span>
+                <span>{isConnecting ? "Connecting..." : "Connect"}</span>
             </button>
         );
     }
@@ -66,7 +80,7 @@ export function ConnectButton() {
                                 <div className="my-1 border-t border-white/5" />
                                 <button
                                     onClick={() => {
-                                        logout();
+                                        disconnect();
                                         setIsMenuOpen(false);
                                     }}
                                     className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"

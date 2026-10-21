@@ -49,9 +49,12 @@ export class ChainvasWalletPipeline {
             return { success: false, error: `Invalid recipient address: "${req.to}"` };
         }
 
-        const rpcUrl = req.rpcUrl || 'http://127.0.0.1:8545';
+        // Default to the Quai EVM: Orchard testnet RPC + chainId 15000, mainnet is 9.
+        const rpcUrl = req.rpcUrl || 'https://orchard.rpc.quai.network/cyprus1';
         const timeoutMs = req.timeoutMs || 60_000;
-        const provider = req.provider || (typeof window !== 'undefined' ? (window as any).ethereum : undefined);
+        const provider = req.provider || (typeof window !== 'undefined'
+            ? ((window as any).pelagus ?? (window as any).ethereum)
+            : undefined);
 
         if (provider && typeof provider.request === 'function') {
             if (req.chainId) {
@@ -61,7 +64,7 @@ export class ChainvasWalletPipeline {
             try {
                 let fromAddress = req.from;
                 if (!fromAddress) {
-                    const accounts = await provider.request({ method: 'eth_accounts' });
+                    const accounts = await this.rpcRequest(provider, 'accounts', []);
                     fromAddress = accounts && accounts.length > 0 ? accounts[0] : undefined;
                 }
 
@@ -73,7 +76,7 @@ export class ChainvasWalletPipeline {
                 };
                 if (req.gasLimit) txParams.gas = '0x' + BigInt(req.gasLimit).toString(16);
 
-                const txHash = await provider.request({ method: 'eth_sendTransaction', params: [txParams] });
+                const txHash = await this.rpcRequest(provider, 'sendTransaction', [txParams]);
                 return this.waitForReceipt(txHash, rpcUrl, timeoutMs);
             } catch (err: any) {
                 return { success: false, error: err.message || 'Transaction submission failed.' };
@@ -83,15 +86,38 @@ export class ChainvasWalletPipeline {
         return this.waitForReceipt('0x0000000000000000000000000000000000000000000000000000000000000000', rpcUrl, 500);
     }
 
+    /**
+     * Quai nodes expose the `quai_` JSON-RPC namespace rather than `eth_`.
+     * Try `quai_<method>` first (Pelagus / go-quai), then fall back to `eth_`
+     * for generic EVM providers so the pipeline still works elsewhere.
+     */
+    private static async rpcRequest(provider: any, method: string, params: any[]): Promise<any> {
+        try {
+            return await provider.request({ method: `quai_${method}`, params });
+        } catch (err: any) {
+            // Method-not-found style errors mean the provider only speaks eth_.
+            if (err?.code === -32601 || err?.code === 4201 || /not found|unsupported|does not exist/i.test(err?.message || '')) {
+                return provider.request({ method: `eth_${method}`, params });
+            }
+            throw err;
+        }
+    }
+
     public static async ensureChain(provider: any, chainId: number, rpcUrl: string): Promise<{ success: boolean; error?: string }> {
         const hexChainId = '0x' + chainId.toString(16);
         try {
             await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: hexChainId }] });
             return { success: true };
         } catch (switchError: any) {
+            // Pelagus (Quai) manages the active shard inside the wallet and may not
+            // implement wallet_switchEthereumChain — proceed and let the wallet decide.
+            if (switchError.code === -32601 || /not found|unsupported|does not exist/i.test(switchError?.message || '')) {
+                console.warn('[ChainvasWalletPipeline] Provider does not support chain switching; assuming the wallet-selected network.');
+                return { success: true };
+            }
             if (switchError.code === 4902 || switchError.message?.includes('Unrecognized chain')) {
                 try {
-                    await provider.request({ method: 'wallet_addEthereumChain', params: [{ chainId: hexChainId, chainName: `Chain ${chainId}`, rpcUrls: [rpcUrl] }] });
+                    await provider.request({ method: 'wallet_addEthereumChain', params: [{ chainId: hexChainId, chainName: `Quai (chain ${chainId})`, rpcUrls: [rpcUrl] }] });
                     return { success: true };
                 } catch (addError: any) {
                     return { success: false, error: addError.message };
@@ -103,15 +129,23 @@ export class ChainvasWalletPipeline {
 
     public static async waitForReceipt(txHash: string, rpcUrl: string, timeoutMs: number = 60_000): Promise<ChainvasTxResult> {
         const startTime = Date.now();
+        // Quai nodes expose quai_getTransactionReceipt; generic EVM nodes use eth_.
+        const receiptMethods = ['quai_getTransactionReceipt', 'eth_getTransactionReceipt'];
+        let methodIdx = 0;
         while (Date.now() - startTime < timeoutMs) {
             try {
                 const res = await fetch(rpcUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ jsonrpc: '2.0', id: Date.now(), method: 'eth_getTransactionReceipt', params: [txHash] })
+                    body: JSON.stringify({ jsonrpc: '2.0', id: Date.now(), method: receiptMethods[methodIdx], params: [txHash] })
                 });
                 if (res.ok) {
                     const json = await res.json();
+                    if (json.error && methodIdx === 0) {
+                        // quai_ namespace unsupported — retry permanently on eth_.
+                        methodIdx = 1;
+                        continue;
+                    }
                     if (json.result && json.result.blockNumber) {
                         const isSuccess = json.result.status === '0x1' || json.result.status === 1 || json.result.status === '1';
                         return {

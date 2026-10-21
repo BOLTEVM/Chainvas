@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Cpu, Shapes, ShieldAlert } from "lucide-react";
-import { useActiveAccount } from "thirdweb/react";
+import { useQuaiWallet } from "@/hooks/useQuaiWallet";
+import { resolveIpfsUrl } from "@/lib/quai";
 
 export type TokenType = "ERC20" | "ERC721";
 
@@ -25,7 +26,7 @@ interface MintingModalProps {
 }
 
 export default function MintingModal({ isOpen, onClose, asset, onMint, isMinting, defaultMediaType }: MintingModalProps) {
-    const account = useActiveAccount();
+    const { address: account, isPelagusInstalled, connect, isConnecting, network } = useQuaiWallet();
     const [tokenType, setTokenType] = useState<TokenType>("ERC721");
     const [name, setName] = useState("");
     const [symbol, setSymbol] = useState("");
@@ -82,7 +83,30 @@ export default function MintingModal({ isOpen, onClose, asset, onMint, isMinting
                         {!account ? (
                             <div className="text-center py-8 space-y-4">
                                 <ShieldAlert className="w-12 h-12 text-yellow-500 mx-auto" />
-                                <p className="text-gray-400 text-sm">Please connect your wallet to mint assets.</p>
+                                {isPelagusInstalled ? (
+                                    <>
+                                        <p className="text-gray-400 text-sm">Connect your Pelagus wallet to mint on {network.name}.</p>
+                                        <button
+                                            onClick={connect}
+                                            disabled={isConnecting}
+                                            className="px-6 py-2 rounded-lg font-bold text-sm text-black bg-[#00ffa3] hover:bg-[#00ffa3]/90 transition-all disabled:opacity-50"
+                                        >
+                                            {isConnecting ? "Connecting..." : "Connect Pelagus"}
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p className="text-gray-400 text-sm">Pelagus wallet not detected.</p>
+                                        <a
+                                            href="https://pelaguswallet.io"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="inline-block px-6 py-2 rounded-lg font-bold text-sm text-black bg-[#00ffa3] hover:bg-[#00ffa3]/90 transition-all"
+                                        >
+                                            Install Pelagus
+                                        </a>
+                                    </>
+                                )}
                             </div>
                         ) : (
                             <div className="space-y-8">
@@ -91,7 +115,7 @@ export default function MintingModal({ isOpen, onClose, asset, onMint, isMinting
                                     <div className="w-16 h-16 rounded-lg bg-black overflow-hidden flex-shrink-0 border border-white/10">
                                         {asset.uri || asset.previewUrl ? (
                                             <img
-                                                src={asset.uri || asset.previewUrl}
+                                                src={resolveIpfsUrl(asset.uri || asset.previewUrl)}
                                                 className="w-full h-full object-cover"
                                                 alt={asset.filename || asset.name}
                                             />

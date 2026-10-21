@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "next build --webpack",
         "start": "next start",
         "lint": "next lint"
     },
@@ -25,6 +25,7 @@
         "prosemirror-schema-basic": "^1.2.4",
         "prosemirror-state": "^1.4.4",
         "prosemirror-view": "^1.41.6",
+        "quais": "^1.0.0-alpha.57",
         "react": "19.2.3",
         "react-dom": "19.2.3",
         "spacetimedb": "^2.0.3",
