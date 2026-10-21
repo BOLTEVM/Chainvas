@@ -1,0 +1,178 @@
+{
+  "checks": [
+    {
+      "name": "IPFS upload: document (TEXT) (fallback URI; upload failed: Forbidden - You don't have permission to use this service.)",
+      "ok": true,
+      "detail": "ipfs://smoke-test/contractual-agreement.md#sha256=68711bf237ce57cdcde3dcf3e7d95adecb98d0a71ffb21312f8909d5497a445a"
+    },
+    {
+      "name": "IPFS upload: image (PHOTO) (fallback URI; upload failed: Forbidden - You don't have permission to use this service.)",
+      "ok": true,
+      "detail": "ipfs://smoke-test/smoke-image.png#sha256=fe0e65d8387cedf35711e55af93b62c85a6289b21bc2767fa3858eaccd002dc8"
+    },
+    {
+      "name": "IPFS upload: video (VIDEO) (fallback URI; upload failed: Forbidden - You don't have permission to use this service.)",
+      "ok": true,
+      "detail": "ipfs://smoke-test/smoke-video.mp4#sha256=cce9c9fd7e9af77862cdae9a8aaeffd7608c16d0f3cc29063c9f3e497b80265b"
+    },
+    {
+      "name": "Mint NFT: document (TEXT)",
+      "ok": true,
+      "detail": "tokenId 1, tx 0x0027006d224e4632de65d0ba334681689c0ac2ee2670f29fda6a4fe532b94b35"
+    },
+    {
+      "name": "  event mediaType matches",
+      "ok": true
+    },
+    {
+      "name": "  event recipient matches",
+      "ok": true
+    },
+    {
+      "name": "  ownerOf(1)",
+      "ok": true,
+      "detail": "0x0026a4b3f0E8b1E97a1a67C08CdF7259d995419f"
+    },
+    {
+      "name": "  tokenURI(1) round-trips",
+      "ok": true,
+      "detail": "ipfs://smoke-test/contractual-agreement.md#sha256=68711bf237ce57cdcde3dcf3e7d95adecb98d0a7"
+    },
+    {
+      "name": "  metadata(1): type/creator/timestamp",
+      "ok": true,
+      "detail": "type=0 creator=0x0026a4b3… ts=1792602302"
+    },
+    {
+      "name": "Mint NFT: image (PHOTO)",
+      "ok": true,
+      "detail": "tokenId 2, tx 0x004100191835111ed974cd5a4a416579861b42ee99915ac3c60c8e84f7e4e9b3"
+    },
+    {
+      "name": "  event mediaType matches",
+      "ok": true
+    },
+    {
+      "name": "  event recipient matches",
+      "ok": true
+    },
+    {
+      "name": "  ownerOf(2)",
+      "ok": true,
+      "detail": "0x0026a4b3f0E8b1E97a1a67C08CdF7259d995419f"
+    },
+    {
+      "name": "  tokenURI(2) round-trips",
+      "ok": true,
+      "detail": "ipfs://smoke-test/smoke-image.png#sha256=fe0e65d8387cedf35711e55af93b62c85a6289b21bc2767fa"
+    },
+    {
+      "name": "  metadata(2): type/creator/timestamp",
+      "ok": true,
+      "detail": "type=1 creator=0x0026a4b3… ts=1792602348"
+    },
+    {
+      "name": "Mint NFT: video (VIDEO)",
+      "ok": true,
+      "detail": "tokenId 3, tx 0x00470026dd378115302ab3877e16f8a4ca823b173d6afa9e72cac380c273f647"
+    },
+    {
+      "name": "  event mediaType matches",
+      "ok": true
+    },
+    {
+      "name": "  event recipient matches",
+      "ok": true
+    },
+    {
+      "name": "  ownerOf(3)",
+      "ok": true,
+      "detail": "0x0026a4b3f0E8b1E97a1a67C08CdF7259d995419f"
+    },
+    {
+      "name": "  tokenURI(3) round-trips",
+      "ok": true,
+      "detail": "ipfs://smoke-test/smoke-video.mp4#sha256=cce9c9fd7e9af77862cdae9a8aaeffd7608c16d0f3cc29063"
+    },
+    {
+      "name": "  metadata(3): type/creator/timestamp",
+      "ok": true,
+      "detail": "type=2 creator=0x0026a4b3… ts=1792602367"
+    },
+    {
+      "name": "totalMinted advanced by 3",
+      "ok": true,
+      "detail": "1 → 4"
+    },
+    {
+      "name": "Mint ERC-20: 100 video units",
+      "ok": true,
+      "detail": "tx 0x000a00165ec1692f8501cba2c99f86f8c0ea6ebbc2ea809c2d51c5ae7e071d98"
+    },
+    {
+      "name": "Mint ERC-20: 250 image units",
+      "ok": true,
+      "detail": "tx 0x0004003118c1d13a3eb28fb04b4c3c969b31d5129106da5e9ff881e9579dd089"
+    },
+    {
+      "name": "Mint ERC-20: 500 document units",
+      "ok": true,
+      "detail": "tx 0x00460067ade22a0dff820a6f32e9931a1a879ae438a11ffc26870c31765b605b"
+    },
+    {
+      "name": "totalSupply advanced by 850 BCVT",
+      "ok": true,
+      "detail": "1000.0 → 1850.0"
+    },
+    {
+      "name": "deployer balance reflects mints",
+      "ok": true,
+      "detail": "1850.0 BCVT"
+    },
+    {
+      "name": "unauthorized mint reverts",
+      "ok": true,
+      "detail": "MINTER_ROLE enforced"
+    },
+    {
+      "name": "empty URI reverts",
+      "ok": true,
+      "detail": "EmptyTokenURI"
+    },
+    {
+      "name": "nonexistent token metadata reverts",
+      "ok": true,
+      "detail": "ERC721NonexistentToken"
+    }
+  ],
+  "failures": 0,
+  "deployer": "0x0026a4b3f0E8b1E97a1a67C08CdF7259d995419f",
+  "contracts": {
+    "MediaAsset": "0x007ff4dAbb1FFFba138Aeb03DF0Fb309c7f3FBA4",
+    "MediaToken": "0x005b1FcC5ECe97176667F1E1c803Da21bEbF2CFB"
+  },
+  "assets": [
+    {
+      "file": "contractual-agreement.md",
+      "label": "document (TEXT)",
+      "uri": "ipfs://smoke-test/contractual-agreement.md#sha256=68711bf237ce57cdcde3dcf3e7d95adecb98d0a71ffb21312f8909d5497a445a",
+      "sha256": "68711bf237ce57cdcde3dcf3e7d95adecb98d0a71ffb21312f8909d5497a445a",
+      "tokenId": "1"
+    },
+    {
+      "file": "smoke-image.png",
+      "label": "image (PHOTO)",
+      "uri": "ipfs://smoke-test/smoke-image.png#sha256=fe0e65d8387cedf35711e55af93b62c85a6289b21bc2767fa3858eaccd002dc8",
+      "sha256": "fe0e65d8387cedf35711e55af93b62c85a6289b21bc2767fa3858eaccd002dc8",
+      "tokenId": "2"
+    },
+    {
+      "file": "smoke-video.mp4",
+      "label": "video (VIDEO)",
+      "uri": "ipfs://smoke-test/smoke-video.mp4#sha256=cce9c9fd7e9af77862cdae9a8aaeffd7608c16d0f3cc29063c9f3e497b80265b",
+      "sha256": "cce9c9fd7e9af77862cdae9a8aaeffd7608c16d0f3cc29063c9f3e497b80265b",
+      "tokenId": "3"
+    }
+  ],
+  "failuresTotal": 0
+}

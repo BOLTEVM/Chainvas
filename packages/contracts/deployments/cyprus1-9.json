@@ -1,0 +1,14 @@
+{
+  "network": "cyprus1",
+  "chainId": 9,
+  "deployedAt": "2026-10-21T16:43:59.604Z",
+  "contracts": {
+    "MediaAsset": "0x007ff4dAbb1FFFba138Aeb03DF0Fb309c7f3FBA4",
+    "MediaToken": "0x005b1FcC5ECe97176667F1E1c803Da21bEbF2CFB"
+  },
+  "frontendEnv": {
+    "NEXT_PUBLIC_QUAI_NETWORK": "mainnet",
+    "NEXT_PUBLIC_ERC721_ADDRESS": "0x007ff4dAbb1FFFba138Aeb03DF0Fb309c7f3FBA4",
+    "NEXT_PUBLIC_ERC20_ADDRESS": "0x005b1FcC5ECe97176667F1E1c803Da21bEbF2CFB"
+  }
+}
