@@ -44,3 +44,10 @@ typechain-types/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# foundry
+out-forge/
+cache-forge/
+
+# local build logs
+build.log
