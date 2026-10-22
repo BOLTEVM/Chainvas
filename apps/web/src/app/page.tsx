@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { assetPath } from "@/lib/assetPath";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { PenTool, Image as ImageIcon, Video, ArrowRight } from "lucide-react";
@@ -23,7 +24,7 @@ export default function Home() {
           className="mb-8 relative w-64 h-24 md:w-96 md:h-36"
         >
           <Image
-            src="/bolt-logo.png"
+            src={assetPath("/bolt-logo.png")}
             alt="BOLT FONT Logo"
             fill
             className="object-contain drop-shadow-[0_0_15px_rgba(249,115,22,0.8)]"

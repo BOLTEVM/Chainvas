@@ -1,0 +1,46 @@
+build(web): publish the app to GitHub Pages as a static export
+
+Adds .github/workflows/deploy-pages.yml, which builds apps/web and deploys it
+to Pages on every push to main that touches the web app (Settings ▸ Pages ▸
+Source is already "GitHub Actions"). The base path is derived from the
+repository name, so forks and renames need no edits.
+
+next.config.ts now has two modes. The default is unchanged: a Node build that
+sends the COOP/COEP headers enabling SharedArrayBuffer. With GITHUB_PAGES=true
+it switches to `output: "export"` with trailingSlash, unoptimized images and a
+basePath, and drops headers() — `output: "export"` rejects it and a static host
+cannot send headers anyway. The video renderer pins the single-threaded
+@ffmpeg/core, which does not need cross-origin isolation, so the Pages build
+still renders video; encoding is just slower.
+
+Three things blocked a static export and are fixed:
+
+- fabric.js takes a Node/jsdom code path when loaded without a DOM and died on
+  the unbuilt native `canvas.node` binding. This also broke `next build` and
+  made /photo return 500 in dev. The editor now loads through
+  `dynamic(..., { ssr: false })` so it is never evaluated on the server, and
+  `canvas`/`jsdom` are aliased to an empty stub for both webpack and Turbopack.
+- PrivyProvider threw "invalid Privy app ID" on the placeholder value, taking
+  down every page and failing prerender. A missing or placeholder id is now
+  treated as "wallet login not configured" and the provider is skipped.
+- useMinting threw at module scope when NEXT_PUBLIC_THIRDWEB_CLIENT_ID was
+  unset, so importing the hook killed the page. The thirdweb storage client is
+  created lazily and only errors when an upload is actually attempted.
+
+The build therefore succeeds with no secrets configured; supplying them as
+repository secrets/variables re-enables wallet login and IPFS upload.
+
+Also: next/image with `images.unoptimized` hands `src` to the browser
+untouched, so /icon.png and /bolt-logo.png resolved against the domain root and
+404'd under a project Pages site — both now go through a small assetPath()
+helper. The `/out/` ignore rule was root-anchored and did not cover
+apps/web/out, which would have committed the 9 MB export.
+
+Verified: static export of all 11 routes with no secrets set, served from a
+/Chainvas/ sub-path and exercised in a browser — home, video, photo and text
+load with no console errors or 404s, and client-side navigation keeps the base
+path. The default `next build` and `tsc`/`eslint` remain clean.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01JV9ovcMcDxxvQCkLSZMLeU
+

@@ -15,14 +15,23 @@ import {
     explorerTxUrl,
 } from "@/lib/quai";
 
-const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
-if (!clientId) {
-    throw new Error("Missing NEXT_PUBLIC_THIRDWEB_CLIENT_ID environment variable.");
-}
-
 // thirdweb is used for IPFS storage only; all chain interaction on Quai goes
 // through the quais SDK because Quai nodes expose the quai_ JSON-RPC namespace.
-const client = createThirdwebClient({ clientId });
+// The client is created lazily: throwing at module scope took down every page
+// that imports this hook (and failed the static export) when the key was unset,
+// even though the key is only needed at the moment an asset is uploaded.
+const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
+
+let cachedClient: ReturnType<typeof createThirdwebClient> | null = null;
+const getStorageClient = () => {
+    if (!clientId) {
+        throw new Error(
+            "IPFS uploads need NEXT_PUBLIC_THIRDWEB_CLIENT_ID. Set it in apps/web/.env.local and reload.",
+        );
+    }
+    if (!cachedClient) cachedClient = createThirdwebClient({ clientId });
+    return cachedClient;
+};
 
 export function useMinting() {
     const wallet = useQuaiWallet();
@@ -32,7 +41,7 @@ export function useMinting() {
     const uploadToIPFS = async (file: File | Blob) => {
         try {
             const uris = await upload({
-                client,
+                client: getStorageClient(),
                 files: [file as any],
             });
             return uris[0];

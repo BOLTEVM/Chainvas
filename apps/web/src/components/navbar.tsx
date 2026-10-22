@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { assetPath } from "@/lib/assetPath";
 import { PenTool, Image as ImageIcon, Video, LayoutDashboard } from "lucide-react";
 import { ConnectButton } from "./ConnectButton";
 
@@ -11,7 +12,7 @@ export function Navbar() {
                     <div className="flex items-center gap-4">
                         <Link href="/" className="flex items-center gap-2 group">
                             <div className="relative w-10 h-10 flex items-center justify-center bg-white rounded-lg p-1 transition-transform group-hover:scale-105">
-                                <Image src="/icon.png" alt="Chainvas Logo" width={32} height={32} className="object-contain" />
+                                <Image src={assetPath("/icon.png")} alt="Chainvas Logo" width={32} height={32} className="object-contain" />
                             </div>
                             <span className="text-2xl font-bold tracking-tight text-white group-hover:text-primary transition-colors">
                                 Chainvas

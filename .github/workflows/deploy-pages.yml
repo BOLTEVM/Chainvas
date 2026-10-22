@@ -1,0 +1,107 @@
+name: Deploy web app to GitHub Pages
+
+# Publishes apps/web as a static export to GitHub Pages.
+# Repository Settings ▸ Pages ▸ Source must be set to "GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/web/**"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "package.json"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let an in-flight deploy finish rather than cancelling it half-published,
+# but keep only the newest queued run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # packages/contracts carries Foundry submodules the web build never reads.
+          submodules: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Resolve base path
+        id: basepath
+        run: |
+          repo='${{ github.event.repository.name }}'
+          owner='${{ github.repository_owner }}'
+          # <owner>.github.io is served from the domain root; every other repo
+          # is a project site served from https://<owner>.github.io/<repo>/.
+          if [ "$(echo "$repo" | tr '[:upper:]' '[:lower:]')" = "$(echo "$owner" | tr '[:upper:]' '[:lower:]').github.io" ]; then
+            echo "value=" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=/$repo" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        # Only the web workspace: the contracts package pulls in Hardhat/Foundry
+        # tooling that Pages never builds. Lifecycle scripts are skipped because
+        # fabric's optional `canvas` native addon is aliased out of the bundle
+        # (see apps/web/next.config.ts) and never needs compiling.
+        run: pnpm install --filter @boltchainvas/web --frozen-lockfile --ignore-scripts
+
+      - name: Build static export
+        working-directory: apps/web
+        env:
+          GITHUB_PAGES: "true"
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.basepath.outputs.value }}
+          NEXT_TELEMETRY_DISABLED: "1"
+          # Optional. The build succeeds without them; the corresponding
+          # features (wallet login, IPFS upload) stay disabled on the demo.
+          NEXT_PUBLIC_PRIVY_APP_ID: ${{ secrets.NEXT_PUBLIC_PRIVY_APP_ID }}
+          NEXT_PUBLIC_THIRDWEB_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_THIRDWEB_CLIENT_ID }}
+          NEXT_PUBLIC_QUAI_NETWORK: ${{ vars.NEXT_PUBLIC_QUAI_NETWORK }}
+          NEXT_PUBLIC_ERC721_ADDRESS: ${{ vars.NEXT_PUBLIC_ERC721_ADDRESS }}
+          NEXT_PUBLIC_ERC20_ADDRESS: ${{ vars.NEXT_PUBLIC_ERC20_ADDRESS }}
+          NEXT_PUBLIC_YJS_SIGNALING: ${{ vars.NEXT_PUBLIC_YJS_SIGNALING }}
+        run: pnpm run build
+
+      - name: Add .nojekyll
+        # Stops any Jekyll processing from dropping Next's _next/ directory.
+        run: touch apps/web/out/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -137,6 +137,47 @@ pnpm exec hardhat test
 
 <br />
 
+## 🌐 GitHub Pages Deployment
+
+The web app is published to GitHub Pages as a **static export** by
+[`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) on every push to
+`main` that touches `apps/web/**` (or manually via *Actions ▸ Deploy web app to GitHub Pages ▸
+Run workflow*). Set **Settings ▸ Pages ▸ Source** to **GitHub Actions** once, and the site goes
+live at `https://<owner>.github.io/<repo>/`.
+
+The workflow derives the base path from the repository name, so forks and renames need no edits.
+
+| Build mode | Command | Output |
+| :--- | :--- | :--- |
+| Server (default) | `pnpm run build` | `.next/` — Node server, sends COOP/COEP headers |
+| Static (Pages) | `GITHUB_PAGES=true` + `pnpm run build` | `apps/web/out/` — no server |
+
+Reproduce the Pages build locally:
+
+```bash
+# bash / zsh
+GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/Chainvas pnpm --filter @boltchainvas/web run build
+
+# PowerShell
+$env:GITHUB_PAGES="true"; $env:NEXT_PUBLIC_BASE_PATH="/Chainvas"
+pnpm --filter @boltchainvas/web run build
+```
+
+Then serve `apps/web/out` from a `/Chainvas/` sub-path — opening `out/index.html` directly will
+404 on every asset, because the export is built for that prefix.
+
+> [!NOTE]
+> **What the static demo can and cannot do.** The three editors, the timeline, in-browser
+> rendering and local persistence all work. Cross-origin isolation (`COOP`/`COEP`) cannot be sent
+> by a static host, so the renderer uses the single-threaded `@ffmpeg/core` build — correct output,
+> slower encoding. Wallet login and IPFS upload stay disabled unless
+> `NEXT_PUBLIC_PRIVY_APP_ID` and `NEXT_PUBLIC_THIRDWEB_CLIENT_ID` are added as repository
+> **secrets**; chain and signaling settings can be supplied as repository **variables**
+> (`NEXT_PUBLIC_QUAI_NETWORK`, `NEXT_PUBLIC_ERC721_ADDRESS`, `NEXT_PUBLIC_ERC20_ADDRESS`,
+> `NEXT_PUBLIC_YJS_SIGNALING`). The build succeeds with none of them set.
+
+<br />
+
 ## 📜 Roadmap
 
 - [x] **Phase 1**: Initial migration to `pnpm` and monorepo stabilization.
