@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useYjs } from "@/hooks/useYjs";
+import * as Y from "yjs";
 
 import TextFrameEditor from "@/components/text-editor/TextFrameEditor";
-import { undo, redo } from "y-prosemirror";
 
 // Modular Components
 import InDesignToolbar from "@/components/text-editor/InDesignToolbar";
@@ -68,33 +68,73 @@ export default function InDesignTextEditor() {
         title: string;
     }>({ isOpen: false, type: null, title: "" });
 
-    const [pages] = useState<PageData[]>([
+    const [pages, setPages] = useState<PageData[]>([
         { id: "1", number: 1 },
         { id: "2", number: 2 }
     ]);
     const [activePageId, setActivePageId] = useState("1");
+    const activePageNumber = pages.find(p => p.id === activePageId)?.number ?? 1;
 
-    // Yjs Sync for Objects
+    const addPage = () => {
+        const id = Math.random().toString(36).substring(2, 11);
+        setPages(prev => [...prev, { id, number: prev.length + 1 }]);
+        setActivePageId(id);
+    };
+
+    const deleteActivePage = () => {
+        if (pages.length <= 1) return;
+        const idx = pages.findIndex(p => p.id === activePageId);
+        const remaining = pages.filter(p => p.id !== activePageId).map((p, i) => ({ ...p, number: i + 1 }));
+        setPages(remaining);
+        setActivePageId(remaining[Math.max(0, idx - 1)].id);
+        commitObjects(prev => prev.filter(o => o.pageId !== activePageId));
+    };
+
+    // Collaborative object list + undo history (layout changes only; text content has its own PM/Yjs undo)
+    const yObjects = useMemo(() => ydoc.getArray<CanvasObject>("canvas-objects"), [ydoc]);
+    const undoManager = useMemo(() => new Y.UndoManager(yObjects), [yObjects]);
+
+    // Latest objects for event handlers / callbacks that must not rely on a stale render closure
+    const objectsRef = useRef<CanvasObject[]>([]);
     useEffect(() => {
-        if (!synced) return;
-        const yObjects = ydoc.getArray<CanvasObject>("canvas-objects");
-        
+        objectsRef.current = objects;
+    }, [objects]);
+
+    // Yjs Sync for Objects. Subscribe immediately: y-webrtc only fires "synced" once a peer connects,
+    // so gating on it left a solo user with an empty, never-updating document.
+    useEffect(() => {
         const updateLocal = () => {
-            setObjects(yObjects.toArray());
+            const remote = yObjects.toArray();
+            // Selection is per-user UI state: keep ours instead of taking it from the shared doc
+            setObjects(prev => {
+                const selected = new Set(prev.filter(o => o.isSelected).map(o => o.id));
+                return remote.map(o => ({ ...o, isSelected: selected.has(o.id) }));
+            });
         };
 
         yObjects.observe(updateLocal);
         updateLocal();
 
         return () => yObjects.unobserve(updateLocal);
-    }, [synced, ydoc]);
+    }, [yObjects]);
 
     const syncObjects = (newObjects: CanvasObject[]) => {
-        const yObjects = ydoc.getArray<CanvasObject>("canvas-objects");
         ydoc.transact(() => {
             yObjects.delete(0, yObjects.length);
-            yObjects.insert(0, newObjects);
+            yObjects.insert(0, newObjects.map(o => {
+                const shared = { ...o };
+                delete shared.isSelected;
+                return shared;
+            }));
         });
+    };
+
+    // Apply a change locally AND persist it to the shared doc in one step
+    const commitObjects = (updater: (prev: CanvasObject[]) => CanvasObject[]) => {
+        const next = updater(objectsRef.current);
+        objectsRef.current = next;
+        setObjects(next);
+        syncObjects(next);
     };
 
     // Minting State
@@ -112,7 +152,7 @@ export default function InDesignTextEditor() {
         
         try {
             addToast({ type: "info", title: "Rendering Document...", message: "Generating high-quality snapshot of your layout." });
-            const dataUrl = await toPng(pageRef.current, { quality: 1, backgroundColor: "#ffffff" });
+            const dataUrl = await snapshotPage();
             const response = await fetch(dataUrl);
             const blob = await response.blob();
             
@@ -146,6 +186,8 @@ export default function InDesignTextEditor() {
     const [isDraggingObject, setIsDraggingObject] = useState(false);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
     const [initialObjectPos, setInitialObjectPos] = useState({ x: 0, y: 0 });
+    // Corner-handle resizing (handle = "nw" | "ne" | "sw" | "se")
+    const [resizing, setResizing] = useState<{ id: string; handle: string; start: { x: number; y: number }; initial: { x: number; y: number; width: number; height: number } } | null>(null);
 
     const workspaceRef = useRef<HTMLDivElement>(null);
 
@@ -154,12 +196,28 @@ export default function InDesignTextEditor() {
         const zoomFactor = zoom / 100;
 
         if (activeTool === "SELECT" || activeTool === "DIRECT_SELECT") {
+            const handleEl = (e.target as HTMLElement).closest("[data-resize-handle]");
             const isClickOnObject = (e.target as HTMLElement).closest(".text-frame-container");
-            
+
+            if (handleEl && isClickOnObject && pageRect) {
+                const objectId = isClickOnObject.getAttribute("data-id");
+                const obj = objects.find(o => o.id === objectId);
+                if (obj && !obj.locked) {
+                    e.preventDefault();
+                    setResizing({
+                        id: obj.id,
+                        handle: handleEl.getAttribute("data-resize-handle") || "se",
+                        start: { x: (e.clientX - pageRect.left) / zoomFactor, y: (e.clientY - pageRect.top) / zoomFactor },
+                        initial: { x: obj.x, y: obj.y, width: obj.width, height: obj.height }
+                    });
+                    return;
+                }
+            }
+
             if (isClickOnObject) {
                 const objectId = isClickOnObject.getAttribute("data-id");
                 const obj = objects.find(o => o.id === objectId);
-                
+
                 if (obj && !obj.locked) {
                     setIsDraggingObject(true);
                     setObjects(prev => prev.map(o => ({ ...o, isSelected: o.id === obj.id })));
@@ -204,15 +262,30 @@ export default function InDesignTextEditor() {
                 x: (e.clientX - pageRect.left) / zoomFactor,
                 y: (e.clientY - pageRect.top) / zoomFactor
             });
+        } else if (resizing && pageRef.current) {
+            const pageRect = pageRef.current.getBoundingClientRect();
+            const zoomFactor = zoom / 100;
+            const dx = (e.clientX - pageRect.left) / zoomFactor - resizing.start.x;
+            const dy = (e.clientY - pageRect.top) / zoomFactor - resizing.start.y;
+            const { x, y, width, height } = resizing.initial;
+            const west = resizing.handle.includes("w");
+            const north = resizing.handle.includes("n");
+            const MIN = 20;
+            const newWidth = Math.max(MIN, west ? width - dx : width + dx);
+            const newHeight = Math.max(MIN, north ? height - dy : height + dy);
+            const newX = west ? x + (width - newWidth) : x;
+            const newY = north ? y + (height - newHeight) : y;
+
+            setObjects(prev => prev.map(o => o.id === resizing.id ? { ...o, x: newX, y: newY, width: newWidth, height: newHeight } : o));
         } else if (isDraggingObject && pageRef.current) {
             const pageRect = pageRef.current.getBoundingClientRect();
             const zoomFactor = zoom / 100;
             const currentX = (e.clientX - pageRect.left) / zoomFactor;
             const currentY = (e.clientY - pageRect.top) / zoomFactor;
-            
+
             const dx = currentX - dragStart.x;
             const dy = currentY - dragStart.y;
-            
+
             setObjects(prev => prev.map(o => o.isSelected ? {
                 ...o,
                 x: initialObjectPos.x + dx,
@@ -222,11 +295,13 @@ export default function InDesignTextEditor() {
     };
 
     const handleMouseUp = () => {
-        if (isDraggingObject) {
-            syncObjects(objects);
+        if (isDraggingObject || resizing) {
+            // Persist the final geometry of the interaction
+            syncObjects(objectsRef.current);
         }
         setIsPanning(false);
         setIsDraggingObject(false);
+        setResizing(null);
         if (isDrawing) {
             setIsDrawing(false);
 
@@ -252,9 +327,7 @@ export default function InDesignTextEditor() {
                     isSelected: true,
                 };
 
-                const updatedObjects = [...objects.map(o => ({ ...o, isSelected: false } as CanvasObject)), newObj];
-                setObjects(updatedObjects);
-                syncObjects(updatedObjects);
+                commitObjects(prev => [...prev.map(o => ({ ...o, isSelected: false } as CanvasObject)), newObj]);
 
                 if (activeTool === "TEXT" || activeTool === "RECTANGLE_FRAME" || activeTool === "RECTANGLE" || activeTool === "ELLIPSE" || activeTool === "ELLIPSE_FRAME") {
                     setActiveTool("SELECT"); // Switch to selection tool after drawing
@@ -284,25 +357,73 @@ export default function InDesignTextEditor() {
     };
 
     const handleOptionsChange = (newOptions: Partial<TypographyOptions>) => {
-        setTypography((prev: TypographyOptions) => {
-            const updated = { ...prev, ...newOptions };
-            
-            // Apply to selected objects
-            const anySelected = objects.some(o => o.isSelected);
-            if (anySelected) {
-                const updatedObjects = objects.map(o => o.isSelected ? {
-                    ...o,
-                    typography: { ...(o.typography || prev), ...newOptions }
-                } : o);
-                setObjects(updatedObjects);
-                syncObjects(updatedObjects);
-            }
-            
-            return updated;
+        const base = typography;
+        setTypography((prev: TypographyOptions) => ({ ...prev, ...newOptions }));
+
+        // Apply to selected objects (kept outside the state updater: updaters must be pure)
+        if (objectsRef.current.some(o => o.isSelected)) {
+            commitObjects(prev => prev.map(o => o.isSelected ? {
+                ...o,
+                typography: { ...(o.typography || base), ...newOptions }
+            } : o));
+        }
+    };
+
+    // Snapshot the artboard without selection chrome and without the on-screen zoom transform
+    const snapshotPage = async () => {
+        const node = pageRef.current;
+        if (!node) throw new Error("Page not mounted");
+        commitObjects(prev => prev.map(o => ({ ...o, isSelected: false })));
+        await new Promise<void>(resolve => requestAnimationFrame(() => setTimeout(resolve, 50)));
+        return toPng(node, {
+            quality: 1,
+            pixelRatio: 2,
+            backgroundColor: "#ffffff",
+            style: { transform: "none" }
         });
     };
 
-    const handleMenuAction = React.useCallback((id: string) => {
+    const placeImageFiles = (files: File[]) => {
+        const images = files.filter(f => f.type.startsWith("image/"));
+        if (images.length === 0) {
+            addToast({ type: "warning", title: "Unsupported Media", message: "Only image files can be placed on the page right now." });
+            return;
+        }
+        images.forEach((file, idx) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const dataUrl = reader.result as string;
+                const img = new Image();
+                img.onload = () => {
+                    // Fit within the A4 page (~794 x 1123 CSS px) with a margin
+                    const maxW = 600, maxH = 800;
+                    const scale = Math.min(1, maxW / img.naturalWidth, maxH / img.naturalHeight);
+                    const newObj: CanvasObject = {
+                        id: Math.random().toString(36).substring(2, 11),
+                        type: "RECTANGLE_FRAME",
+                        x: 60 + idx * 20,
+                        y: 60 + idx * 20,
+                        width: Math.round(img.naturalWidth * scale),
+                        height: Math.round(img.naturalHeight * scale),
+                        pageId: activePageId,
+                        isSelected: true,
+                        imageData: dataUrl,
+                        imageName: file.name
+                    };
+                    commitObjects(prev => [...prev.map(o => ({ ...o, isSelected: false })), newObj]);
+                    setActiveTool("SELECT");
+                };
+                img.src = dataUrl;
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
+    const clipboardRef = useRef<CanvasObject[]>([]);
+
+    // Plain function (not memoised): it closes over per-render helpers; the keydown effect below
+    // re-subscribes each render, which is cheap and avoids stale closures.
+    const handleMenuAction = (id: string) => {
         switch (id) {
             case "FILE_NEW":
                 setModalConfig({ isOpen: true, type: "NEW", title: "New Document" });
@@ -317,26 +438,77 @@ export default function InDesignTextEditor() {
                 alert("Document layout saved to BOLTChain");
                 break;
             case "EDIT_UNDO":
-                // In a full implementation, this would trigger ProseMirror or Yjs undo
+                undoManager.undo();
                 break;
             case "EDIT_REDO":
+                undoManager.redo();
                 break;
-            case "EDIT_DUPLICATE":
-                const selectedObj = objects.find(o => o.isSelected);
-                if (selectedObj) {
-                    const newObj: CanvasObject = {
-                        ...selectedObj,
+            case "EDIT_DUPLICATE": {
+                const selected = objectsRef.current.filter(o => o.isSelected);
+                if (selected.length > 0) {
+                    const copies = selected.map(obj => ({
+                        ...obj,
                         id: Math.random().toString(36).substring(2, 11),
-                        contentId: `text-fragment-${Math.random().toString(36).substring(2, 11)}`,
-                        x: selectedObj.x + 20,
-                        y: selectedObj.y + 20,
+                        contentId: obj.contentId ? `text-fragment-${Math.random().toString(36).substring(2, 11)}` : undefined,
+                        x: obj.x + 20,
+                        y: obj.y + 20,
                         isSelected: true
-                    };
-                    setObjects(prev => [...prev.map(o => ({ ...o, isSelected: false })), newObj]);
+                    }));
+                    commitObjects(prev => [...prev.map(o => ({ ...o, isSelected: false })), ...copies]);
                 }
                 break;
+            }
+            case "EDIT_COPY":
+                clipboardRef.current = objectsRef.current.filter(o => o.isSelected).map(o => ({ ...o }));
+                break;
+            case "EDIT_CUT":
+                clipboardRef.current = objectsRef.current.filter(o => o.isSelected).map(o => ({ ...o }));
+                commitObjects(prev => prev.filter(o => !o.isSelected));
+                break;
+            case "EDIT_PASTE": {
+                if (clipboardRef.current.length === 0) break;
+                const pasted = clipboardRef.current.map(obj => ({
+                    ...obj,
+                    id: Math.random().toString(36).substring(2, 11),
+                    contentId: obj.contentId ? `text-fragment-${Math.random().toString(36).substring(2, 11)}` : undefined,
+                    x: obj.x + 20,
+                    y: obj.y + 20,
+                    pageId: activePageId,
+                    isSelected: true
+                }));
+                // Offset the clipboard so repeated pastes cascade
+                clipboardRef.current = pasted.map(o => ({ ...o }));
+                commitObjects(prev => [...prev.map(o => ({ ...o, isSelected: false })), ...pasted]);
+                break;
+            }
             case "EDIT_DELETE":
-                setObjects(prev => prev.filter(o => !o.isSelected));
+                commitObjects(prev => prev.filter(o => !o.isSelected));
+                break;
+            case "FILE_EXPORT":
+                snapshotPage()
+                    .then(dataUrl => {
+                        const link = document.createElement("a");
+                        link.download = "bolt-document.png";
+                        link.href = dataUrl;
+                        link.click();
+                        addToast({ type: "success", title: "Page Exported", message: "Saved a 2x PNG of the current page. Use Print Layout (Ctrl+P) to save as PDF." });
+                    })
+                    .catch(err => {
+                        console.error("Export failed:", err);
+                        addToast({ type: "error", title: "Export Failed", message: "Could not render the page." });
+                    });
+                break;
+            case "FILE_PRINT":
+                window.print();
+                break;
+            case "VIEW_FULLSCREEN":
+                if (typeof document !== "undefined") {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().catch(() => { });
+                    } else if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(() => { });
+                    }
+                }
                 break;
             case "WINDOW_TOOLBAR": setShowToolbar(prev => !prev); break;
             case "WINDOW_OPTIONS": setShowOptions(prev => !prev); break;
@@ -345,46 +517,60 @@ export default function InDesignTextEditor() {
             case "FILE_HELP":
                 setModalConfig({ isOpen: true, type: "HELP", title: "Bolt InDesign Editor - Help" });
                 break;
-            case "EDIT_SIGN":
-                const selectedSig = objects.find(o => o.isSelected && o.type === "SIGNATURE");
+            case "EDIT_SIGN": {
+                const selectedSig = objectsRef.current.find(o => o.isSelected && o.type === "SIGNATURE");
                 if (selectedSig) {
                     setSignatureModal({ isOpen: true, pendingObject: selectedSig });
+                } else {
+                    addToast({ type: "info", title: "Select a Signature Frame", message: "Draw one with the Signature tool (J), or select an existing one, then sign." });
                 }
                 break;
+            }
             case "EDIT_SELECT_ALL":
-                setObjects(prev => prev.map(o => ({ ...o, isSelected: true })));
+                // Selection is local UI state; only objects on the visible page are selectable
+                setObjects(prev => prev.map(o => ({ ...o, isSelected: o.pageId === activePageId || !o.pageId })));
                 break;
             case "EDIT_DESELECT":
                 setObjects(prev => prev.map(o => ({ ...o, isSelected: false })));
                 break;
             case "EDIT_LOCK":
-                setObjects(prev => prev.map(o => o.isSelected ? { ...o, locked: !o.locked } : o));
+                commitObjects(prev => prev.map(o => o.isSelected ? { ...o, locked: !o.locked } : o));
                 break;
             case "VIEW_ZOOM_IN": setZoom(prev => Math.min(prev + 25, 400)); break;
             case "VIEW_ZOOM_OUT": setZoom(prev => Math.max(prev - 25, 25)); break;
             case "VIEW_FIT": setZoom(100); break;
-            case "FILE_PLACE":
+            case "FILE_PLACE": {
                 const input = document.createElement("input");
                 input.type = "file";
                 input.multiple = true;
-                input.accept = "image/*,application/pdf,text/*";
-                input.onchange = (e: any) => {
-                    // Placeholder for actual file placement logic
-                    alert("File placement triggered");
+                input.accept = "image/*";
+                input.onchange = () => {
+                    placeImageFiles(Array.from(input.files || []));
                 };
                 input.click();
                 break;
+            }
             default:
                 console.log("Action not implemented:", id);
         }
-    }, [objects, activeTool]);
+    };
 
     // Keyboard Shortcuts
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            // CTRL/META Shortcuts
+            const target = e.target as HTMLElement | null;
+            const tag = target?.tagName;
+            const isEditable = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || !!target?.isContentEditable;
+
+            // CTRL/META Shortcuts. While typing in a frame, ProseMirror owns undo/redo/select-all/etc.
             if (e.ctrlKey || e.metaKey) {
+                if (isEditable) return;
                 const key = e.key.toLowerCase();
+
+                if (key === "c" || key === "x" || key === "v") {
+                    handleMenuAction(key === "c" ? "EDIT_COPY" : key === "x" ? "EDIT_CUT" : "EDIT_PASTE");
+                    return;
+                }
 
                 // Special case for Alt+Ctrl+P (Document Setup)
                 if (e.altKey && key === "p") {
@@ -461,18 +647,23 @@ export default function InDesignTextEditor() {
                         e.preventDefault();
                         handleMenuAction("EDIT_PREFERENCES");
                         break;
+                    case "e":
+                        e.preventDefault();
+                        handleMenuAction("FILE_EXPORT");
+                        break;
                 }
+                return;
             }
 
             // Deletion
-            if (e.key === "Delete" || e.key === "Backspace") {
-                if ((e.target as HTMLElement).tagName !== "INPUT" && (e.target as HTMLElement).tagName !== "TEXTAREA" && !(e.target as HTMLElement).isContentEditable) {
-                    setObjects(prev => prev.filter(o => !o.isSelected));
-                }
+            if ((e.key === "Delete" || e.key === "Backspace") && !isEditable) {
+                e.preventDefault();
+                handleMenuAction("EDIT_DELETE");
+                return;
             }
 
             // Tool Shortcuts (V, A, T, etc.)
-            if (!e.ctrlKey && !e.metaKey && (e.target as HTMLElement).tagName !== "INPUT" && (e.target as HTMLElement).tagName !== "TEXTAREA" && !(e.target as HTMLElement).isContentEditable) {
+            if (!isEditable && !e.altKey && e.key.length === 1) {
                 switch (e.key.toLowerCase()) {
                     case "v": setActiveTool("SELECT"); break;
                     case "a": setActiveTool("DIRECT_SELECT"); break;
@@ -514,29 +705,20 @@ export default function InDesignTextEditor() {
                     break;
                 case "F11":
                     e.preventDefault();
-                    if (typeof document !== 'undefined') {
-                        if (!document.fullscreenElement) {
-                            document.documentElement.requestFullscreen().catch(() => { });
-                        } else if (document.exitFullscreen) {
-                            document.exitFullscreen().catch(() => { });
-                        }
-                    }
+                    handleMenuAction("VIEW_FULLSCREEN");
                     break;
                 case "F12":
                     e.preventDefault();
                     setIsMintModalOpen(true);
                     break;
-                case "j":
-                case "J":
-                    e.preventDefault();
-                    setActiveTool("SIGNATURE");
-                    break;
+                // NOTE: a plain "j"/"J" case used to live here with preventDefault and no editable
+                // guard, which made it impossible to type the letter J anywhere in the editor.
             }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [handleMenuAction, activeTool]);
+    });
 
     return (
         <>
@@ -639,13 +821,13 @@ export default function InDesignTextEditor() {
                         {/* Zoom / Info Footer */}
                         <div className="h-6 bg-[#2d2d2d] border-t border-[#1e1e1e] flex items-center justify-between px-3 text-[9px] text-gray-500 font-bold uppercase tracking-widest">
                             <div className="flex items-center gap-4">
-                                <span>Page 1 of {pages.length}</span>
+                                <span>Page {activePageNumber} of {pages.length}</span>
                                 <span>A4 (210 x 297 mm)</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <span>Zoom:</span>
                                 <input
-                                    type="range" min="25" max="200" step="5"
+                                    type="range" min="25" max="400" step="5"
                                     value={zoom}
                                     onChange={(e) => setZoom(parseInt(e.target.value))}
                                     className="w-24 accent-[#ff6b00]"
@@ -678,6 +860,8 @@ export default function InDesignTextEditor() {
                                         pages={pages}
                                         activePageId={activePageId}
                                         onPageSelect={setActivePageId}
+                                        onAddPage={addPage}
+                                        onDeletePage={deleteActivePage}
                                     />
                                 </div>
                             </div>
@@ -836,8 +1020,14 @@ export default function InDesignTextEditor() {
                             signerAddress = await signer.getAddress();
                         }
 
-                        // Calculate integrity hash of current objects (simplified)
-                        const docState = JSON.stringify(objects.map(o => ({ id: o.id, x: o.x, y: o.y, type: o.type })));
+                        // Calculate integrity hash of current objects (simplified). Signature frames are
+                        // excluded exactly as TextFrameEditor's verifier excludes them, otherwise a
+                        // re-signed or second signature could never verify.
+                        const docState = JSON.stringify(
+                            objectsRef.current
+                                .filter(o => o.type !== "SIGNATURE")
+                                .map(o => ({ id: o.id, x: o.x, y: o.y, type: o.type }))
+                        );
                         integrityHash = ethers.keccak256(ethers.toUtf8Bytes(docState));
                     } catch (e) {
                         console.error("Signing error:", e);
@@ -850,7 +1040,7 @@ export default function InDesignTextEditor() {
                         integrityHash,
                     };
 
-                    setObjects(prev => {
+                    commitObjects(prev => {
                         const exists = prev.find(o => o.id === finalizedObj.id);
                         if (exists) {
                             return prev.map(o => o.id === finalizedObj.id ? finalizedObj : o);

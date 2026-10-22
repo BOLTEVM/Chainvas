@@ -37,7 +37,7 @@ export default function TextMenuBar({ onAction }: TextMenuBarProps) {
                 { separator: true },
                 { label: "Place Media...", shortcut: "Ctrl+D", action: () => onAction?.("FILE_PLACE") },
                 { separator: true },
-                { label: "Export PDF...", shortcut: "Ctrl+E", action: () => onAction?.("FILE_EXPORT") },
+                { label: "Export Page (PNG)...", shortcut: "Ctrl+E", action: () => onAction?.("FILE_EXPORT") },
                 { label: "Document Setup...", shortcut: "Alt+Ctrl+P", action: () => onAction?.("FILE_SETUP") },
                 { separator: true },
                 { label: "Mint Asset", shortcut: "F12", action: () => onAction?.("FILE_MINT") },
@@ -98,7 +98,7 @@ export default function TextMenuBar({ onAction }: TextMenuBarProps) {
                 { label: "Zoom Out", shortcut: "Ctrl+-", action: () => onAction?.("VIEW_ZOOM_OUT") },
                 { label: "Fit Page in Window", shortcut: "Ctrl+0", action: () => onAction?.("VIEW_FIT") },
                 { separator: true },
-                { label: "Fullscreen", shortcut: "F11" },
+                { label: "Fullscreen", shortcut: "F11", action: () => onAction?.("VIEW_FULLSCREEN") },
                 { separator: true },
                 { label: "Grids & Guides" },
             ]

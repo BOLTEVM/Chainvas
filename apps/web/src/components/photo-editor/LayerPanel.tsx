@@ -9,6 +9,8 @@ interface LayerPanelProps {
     onSelect: (id: string) => void;
     onToggleVisibility: (id: string) => void;
     onToggleLock: (id: string) => void;
+    onDeleteActive?: () => void;
+    onRenameActive?: () => void;
 }
 
 export default function LayerPanel({
@@ -16,7 +18,9 @@ export default function LayerPanel({
     activeLayerId,
     onSelect,
     onToggleVisibility,
-    onToggleLock
+    onToggleLock,
+    onDeleteActive,
+    onRenameActive
 }: LayerPanelProps) {
     return (
         <div className="flex flex-col h-full">
@@ -39,6 +43,7 @@ export default function LayerPanel({
                         <div
                             key={layer.id}
                             onClick={() => onSelect(layer.id)}
+                            onDoubleClick={() => { if (activeLayerId === layer.id) onRenameActive?.(); }}
                             className={`group flex items-center h-8 px-2 gap-2 cursor-pointer transition-colors border-b border-[#333] ${activeLayerId === layer.id ? "bg-[#37373d]" : "hover:bg-[#2a2d2e]"
                                 }`}
                         >
@@ -84,7 +89,11 @@ export default function LayerPanel({
                 <button className="text-gray-400 hover:text-white text-[10px] font-bold">FX</button>
                 <button className="text-gray-400 hover:text-white text-[10px] font-bold">MASK</button>
                 <button className="text-gray-400 hover:text-white text-[10px] font-bold">NEW</button>
-                <button className="text-gray-400 hover:text-white text-[10px] font-bold text-red-500/80">DEL</button>
+                <button
+                    onClick={onDeleteActive}
+                    disabled={!activeLayerId}
+                    className="text-gray-400 hover:text-white text-[10px] font-bold text-red-500/80 disabled:opacity-30"
+                >DEL</button>
             </div>
         </div>
     );

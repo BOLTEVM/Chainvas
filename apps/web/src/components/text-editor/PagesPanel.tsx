@@ -7,9 +7,11 @@ interface PagesPanelProps {
     pages: PageData[];
     activePageId: string;
     onPageSelect: (id: string) => void;
+    onAddPage?: () => void;
+    onDeletePage?: () => void;
 }
 
-export default function PagesPanel({ pages, activePageId, onPageSelect }: PagesPanelProps) {
+export default function PagesPanel({ pages, activePageId, onPageSelect, onAddPage, onDeletePage }: PagesPanelProps) {
     return (
         <div className="flex flex-col bg-[#252526] h-full">
             {/* Header */}
@@ -48,9 +50,14 @@ export default function PagesPanel({ pages, activePageId, onPageSelect }: PagesP
 
                 {/* Actions Bar */}
                 <div className="flex items-center justify-center gap-4 pt-4 border-t border-white/5">
-                    <button className="text-gray-500 hover:text-white transition-colors"><Copy className="w-4 h-4" /></button>
-                    <button className="text-gray-500 hover:text-white transition-colors"><Plus className="w-4 h-4" /></button>
-                    <button className="text-gray-500 hover:text-white transition-colors"><Trash2 className="w-4 h-4" /></button>
+                    <button title="Duplicate page (coming soon)" disabled className="text-gray-500 opacity-40 cursor-not-allowed"><Copy className="w-4 h-4" /></button>
+                    <button title="Add page" onClick={onAddPage} className="text-gray-500 hover:text-white transition-colors"><Plus className="w-4 h-4" /></button>
+                    <button
+                        title="Delete page"
+                        onClick={onDeletePage}
+                        disabled={pages.length <= 1}
+                        className="text-gray-500 hover:text-red-400 transition-colors disabled:opacity-40 disabled:hover:text-gray-500 disabled:cursor-not-allowed"
+                    ><Trash2 className="w-4 h-4" /></button>
                 </div>
             </div>
         </div>

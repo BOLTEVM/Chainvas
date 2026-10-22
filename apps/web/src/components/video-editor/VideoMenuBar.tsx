@@ -18,9 +18,13 @@ interface MenuSection {
 
 interface VideoMenuBarProps {
     onAction?: (actionId: string) => void;
+    canUndo?: boolean;
+    canRedo?: boolean;
+    hasSelection?: boolean;
+    canPaste?: boolean;
 }
 
-export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
+export default function VideoMenuBar({ onAction, canUndo = true, canRedo = true, hasSelection = true, canPaste = true }: VideoMenuBarProps) {
     const [activeMenu, setActiveMenu] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -31,35 +35,33 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "New Project", shortcut: "Ctrl+Alt+N", action: () => onAction?.("FILE_NEW") },
                 { label: "Open Project...", shortcut: "Ctrl+O", action: () => onAction?.("FILE_OPEN") },
                 { separator: true },
-                { label: "Close", shortcut: "Ctrl+W", action: () => onAction?.("FILE_CLOSE") },
-                { label: "Save", shortcut: "Ctrl+S", action: () => onAction?.("FILE_SAVE") },
-                { label: "Save As...", shortcut: "Shift+Ctrl+S", action: () => onAction?.("FILE_SAVE_AS") },
+                { label: "Save Project", shortcut: "Ctrl+S", action: () => onAction?.("FILE_SAVE") },
+                { label: "Save Frame As PNG...", shortcut: "Ctrl+Shift+S", action: () => onAction?.("FILE_SAVE_FRAME") },
                 { separator: true },
                 { label: "Import File...", shortcut: "Ctrl+I", action: () => onAction?.("FILE_IMPORT") },
-                { label: "Quick Render", shortcut: "F5", action: () => onAction?.("COMP_RENDER") },
+                { label: "Render...", shortcut: "Ctrl+M / F5", action: () => onAction?.("COMP_RENDER") },
                 { separator: true },
-                { label: "Project Settings...", shortcut: "Alt+Shift+Ctrl+K", action: () => onAction?.("FILE_SETTINGS") },
                 { label: "Mint Asset", shortcut: "F12", action: () => onAction?.("FILE_MINT") },
             ]
         },
         {
             label: "Edit",
             items: [
-                { label: "Undo", shortcut: "Ctrl+Z", action: () => onAction?.("EDIT_UNDO") },
-                { label: "Redo", shortcut: "Ctrl+Y", action: () => onAction?.("EDIT_REDO") },
+                { label: "Undo", shortcut: "Ctrl+Z", action: () => onAction?.("EDIT_UNDO"), disabled: !canUndo },
+                { label: "Redo", shortcut: "Ctrl+Y", action: () => onAction?.("EDIT_REDO"), disabled: !canRedo },
                 { separator: true },
-                { label: "Cut", shortcut: "Ctrl+X", action: () => onAction?.("EDIT_CUT") },
-                { label: "Copy", shortcut: "Ctrl+C", action: () => onAction?.("EDIT_COPY") },
-                { label: "Paste", shortcut: "Ctrl+V", action: () => onAction?.("EDIT_PASTE") },
+                { label: "Cut", shortcut: "Ctrl+X", action: () => onAction?.("EDIT_CUT"), disabled: !hasSelection },
+                { label: "Copy", shortcut: "Ctrl+C", action: () => onAction?.("EDIT_COPY"), disabled: !hasSelection },
+                { label: "Paste", shortcut: "Ctrl+V", action: () => onAction?.("EDIT_PASTE"), disabled: !canPaste },
                 { separator: true },
                 { label: "Select All", shortcut: "Ctrl+A", action: () => onAction?.("EDIT_SELECT_ALL") },
                 { label: "Deselect All", shortcut: "Shift+Ctrl+A", action: () => onAction?.("EDIT_DESELECT") },
                 { separator: true },
-                { label: "Duplicate Layer", shortcut: "Ctrl+D", action: () => onAction?.("EDIT_DUPLICATE") },
-                { label: "Split Layer", shortcut: "Ctrl+Shift+D", action: () => onAction?.("EDIT_SPLIT") },
-                { label: "Delete", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
+                { label: "Duplicate Layer", shortcut: "Ctrl+D", action: () => onAction?.("EDIT_DUPLICATE"), disabled: !hasSelection },
+                { label: "Split Layer", shortcut: "Ctrl+Shift+D", action: () => onAction?.("EDIT_SPLIT"), disabled: !hasSelection },
+                { label: "Delete", shortcut: "Del / F4", action: () => onAction?.("EDIT_DELETE"), disabled: !hasSelection },
                 { separator: true },
-                { label: "Preferences", shortcut: "Ctrl+K", action: () => onAction?.("EDIT_PREFERENCES") },
+                { label: "Preferences", shortcut: "Ctrl+,", action: () => onAction?.("EDIT_PREFERENCES") },
             ]
         },
         {
@@ -68,35 +70,42 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "New Composition...", shortcut: "Ctrl+N", action: () => onAction?.("COMP_NEW") },
                 { label: "Composition Settings...", shortcut: "Ctrl+K", action: () => onAction?.("COMP_SETTINGS") },
                 { separator: true },
-                { label: "Preview", shortcut: "Space" },
-                { label: "Save Frame As" },
+                { label: "Play / Pause", shortcut: "Space", action: () => onAction?.("PLAY_TOGGLE") },
+                { label: "Go to Start", shortcut: "Home", action: () => onAction?.("PLAY_HOME") },
+                { label: "Go to End", shortcut: "End", action: () => onAction?.("PLAY_END") },
                 { separator: true },
-                { label: "Add to Render Queue", shortcut: "Ctrl+M", action: () => onAction?.("COMP_RENDER") },
+                { label: "Save Frame As PNG...", shortcut: "Ctrl+Shift+S", action: () => onAction?.("FILE_SAVE_FRAME") },
+                { label: "Render...", shortcut: "Ctrl+M", action: () => onAction?.("COMP_RENDER") },
             ]
         },
         {
             label: "Layer",
             items: [
-                { label: "New" },
-                { label: "Layer Settings...", shortcut: "Shift+Ctrl+Y" },
+                { label: "New Solid", shortcut: "Ctrl+Y", action: () => onAction?.("LAYER_NEW_SOLID") },
+                { label: "New Text", shortcut: "Ctrl+Alt+Shift+T", action: () => onAction?.("LAYER_NEW_TEXT") },
+                { label: "New Adjustment Layer", shortcut: "Ctrl+Alt+Y", action: () => onAction?.("LAYER_NEW_ADJUSTMENT") },
                 { separator: true },
-                { label: "Duplicate", shortcut: "Ctrl+D", action: () => onAction?.("EDIT_DUPLICATE") },
-                { label: "Split", shortcut: "Ctrl+Shift+D", action: () => onAction?.("EDIT_SPLIT") },
-                { label: "Delete", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
+                { label: "Trim In Point to Playhead", shortcut: "I", action: () => onAction?.("LAYER_TRIM_IN"), disabled: !hasSelection },
+                { label: "Trim Out Point to Playhead", shortcut: "O", action: () => onAction?.("LAYER_TRIM_OUT"), disabled: !hasSelection },
+                { label: "Move to Playhead", shortcut: "[", action: () => onAction?.("LAYER_MOVE_TO_PLAYHEAD"), disabled: !hasSelection },
                 { separator: true },
-                { label: "Pre-compose...", shortcut: "Shift+Ctrl+C" },
+                { label: "Bring Forward", shortcut: "Ctrl+]", action: () => onAction?.("LAYER_UP"), disabled: !hasSelection },
+                { label: "Send Backward", shortcut: "Ctrl+[", action: () => onAction?.("LAYER_DOWN"), disabled: !hasSelection },
+                { separator: true },
+                { label: "Duplicate", shortcut: "Ctrl+D", action: () => onAction?.("EDIT_DUPLICATE"), disabled: !hasSelection },
+                { label: "Split", shortcut: "Ctrl+Shift+D", action: () => onAction?.("EDIT_SPLIT"), disabled: !hasSelection },
+                { label: "Detach Audio", action: () => onAction?.("LAYER_DETACH_AUDIO"), disabled: !hasSelection },
+                { label: "Delete", shortcut: "Del", action: () => onAction?.("EDIT_DELETE"), disabled: !hasSelection },
             ]
         },
         {
             label: "Effect",
             items: [
-                { label: "Last Effect", shortcut: "Alt+Ctrl+F" },
+                { label: "Toggle Drop Shadow", action: () => onAction?.("EFFECT_DROP_SHADOW"), disabled: !hasSelection },
+                { label: "Toggle Gaussian Blur", action: () => onAction?.("EFFECT_BLUR"), disabled: !hasSelection },
                 { separator: true },
-                { label: "Blur & Sharpen" },
-                { label: "Color Correction" },
-                { label: "Distort" },
-                { label: "Generate" },
-                { label: "Keying" },
+                { label: "Reset Transform", action: () => onAction?.("EFFECT_RESET_TRANSFORM"), disabled: !hasSelection },
+                { label: "Remove All Effects", action: () => onAction?.("EFFECT_CLEAR"), disabled: !hasSelection },
             ]
         },
         {
@@ -106,10 +115,10 @@ export default function VideoMenuBar({ onAction }: VideoMenuBarProps) {
                 { label: "Zoom Out", shortcut: "Ctrl+-", action: () => onAction?.("VIEW_ZOOM_OUT") },
                 { label: "Fit in Window", shortcut: "Ctrl+0", action: () => onAction?.("VIEW_FIT") },
                 { separator: true },
-                { label: "Fullscreen", shortcut: "F11" },
+                { label: "Timeline Zoom In", shortcut: "Ctrl+Shift++", action: () => onAction?.("VIEW_TL_ZOOM_IN") },
+                { label: "Timeline Zoom Out", shortcut: "Ctrl+Shift+-", action: () => onAction?.("VIEW_TL_ZOOM_OUT") },
                 { separator: true },
-                { label: "Show Rulers", shortcut: "Ctrl+R" },
-                { label: "Show Guides", shortcut: "Ctrl+;" },
+                { label: "Fullscreen", shortcut: "F11", action: () => onAction?.("VIEW_FULLSCREEN") },
             ]
         },
         {

@@ -62,4 +62,6 @@ export interface CanvasObject {
     signatureData?: string; // Base64 image
     signerAddress?: string;
     integrityHash?: string;
+    imageData?: string; // Placed media (data URL) for frames
+    imageName?: string;
 }

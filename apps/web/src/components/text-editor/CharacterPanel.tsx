@@ -51,7 +51,7 @@ export default function CharacterPanel({ options, onOptionsChange }: CharacterPa
                         <InDesignInput
                             label={<MoveVertical className="w-3 h-3 text-gray-500" />}
                             value={options.lineHeight}
-                            suffix="pt"
+                            suffix="x"
                             onChange={(v) => onOptionsChange({ lineHeight: v })}
                         />
                     </div>
@@ -141,8 +141,9 @@ function InDesignInput({ label, value, onChange, suffix = "" }: { label: React.R
             <span className="w-4 flex justify-center flex-shrink-0">{label}</span>
             <input
                 type="number"
+                step="any"
                 value={value}
-                onChange={(e) => onChange(parseInt(e.target.value) || 0)}
+                onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
                 className="bg-transparent border-none outline-none text-[11px] text-gray-200 w-full text-right font-mono"
             />
             {suffix && <span className="text-[9px] text-gray-600 font-medium w-4 flex-shrink-0">{suffix}</span>}

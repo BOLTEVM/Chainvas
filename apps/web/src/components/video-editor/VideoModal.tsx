@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -12,10 +13,30 @@ interface VideoModalProps {
 }
 
 export default function VideoModal({ isOpen, onClose, title, children, footer }: VideoModalProps) {
+    // Escape closes the dialog; the editor's global shortcuts are suspended
+    // while a modal is open (they check for an open [role="dialog"]).
+    useEffect(() => {
+        if (!isOpen) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                e.stopPropagation();
+                onClose();
+            }
+        };
+        window.addEventListener("keydown", onKey, true);
+        return () => window.removeEventListener("keydown", onKey, true);
+    }, [isOpen, onClose]);
+
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={title}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md"
+                    onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
+                >
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 30 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -34,7 +55,7 @@ export default function VideoModal({ isOpen, onClose, title, children, footer }:
                         </div>
 
                         {/* Content */}
-                        <div className="p-8 text-[12px] text-gray-300">
+                        <div className="p-8 text-[12px] text-gray-300 max-h-[70vh] overflow-y-auto custom-scrollbar">
                             {children}
                         </div>
 

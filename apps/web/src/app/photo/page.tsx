@@ -29,6 +29,10 @@ export default function PhotoEditor() {
     const isDragging = useRef(false);
     const dragStart = useRef({ x: 0, y: 0 });
     const dragPreview = useRef<fabric.Rect | null>(null);
+    const workspaceRef = useRef<HTMLDivElement>(null);
+    const panStart = useRef<{ x: number; y: number; scrollLeft: number; scrollTop: number } | null>(null);
+    const refreshLayersRef = useRef<() => void>(() => { });
+    const clipboardRef = useRef<fabric.Object | null>(null);
 
     // UI State
     const [activeTool, setActiveTool] = useState<ToolType>("MOVE");
@@ -71,6 +75,11 @@ export default function PhotoEditor() {
         hardness: 100,
         exportScale: 2
     });
+    // Mirror tool options into a ref so the (mount-only) fabric mouse handlers read fresh values
+    const toolOptionsRef = useRef<ToolOptions>(toolOptions);
+    useEffect(() => {
+        toolOptionsRef.current = toolOptions;
+    }, [toolOptions]);
 
     const [canvasWidth, setCanvasWidth] = useState(800);
     const [canvasHeight, setCanvasHeight] = useState(600);
@@ -130,6 +139,18 @@ export default function PhotoEditor() {
         canvas.on("object:moving", syncToYjs);
         canvas.on("object:scaling", syncToYjs);
         canvas.on("object:rotating", syncToYjs);
+        canvas.on("text:changed", syncToYjs);
+
+        // Brush / eraser strokes: give them an id so they persist and sync like other layers
+        canvas.on("path:created", (opt: any) => {
+            const path = opt.path as FabricObject | undefined;
+            if (!path) return;
+            const id = Math.random().toString(36).substr(2, 9);
+            path.id = id;
+            path.name = activeToolRef.current === "ERASER" ? "Eraser Stroke" : "Brush Stroke";
+            yObjects.set(id, (path as any).toObject(["id", "name", "locked"]));
+            updateLayerList();
+        });
 
         // Layer list logic
         const updateLayerList = () => {
@@ -147,14 +168,33 @@ export default function PhotoEditor() {
 
         canvas.on("object:added", updateLayerList);
         canvas.on("object:removed", updateLayerList);
+        canvas.on("object:modified", updateLayerList);
+        refreshLayersRef.current = updateLayerList;
 
         // Drag-to-create listeners
         canvas.on("mouse:down", (opt: any) => {
             const tool = activeToolRef.current;
+            const mouseEvent = opt.e as MouseEvent;
+
+            if (tool === "HAND") {
+                const ws = workspaceRef.current;
+                if (ws) {
+                    panStart.current = { x: mouseEvent.clientX, y: mouseEvent.clientY, scrollLeft: ws.scrollLeft, scrollTop: ws.scrollTop };
+                    canvas.setCursor("grabbing");
+                }
+                return;
+            }
+
+            if (tool === "ZOOM") {
+                setZoom(prev => mouseEvent.altKey ? Math.max(prev - 25, 10) : Math.min(prev + 25, 400));
+                return;
+            }
+
             if (tool === "TEXT" || tool === "SELECT" || tool === "SHAPE") {
                 const pointer = canvas.getPointer(opt.e);
                 isDragging.current = true;
                 dragStart.current = { x: pointer.x, y: pointer.y };
+                const opts = toolOptionsRef.current;
 
                 if (tool === "SHAPE") {
                     const rect = new fabric.Rect({
@@ -162,9 +202,9 @@ export default function PhotoEditor() {
                         top: pointer.y,
                         width: 0,
                         height: 0,
-                        fill: "#00e0ff33",
-                        stroke: "#00e0ff",
-                        strokeWidth: 2,
+                        fill: opts.shapeFill,
+                        stroke: opts.shapeStroke,
+                        strokeWidth: opts.shapeStrokeWidth,
                         rx: 4,
                         ry: 4
                     });
@@ -189,6 +229,12 @@ export default function PhotoEditor() {
         });
 
         canvas.on("mouse:move", (opt: any) => {
+            if (panStart.current && workspaceRef.current) {
+                const me = opt.e as MouseEvent;
+                workspaceRef.current.scrollLeft = panStart.current.scrollLeft - (me.clientX - panStart.current.x);
+                workspaceRef.current.scrollTop = panStart.current.scrollTop - (me.clientY - panStart.current.y);
+                return;
+            }
             if (!isDragging.current || !dragPreview.current) return;
             const pointer = canvas.getPointer(opt.e);
             const left = Math.min(dragStart.current.x, pointer.x);
@@ -201,9 +247,15 @@ export default function PhotoEditor() {
         });
 
         canvas.on("mouse:up", (opt: any) => {
+            if (panStart.current) {
+                panStart.current = null;
+                canvas.setCursor("grab");
+                return;
+            }
             if (!isDragging.current) return;
             const tool = activeToolRef.current;
             const pointer = canvas.getPointer(opt.e);
+            const opts = toolOptionsRef.current;
 
             if (dragPreview.current) {
                 const finalWidth = Math.abs(dragStart.current.x - pointer.x);
@@ -216,12 +268,13 @@ export default function PhotoEditor() {
 
                 if (tool === "TEXT" && finalWidth > 5) {
                     const id = Math.random().toString(36).substr(2, 9);
-                    const text = new fabric.IText("Type here...", {
+                    // Textbox honours the dragged width (IText ignores it)
+                    const text = new fabric.Textbox("Type here...", {
                         left: finalLeft,
                         top: finalTop,
                         width: finalWidth,
-                        fill: "#ffffff",
-                        fontSize: 24,
+                        fill: opts.fontColor,
+                        fontSize: opts.fontSize,
                         fontFamily: "Inter"
                     });
                     const fabricText = text as FabricObject;
@@ -230,7 +283,8 @@ export default function PhotoEditor() {
                     canvas.add(text);
                     canvas.setActiveObject(text);
                     text.enterEditing();
-                    yObjects.set(id, (fabricText as any).toObject(["id", "name"]));
+                    text.selectAll();
+                    yObjects.set(id, (fabricText as any).toObject(["id", "name", "locked"]));
                 } else if (tool === "SHAPE" && finalWidth > 5) {
                     const id = Math.random().toString(36).substr(2, 9);
                     const rect = new fabric.Rect({
@@ -238,16 +292,17 @@ export default function PhotoEditor() {
                         top: finalTop,
                         width: finalWidth,
                         height: finalHeight,
-                        fill: "#00e0ff33",
-                        stroke: "#00e0ff",
-                        strokeWidth: 2,
+                        fill: opts.shapeFill,
+                        stroke: opts.shapeStroke,
+                        strokeWidth: opts.shapeStrokeWidth,
                         rx: 4,
                         ry: 4
                     }) as FabricObject;
                     rect.id = id;
                     rect.name = "Rectangle";
                     canvas.add(rect);
-                    yObjects.set(id, (rect as any).toObject(["id", "name"]));
+                    canvas.setActiveObject(rect);
+                    yObjects.set(id, (rect as any).toObject(["id", "name", "locked"]));
                 }
             }
 
@@ -257,8 +312,12 @@ export default function PhotoEditor() {
         return () => {
             canvas.dispose();
             fabricCanvas.current = null;
+            refreshLayersRef.current = () => { };
         };
-    }, [canvasHeight, canvasWidth, yObjects]);
+        // Mount once: dimension changes are applied via setDimensions below. Recreating the canvas
+        // here would wipe every layer and leave the Yjs observer bound to a disposed canvas.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [yObjects]);
 
     // Sync Dimensions and Zoom
     useEffect(() => {
@@ -291,6 +350,8 @@ export default function PhotoEditor() {
         // Reset behaviors
         canvas.isDrawingMode = false;
         canvas.selection = activeTool === "MOVE" || activeTool === "SELECT";
+        // Hand/Zoom tools must not pick up or drag objects underneath the pointer
+        canvas.skipTargetFind = activeTool === "HAND" || activeTool === "ZOOM";
 
         // Fix Cursor logic
         if (activeTool === "SELECT") {
@@ -320,6 +381,10 @@ export default function PhotoEditor() {
             canvas.freeDrawingBrush.color = "#1e1e1e"; // Erasing to background
         } else if (activeTool === "HAND") {
             canvas.defaultCursor = "grab";
+            canvas.hoverCursor = "grab";
+        } else if (activeTool === "ZOOM") {
+            canvas.defaultCursor = "zoom-in";
+            canvas.hoverCursor = "zoom-in";
         }
 
     }, [activeTool, toolOptions]);
@@ -329,19 +394,36 @@ export default function PhotoEditor() {
         if (!fabricCanvas.current) return;
         const canvas = fabricCanvas.current;
 
+        // Plain local edits (origin null) were serialised from the fabric object itself, so re-applying
+        // them is redundant; undo/redo transactions carry the UndoManager origin and must be applied.
+        const isLocalEcho = (event: Y.YMapEvent<Record<string, unknown>>) =>
+            event.transaction.local && event.transaction.origin === null;
+
         const handleMapUpdate = (event: Y.YMapEvent<Record<string, unknown>>) => {
             event.changes.keys.forEach((change, key) => {
                 const data = yObjects.get(key);
                 if (change.action === "add" || change.action === "update") {
                     const existing = canvas.getObjects().find((o: any) => (o as FabricObject).id === key);
-                    if (existing && data) {
+                    if (existing && data && isLocalEcho(event)) {
+                        // Already applied to the fabric object locally.
+                    } else if (existing && data) {
                         existing.set(data as fabric.IObjectOptions);
+                        if (typeof data.locked === "boolean") {
+                            existing.selectable = !data.locked;
+                            existing.evented = !data.locked;
+                        }
                         existing.setCoords();
                         canvas.requestRenderAll();
+                        refreshLayersRef.current();
                     } else if (data) {
                         fabric.util.enlivenObjects([data], (objects: fabric.Object[]) => {
                             objects.forEach(obj => {
-                                (obj as FabricObject).id = key;
+                                const fo = obj as FabricObject;
+                                fo.id = key;
+                                if (fo.locked) {
+                                    obj.selectable = false;
+                                    obj.evented = false;
+                                }
                                 canvas.add(obj);
                             });
                             canvas.requestRenderAll();
@@ -482,6 +564,7 @@ export default function PhotoEditor() {
             obj.visible = !obj.visible;
             fabricCanvas.current?.requestRenderAll();
             yObjects.set(id, (obj as any).toObject(["id", "name", "locked"]));
+            refreshLayersRef.current();
         }
     };
 
@@ -491,14 +574,66 @@ export default function PhotoEditor() {
             obj.locked = !obj.locked;
             (obj as any).selectable = !obj.locked;
             (obj as any).evented = !obj.locked;
+            if (obj.locked && fabricCanvas.current?.getActiveObject() === obj) {
+                fabricCanvas.current?.discardActiveObject();
+            }
             fabricCanvas.current?.requestRenderAll();
             yObjects.set(id, (obj as any).toObject(["id", "name", "locked"]));
+            refreshLayersRef.current();
         }
     };
+
+    const exportPng = useCallback(() => {
+        if (!fabricCanvas.current) return;
+        fabricCanvas.current.discardActiveObject();
+        fabricCanvas.current.requestRenderAll();
+        const dataURL = fabricCanvas.current.toDataURL({
+            format: "png",
+            quality: 1,
+            multiplier: toolOptions.exportScale || 1
+        });
+        const link = document.createElement("a");
+        link.download = "bolt-composition.png";
+        link.href = dataURL;
+        link.click();
+    }, [toolOptions.exportScale]);
+
+    const addClonedObject = useCallback((source: fabric.Object, offset = 20) => {
+        source.clone((cloned: fabric.Object) => {
+            const canvas = fabricCanvas.current;
+            if (!canvas) return;
+            const id = Math.random().toString(36).substr(2, 9);
+            (cloned as FabricObject).id = id;
+            cloned.set({ left: (cloned.left || 0) + offset, top: (cloned.top || 0) + offset });
+            cloned.setCoords();
+            canvas.add(cloned);
+            canvas.setActiveObject(cloned);
+            canvas.requestRenderAll();
+            yObjects.set(id, (cloned as any).toObject(["id", "name", "locked"]));
+        }, ["name", "locked"]);
+    }, [yObjects]);
+
+    const deleteActiveObjects = useCallback(() => {
+        const canvas = fabricCanvas.current;
+        if (!canvas) return;
+        // Handles single objects and multi-selections (an ActiveSelection has no id of its own)
+        const targets = canvas.getActiveObjects() as FabricObject[];
+        if (targets.length === 0) return;
+        canvas.discardActiveObject();
+        ydoc.transact(() => {
+            targets.forEach(obj => {
+                if (obj.id) yObjects.delete(obj.id);
+                canvas.remove(obj);
+            });
+        });
+        canvas.requestRenderAll();
+        setActiveObject(null);
+    }, [ydoc, yObjects]);
 
     const handleMenuAction = useCallback((id: string) => {
         switch (id) {
             case "FILE_NEW":
+                setNewDocData({ width: canvasWidth, height: canvasHeight });
                 setModalConfig({ isOpen: true, type: "NEW", title: "New Document" });
                 break;
             case "EDIT_PREFERENCES":
@@ -514,22 +649,35 @@ export default function PhotoEditor() {
                 undoManager.redo();
                 break;
             case "EDIT_DUPLICATE":
+                if (activeObject) addClonedObject(activeObject);
+                break;
+            case "EDIT_COPY":
                 if (activeObject) {
-                    activeObject.clone((cloned: fabric.Object) => {
-                        fabricCanvas.current?.add(cloned);
-                        const id = Math.random().toString(36).substr(2, 9);
-                        (cloned as FabricObject).id = id;
-                        cloned.set({ left: (cloned.left || 0) + 20, top: (cloned.top || 0) + 20 });
-                        fabricCanvas.current?.setActiveObject(cloned);
-                        yObjects.set(id, (cloned as any).toObject(["id", "name", "locked"]));
-                    });
+                    activeObject.clone((cloned: fabric.Object) => { clipboardRef.current = cloned; }, ["name", "locked"]);
                 }
                 break;
+            case "EDIT_CUT":
+                if (activeObject) {
+                    activeObject.clone((cloned: fabric.Object) => {
+                        clipboardRef.current = cloned;
+                        deleteActiveObjects();
+                    }, ["name", "locked"]);
+                }
+                break;
+            case "EDIT_PASTE":
+                if (clipboardRef.current) addClonedObject(clipboardRef.current);
+                break;
             case "EDIT_DELETE":
+                deleteActiveObjects();
+                break;
+            case "LAYER_RENAME":
                 if (activeObject && activeObject.id) {
-                    yObjects.delete(activeObject.id);
-                    fabricCanvas.current?.remove(activeObject);
-                    setActiveObject(null);
+                    const next = window.prompt("Layer name", activeObject.name || "");
+                    if (next !== null && next.trim()) {
+                        activeObject.name = next.trim();
+                        yObjects.set(activeObject.id, activeObject.toObject(["id", "name", "locked"]));
+                        refreshLayersRef.current();
+                    }
                 }
                 break;
             case "EDIT_SELECT_ALL":
@@ -558,17 +706,20 @@ export default function PhotoEditor() {
                 }
                 break;
             case "FILE_EXPORT_PNG":
-                if (fabricCanvas.current) {
-                    const dataURL = fabricCanvas.current.toDataURL({ format: "png", quality: 1 });
-                    const link = document.createElement("a");
-                    link.download = "bolt-composition.png";
-                    link.href = dataURL;
-                    link.click();
-                }
+                exportPng();
                 break;
             case "VIEW_ZOOM_IN": setZoom(prev => Math.min(prev + 10, 400)); break;
             case "VIEW_ZOOM_OUT": setZoom(prev => Math.max(prev - 10, 10)); break;
             case "VIEW_FIT": setZoom(100); break;
+            case "VIEW_FULLSCREEN":
+                if (typeof document !== "undefined") {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().catch(() => { });
+                    } else if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(() => { });
+                    }
+                }
+                break;
             case "WINDOW_TOOLBAR": setShowToolbar(prev => !prev); break;
             case "WINDOW_LAYERS": setShowLayers(prev => !prev); break;
             case "WINDOW_PROPERTIES": setShowProperties(prev => !prev); break;
@@ -580,15 +731,30 @@ export default function PhotoEditor() {
             default:
                 console.log("Action not implemented:", id);
         }
-    }, [activeObject, undoManager, yObjects, canvasWidth, canvasHeight]);
+    }, [activeObject, undoManager, yObjects, canvasWidth, canvasHeight, addClonedObject, deleteActiveObjects, exportPng]);
 
 
     // Keyboard Shortcuts
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            // Never hijack typing (inputs, selects, fabric's hidden IText textarea, contentEditable)
+            const target = e.target as HTMLElement | null;
+            const tag = target?.tagName;
+            const isEditable = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || !!target?.isContentEditable;
+            if (isEditable) return;
+
             // CTRL/META Shortcuts
             if (e.ctrlKey || e.metaKey) {
                 switch (e.key.toLowerCase()) {
+                    case "c":
+                        handleMenuAction("EDIT_COPY");
+                        break;
+                    case "x":
+                        handleMenuAction("EDIT_CUT");
+                        break;
+                    case "v":
+                        handleMenuAction("EDIT_PASTE");
+                        break;
                     case "z":
                         e.preventDefault();
                         if (e.shiftKey) undoManager.redo();
@@ -636,6 +802,26 @@ export default function PhotoEditor() {
                         handleMenuAction("VIEW_ZOOM_OUT");
                         break;
                 }
+                return;
+            }
+
+            // Delete / Backspace removes the current selection
+            if (e.key === "Delete" || e.key === "Backspace") {
+                e.preventDefault();
+                handleMenuAction("EDIT_DELETE");
+                return;
+            }
+
+            // Single-key tool shortcuts (as advertised in the toolbar tooltips)
+            if (!e.altKey) {
+                const toolKeys: Record<string, ToolType> = {
+                    v: "MOVE", m: "SELECT", b: "BRUSH", e: "ERASER", t: "TEXT", u: "SHAPE", h: "HAND", z: "ZOOM"
+                };
+                const tool = toolKeys[e.key.toLowerCase()];
+                if (tool && e.key.length === 1) {
+                    setActiveTool(tool);
+                    return;
+                }
             }
 
             // F1-F12 Keybinds
@@ -643,6 +829,10 @@ export default function PhotoEditor() {
                 case "F1":
                     e.preventDefault();
                     setModalConfig({ isOpen: true, type: "HELP", title: "Bolt Photo Editor - Help" });
+                    break;
+                case "F2":
+                    e.preventDefault();
+                    handleMenuAction("LAYER_RENAME");
                     break;
                 case "F3":
                     e.preventDefault();
@@ -674,13 +864,7 @@ export default function PhotoEditor() {
                     break;
                 case "F11":
                     e.preventDefault();
-                    if (typeof document !== 'undefined') {
-                        if (!document.fullscreenElement) {
-                            document.documentElement.requestFullscreen().catch(() => { });
-                        } else if (document.exitFullscreen) {
-                            document.exitFullscreen().catch(() => { });
-                        }
-                    }
+                    handleMenuAction("VIEW_FULLSCREEN");
                     break;
                 case "F12":
                     e.preventDefault();
@@ -721,7 +905,7 @@ export default function PhotoEditor() {
                             {synced ? "Connected" : "Syncing..."}
                         </div>
                         <button onClick={() => setIsMintModalOpen(true)} className="bg-[#00ffa3] px-3 py-1 rounded text-[11px] font-bold text-black hover:bg-[#00ffa3]/90 shadow-[0_0_10px_rgba(0,255,163,0.2)] ml-2">Mint Asset</button>
-                        <button className="bg-secondary px-3 py-1 rounded text-[11px] font-bold text-black hover:bg-secondary/90 shadow-[0_0_10px_rgba(0,224,255,0.2)] ml-2">Export Content</button>
+                        <button onClick={exportPng} className="bg-secondary px-3 py-1 rounded text-[11px] font-bold text-black hover:bg-secondary/90 shadow-[0_0_10px_rgba(0,224,255,0.2)] ml-2">Export Content</button>
                     </div>
                 </div>
 
@@ -739,7 +923,7 @@ export default function PhotoEditor() {
                         <OptionsBar
                             activeTool={activeTool}
                             options={toolOptions}
-                            onOptionsChange={(o) => setToolOptions({ ...toolOptions, ...o })}
+                            onOptionsChange={(o) => setToolOptions(prev => ({ ...prev, ...o }))}
                             canvasWidth={canvasWidth}
                             canvasHeight={canvasHeight}
                             onDimensionsChange={setDimensions}
@@ -747,6 +931,7 @@ export default function PhotoEditor() {
 
                         {/* Workspace Wrapper */}
                         <div
+                            ref={workspaceRef}
                             className="flex-grow relative bg-[#1e1e1e] overflow-auto flex items-center justify-center p-20 custom-scrollbar border-r border-[#1e1e1e]"
                             onMouseMove={handleMouseMove}
                             onDragOver={handleDragOver}
@@ -823,6 +1008,8 @@ export default function PhotoEditor() {
                                             }}
                                             onToggleVisibility={handleLayerVisibility}
                                             onToggleLock={handleLayerLock}
+                                            onDeleteActive={() => handleMenuAction("EDIT_DELETE")}
+                                            onRenameActive={() => handleMenuAction("LAYER_RENAME")}
                                         />
                                     </div>
                                 )}
@@ -849,8 +1036,21 @@ export default function PhotoEditor() {
                             </button>
                             <button
                                 onClick={() => {
-                                    setDimensions(newDocData.width, newDocData.height);
-                                    fabricCanvas.current?.clear();
+                                    const w = newDocData.width > 0 ? newDocData.width : canvasWidth;
+                                    const h = newDocData.height > 0 ? newDocData.height : canvasHeight;
+                                    // Remove layers through Yjs so collaborators clear too; canvas.clear() would
+                                    // only wipe locally and also reset the background colour.
+                                    fabricCanvas.current?.discardActiveObject();
+                                    ydoc.transact(() => {
+                                        Array.from(yObjects.keys()).forEach(key => yObjects.delete(key));
+                                        yConfig.set("width", w);
+                                        yConfig.set("height", h);
+                                    });
+                                    fabricCanvas.current?.getObjects().slice().forEach(obj => {
+                                        if (!(obj as FabricObject).id) fabricCanvas.current?.remove(obj);
+                                    });
+                                    fabricCanvas.current?.requestRenderAll();
+                                    setActiveObject(null);
                                     setModalConfig({ ...modalConfig, isOpen: false });
                                 }}
                                 className="bg-[#0078d4] px-6 py-1.5 rounded text-xs font-bold text-white hover:bg-[#0078d4]/90 shadow-lg"

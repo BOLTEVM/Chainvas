@@ -26,19 +26,33 @@ export interface ChainvasTxResult {
  * Native Web3 transaction execution pipeline for BOLTChainvas dApp stack.
  * Operates 100% standalone if 'theguards' package is not installed.
  */
+type GuardsModule = {
+    TheGuardsWalletPipeline?: { executeAndAwaitTransaction: (req: ChainvasTxRequest) => Promise<ChainvasTxResult> };
+};
+
+async function loadOptionalGuards(): Promise<GuardsModule | null> {
+    const explicit = process.env.NEXT_PUBLIC_THEGUARDS_MODULE;
+    if (!explicit) return null;
+    try {
+        return (await import(/* webpackIgnore: true */ explicit)) as GuardsModule;
+    } catch {
+        return null; // Standalone mode fallback
+    }
+}
+
 export class ChainvasWalletPipeline {
     public static async executeAndAwaitTransaction(
         req: ChainvasTxRequest
     ): Promise<ChainvasTxResult> {
         console.log(`[ChainvasWalletPipeline] Executing transaction for canvas [${req.canvasId || 'DEFAULT'}] to ${req.to}...`);
 
-        try {
-            const guards = require('../../../../../../theguards');
-            if (guards && guards.TheGuardsWalletPipeline) {
-                return guards.TheGuardsWalletPipeline.executeAndAwaitTransaction(req);
-            }
-        } catch {
-            // Standalone mode fallback
+        // Optional integration with an external "theguards" wallet pipeline when
+        // this app is embedded in the larger suite. The module lives outside the
+        // repo, so it is resolved at runtime (never bundled) and silently skipped
+        // in standalone mode.
+        const guards = await loadOptionalGuards();
+        if (guards?.TheGuardsWalletPipeline) {
+            return guards.TheGuardsWalletPipeline.executeAndAwaitTransaction(req);
         }
 
         return this.standaloneExecuteAndAwait(req);

@@ -32,8 +32,11 @@ export default function MintingModal({ isOpen, onClose, asset, onMint, isMinting
     const [symbol, setSymbol] = useState("");
     const [amount, setAmount] = useState<number | "">("");
 
+    // Reset the form each time the modal is opened. Resetting on open is an
+    // intentional one-off state sync keyed to a prop transition.
     useEffect(() => {
         if (isOpen) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setTokenType("ERC721");
             setName("");
             setSymbol("");

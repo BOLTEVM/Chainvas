@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import * as Y from "yjs";
-// @ts-ignore - y-webrtc lacks robust typescript definitions sometimes
 import { WebrtcProvider } from "y-webrtc";
 
 // Generate a random color for the user's cursor
@@ -13,22 +12,19 @@ export function useYjs(roomName: string) {
     const [synced, setSynced] = useState(false);
     const [provider, setProvider] = useState<WebrtcProvider | null>(null);
 
-    // We use refs to keep the identical Y.Doc instance across re-renders
-    const ydocRef = useRef<Y.Doc | null>(null);
-    if (!ydocRef.current) {
-        ydocRef.current = new Y.Doc();
-    }
-    const ydoc = ydocRef.current;
+    // Lazy initial state keeps the identical Y.Doc instance across re-renders.
+    const [ydoc] = useState(() => new Y.Doc());
 
     useEffect(() => {
         // Initialize WebRTC Provider
         // Connects to public signaling servers. In production, you'd host your own.
-        const webrtcProvider = new WebrtcProvider(`chainvas-${roomName}`, ydoc, {
-            signaling: [
-                "wss://signaling.yjs.dev",
-                "wss://y-webrtc-signaling-eu.herokuapp.com"
-            ]
-        });
+        // Override with NEXT_PUBLIC_YJS_SIGNALING="wss://a,wss://b" to use your own
+        // signaling servers – the public ones are best-effort and often offline.
+        const signaling = (process.env.NEXT_PUBLIC_YJS_SIGNALING ?? "wss://signaling.yjs.dev")
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+        const webrtcProvider = new WebrtcProvider(`chainvas-${roomName}`, ydoc, { signaling });
 
         // Set awareness (user cursor profile)
         webrtcProvider.awareness.setLocalStateField("user", {
@@ -45,7 +41,9 @@ export function useYjs(roomName: string) {
         return () => {
             webrtcProvider.disconnect();
             webrtcProvider.destroy();
-            ydoc.destroy();
+            // The Y.Doc itself is owned by the component (lazy useState) and is
+            // intentionally not destroyed here: React StrictMode re-runs effects,
+            // and a destroyed doc would then be handed to the new provider.
         };
     }, [roomName, ydoc]);
 

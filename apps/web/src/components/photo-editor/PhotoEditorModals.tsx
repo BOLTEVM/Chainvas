@@ -84,9 +84,9 @@ export default function PhotoEditorModals({
                     </div>
                     <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest text-gray-500 font-black">Background</label>
-                        <select className="w-full bg-[#1a1a1a] border border-white/5 rounded px-3 py-2 text-white outline-none focus:border-[#00e0ff]/50">
+                        <select defaultValue="White" className="w-full bg-[#1a1a1a] border border-white/5 rounded px-3 py-2 text-white outline-none focus:border-[#00e0ff]/50">
                             <option>Transparent</option>
-                            <option selected>White</option>
+                            <option>White</option>
                             <option>Black</option>
                         </select>
                     </div>

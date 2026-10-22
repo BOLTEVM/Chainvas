@@ -25,10 +25,14 @@ export function useKanban() {
     });
     const [isLoaded, setIsLoaded] = useState(false);
 
+    // Hydrate from localStorage after mount. This must stay in an effect (not a
+    // lazy initializer) so server and first client render match; `isLoaded`
+    // gates the UI until the stored board has been applied.
     useEffect(() => {
         const saved = localStorage.getItem("bolt_kanban_state");
         if (saved) {
             try {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setState(JSON.parse(saved));
             } catch (e) {
                 console.error("Failed to load Kanban state", e);

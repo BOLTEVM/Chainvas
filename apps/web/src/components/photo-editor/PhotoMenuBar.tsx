@@ -78,7 +78,7 @@ export default function PhotoMenuBar({ onAction }: PhotoMenuBarProps) {
                 { label: "New Layer", shortcut: "Shift+Ctrl+N" },
                 { label: "Duplicate Layer", shortcut: "Ctrl+J", action: () => onAction?.("EDIT_DUPLICATE") },
                 { label: "Delete Layer", shortcut: "F4", action: () => onAction?.("EDIT_DELETE") },
-                { label: "Rename Layer", shortcut: "F2" },
+                { label: "Rename Layer", shortcut: "F2", action: () => onAction?.("LAYER_RENAME") },
                 { separator: true },
                 { label: "Merge Layers", shortcut: "Ctrl+E" },
                 { label: "Flatten Image" },
@@ -90,7 +90,7 @@ export default function PhotoMenuBar({ onAction }: PhotoMenuBarProps) {
                 { label: "Zoom In", shortcut: "Ctrl++", action: () => onAction?.("VIEW_ZOOM_IN") },
                 { label: "Zoom Out", shortcut: "Ctrl+-", action: () => onAction?.("VIEW_ZOOM_OUT") },
                 { label: "Fit on Screen", shortcut: "Ctrl+0", action: () => onAction?.("VIEW_FIT") },
-                { label: "Fullscreen", shortcut: "F11" },
+                { label: "Fullscreen", shortcut: "F11", action: () => onAction?.("VIEW_FULLSCREEN") },
                 { separator: true },
                 { label: "Rulers", shortcut: "Ctrl+R" },
             ]

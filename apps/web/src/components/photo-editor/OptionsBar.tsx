@@ -100,7 +100,7 @@ export default function OptionsBar({
                         <span>Fill:</span>
                         <input
                             type="color"
-                            value={options.shapeFill}
+                            value={options.shapeFill.slice(0, 7)}
                             onChange={(e) => onOptionsChange({ shapeFill: e.target.value })}
                             className="w-6 h-4 bg-transparent border-none p-0 cursor-pointer"
                         />
@@ -115,7 +115,7 @@ export default function OptionsBar({
                         />
                         <input
                             type="color"
-                            value={options.shapeStroke}
+                            value={options.shapeStroke.slice(0, 7)}
                             onChange={(e) => onOptionsChange({ shapeStroke: e.target.value })}
                             className="w-6 h-4 bg-transparent border-none p-0 cursor-pointer"
                         />

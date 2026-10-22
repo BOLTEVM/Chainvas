@@ -74,7 +74,7 @@ export default function PropertiesPanel({ activeObject, onPropertyChange }: Prop
                 </section>
 
                 {/* Tool Specific (Text) */}
-                {activeObject.type === "i-text" && (
+                {(activeObject.type === "i-text" || activeObject.type === "textbox" || activeObject.type === "text") && (
                     <section className="animate-in fade-in slide-in-from-top-2">
                         <div className="flex items-center gap-2 mb-3">
                             <Type className="w-3.5 h-3.5 text-[#00e0ff]" />
@@ -86,7 +86,7 @@ export default function PropertiesPanel({ activeObject, onPropertyChange }: Prop
                                 <div className="flex items-center gap-2">
                                     <input
                                         type="color"
-                                        value={activeObject.fill as string}
+                                        value={typeof activeObject.fill === "string" ? activeObject.fill : "#ffffff"}
                                         onChange={(e) => onPropertyChange("fill", e.target.value)}
                                         className="w-10 h-5 bg-transparent border-none p-0 cursor-pointer"
                                     />

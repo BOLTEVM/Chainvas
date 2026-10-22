@@ -7,19 +7,34 @@ import { schema } from "prosemirror-schema-basic";
 import { keymap } from "prosemirror-keymap";
 import { baseKeymap } from "prosemirror-commands";
 import { ySyncPlugin, yCursorPlugin, yUndoPlugin, undo, redo } from "y-prosemirror";
+import type * as Y from "yjs";
 import { CanvasObject, TypographyOptions } from "@/app/text/types";
+import type { useYjs } from "@/hooks/useYjs";
 import { ethers } from "ethers";
 import { ShieldAlert, ShieldCheck } from "lucide-react";
 
 interface TextFrameEditorProps {
     object: CanvasObject;
     typography: TypographyOptions;
-    ydoc: any;
-    provider: any;
+    ydoc: Y.Doc;
+    provider: ReturnType<typeof useYjs>["provider"];
     onSelect?: () => void;
     isActiveTool: boolean;
     allObjects: CanvasObject[]; // Added for integrity check
 }
+
+// CharacterPanel exposes named weights; CSS only understands keywords/numbers
+const FONT_WEIGHTS: Record<string, string> = {
+    light: "300",
+    normal: "400",
+    regular: "400",
+    medium: "500",
+    semibold: "600",
+    bold: "700",
+    black: "900"
+};
+const cssFontWeight = (t: Partial<TypographyOptions>) =>
+    t.bold ? "700" : (FONT_WEIGHTS[(t.fontWeight || "normal").toLowerCase()] || t.fontWeight || "400");
 
 export default function TextFrameEditor({
     object,
@@ -32,6 +47,11 @@ export default function TextFrameEditor({
 }: TextFrameEditorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
     const [view, setView] = useState<EditorView | null>(null);
+    // Read by ProseMirror's `editable` callback without recreating the view
+    const lockedRef = useRef(!!object.locked);
+    useEffect(() => {
+        lockedRef.current = !!object.locked;
+    }, [object.locked]);
 
     useEffect(() => {
         if (!editorRef.current || !ydoc || !provider || !object.contentId) return;
@@ -60,14 +80,21 @@ export default function TextFrameEditor({
                 schema,
                 plugins: getPlugins(),
             }),
+            editable: () => !lockedRef.current,
         });
 
         setView(editorView);
 
         return () => {
             editorView.destroy();
+            setView(null);
         };
     }, [provider, ydoc, object.contentId]);
+
+    // Lock state changed: ask ProseMirror to re-evaluate `editable`
+    useEffect(() => {
+        view?.setProps({});
+    }, [view, object.locked]);
 
     const activeTypography = object.typography || typography;
 
@@ -81,7 +108,7 @@ export default function TextFrameEditor({
                 color: activeTypography.color,
                 lineHeight: activeTypography.lineHeight,
                 letterSpacing: `${activeTypography.letterSpacing}em`,
-                fontWeight: activeTypography.bold ? "bold" : activeTypography.fontWeight,
+                fontWeight: cssFontWeight(activeTypography),
                 fontStyle: activeTypography.italic ? "italic" : "normal",
                 textDecoration: activeTypography.underline ? "underline" : "none",
                 // Paragraph Styles
@@ -137,7 +164,7 @@ export default function TextFrameEditor({
                         color: activeTypography.color,
                         lineHeight: activeTypography.lineHeight,
                         letterSpacing: `${activeTypography.letterSpacing}em`,
-                        fontWeight: activeTypography.bold ? "bold" : activeTypography.fontWeight,
+                        fontWeight: cssFontWeight(activeTypography),
                         fontStyle: activeTypography.italic ? "italic" : "normal",
                         textDecoration: activeTypography.underline ? "underline" : "none",
                         // Paragraph Styles via CSS Variables for child paragraphs
@@ -145,17 +172,31 @@ export default function TextFrameEditor({
                         paddingRight: `${activeTypography.rightIndent || 0}pt`,
                         hyphens: activeTypography.hyphenate ? "auto" : "none",
                         transform: `translateY(${activeTypography.baselineShift || 0}pt)`,
-                        // @ts-ignore - CSS Variables
+                        // CSS custom properties for child paragraphs (object is cast below)
                         "--space-before": `${activeTypography.spaceBefore || 0}pt`,
                         "--space-after": `${activeTypography.spaceAfter || 0}pt`,
                         "--first-line-indent": `${activeTypography.firstLineIndent || 0}pt`
                     } as any}
                 />
             ) : (
-                <div className="w-full h-full flex items-center justify-center border border-gray-400/50 relative">
-                    {/* Placeholder cross for shape frames */}
-                    <div className="absolute w-full h-[1px] bg-gray-400/30 transform origin-center rotate-45" />
-                    <div className="absolute w-full h-[1px] bg-gray-400/30 transform origin-center -rotate-45" />
+                <div className="w-full h-full flex items-center justify-center border border-gray-400/50 relative overflow-hidden">
+                    {/* Placeholder cross for empty frames */}
+                    {!object.imageData && (
+                        <>
+                            <div className="absolute w-full h-[1px] bg-gray-400/30 transform origin-center rotate-45" />
+                            <div className="absolute w-full h-[1px] bg-gray-400/30 transform origin-center -rotate-45" />
+                        </>
+                    )}
+
+                    {/* Placed media */}
+                    {object.imageData && !isSignature && (
+                        <img
+                            src={object.imageData}
+                            alt={object.imageName || "Placed image"}
+                            draggable={false}
+                            className="w-full h-full object-cover pointer-events-none select-none"
+                        />
+                    )}
 
                     {isSignature && object.signatureData && (
                         <div className="absolute inset-0 flex flex-col items-center justify-center p-2 bg-black/40 backdrop-blur-sm group overflow-hidden">
@@ -186,12 +227,12 @@ export default function TextFrameEditor({
             )}
 
             {/* Selection Handles */}
-            {object.isSelected && (
+            {object.isSelected && !object.locked && (
                 <>
-                    <div className="absolute -top-1 -left-1 w-2 h-2 bg-white border border-[#ff6b00] cursor-nwse-resize" />
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-white border border-[#ff6b00] cursor-nesw-resize" />
-                    <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-white border border-[#ff6b00] cursor-nesw-resize" />
-                    <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-white border border-[#ff6b00] cursor-nwse-resize" />
+                    <div data-resize-handle="nw" className="absolute -top-1 -left-1 w-2 h-2 bg-white border border-[#ff6b00] cursor-nwse-resize z-20" />
+                    <div data-resize-handle="ne" className="absolute -top-1 -right-1 w-2 h-2 bg-white border border-[#ff6b00] cursor-nesw-resize z-20" />
+                    <div data-resize-handle="sw" className="absolute -bottom-1 -left-1 w-2 h-2 bg-white border border-[#ff6b00] cursor-nesw-resize z-20" />
+                    <div data-resize-handle="se" className="absolute -bottom-1 -right-1 w-2 h-2 bg-white border border-[#ff6b00] cursor-nwse-resize z-20" />
                 </>
             )}
         </div>
