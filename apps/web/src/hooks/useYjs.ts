@@ -32,6 +32,8 @@ export function useYjs(roomName: string) {
             color: randomColor,
         });
 
+        // The provider can only exist once the effect has created it.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setProvider(webrtcProvider);
 
         webrtcProvider.on("synced", (isSynced: { synced: boolean }) => {
