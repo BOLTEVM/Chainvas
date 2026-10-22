@@ -65,6 +65,40 @@ export function useMinting() {
             });
             return false;
         }
+
+        // Preflight 1: an unset NEXT_PUBLIC_ERC*_ADDRESS falls back to the zero
+        // address. quais cannot resolve a Quai shard for it, so it never fills
+        // in tx.chainId and the node rejects the call with an opaque
+        // "transaction chainId mismatch (value=0x00)". Fail here instead, with
+        // the name of the variable that is actually missing.
+        const contractAddress = type === "ERC721" ? ERC721_CONTRACT_ADDRESS : ERC20_CONTRACT_ADDRESS;
+        const addressVar = type === "ERC721" ? "NEXT_PUBLIC_ERC721_ADDRESS" : "NEXT_PUBLIC_ERC20_ADDRESS";
+        if (!contractAddress || /^0x0+$/i.test(contractAddress)) {
+            addToast({
+                type: "error",
+                title: "No contract configured",
+                message: `${addressVar} is not set, so there is no ${type} contract to mint to. The deployed addresses for each network are in packages/contracts/deployments/.`,
+            });
+            return false;
+        }
+
+        // Preflight 2: Pelagus must be on the network this build targets, or the
+        // node rejects the transaction with a genuine chainId mismatch.
+        try {
+            const activeNetwork = await signer.provider?.getNetwork();
+            const walletChainId = activeNetwork ? Number(activeNetwork.chainId) : 0;
+            if (walletChainId && walletChainId !== wallet.network.chainId) {
+                addToast({
+                    type: "error",
+                    title: "Wrong network",
+                    message: `Pelagus is on chain ${walletChainId}, but this build targets ${wallet.network.name} (chain ${wallet.network.chainId}). Switch network in Pelagus, or set NEXT_PUBLIC_QUAI_NETWORK to match.`,
+                });
+                return false;
+            }
+        } catch {
+            /* provider cannot report a network - let the transaction surface it */
+        }
+
         setIsMinting(true);
 
         try {
@@ -81,7 +115,7 @@ export function useMinting() {
             let txHash: string;
 
             if (type === "ERC721") {
-                const contract = new quais.Contract(ERC721_CONTRACT_ADDRESS, MEDIA_ASSET_ABI, signer);
+                const contract = new quais.Contract(contractAddress, MEDIA_ASSET_ABI, signer);
                 const tokenURI = finalUri || "ipfs://placeholder";
 
                 const tx = await contract.mintMedia(ownerAddress, tokenURI, config.mediaType ?? 1);
@@ -89,7 +123,7 @@ export function useMinting() {
                 const receipt = await tx.wait();
                 txHash = receipt?.hash ?? tx.hash;
             } else {
-                const contract = new quais.Contract(ERC20_CONTRACT_ADDRESS, MEDIA_TOKEN_ABI, signer);
+                const contract = new quais.Contract(contractAddress, MEDIA_TOKEN_ABI, signer);
                 // parseUnits avoids the floating-point precision loss of amount * 10 ** 18.
                 const amount = quais.parseUnits(String(config.amount || 0), 18);
 
