@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="608" viewBox="0 0 1080 608">
+  <rect width="1080" height="608" fill="#0a0e14"/>
+  <text x="60" y="90" fill="#00ffa3" font-family="monospace" font-size="34">DANTE TREASURY REPORT #9</text>
+  <text x="60" y="140" fill="#e6e6e6" font-family="monospace" font-size="24">PAID 18.0320 QUAI — block 10764942</text>
+  <text x="60" y="220" fill="#d8b459" font-family="monospace" font-size="52">37.9007 QUAI</text>
+  <text x="60" y="270" fill="#8a8f98" font-family="monospace" font-size="22">treasury balance · $0.00737638/QUAI</text>
+  <text x="60" y="360" fill="#6fd88a" font-family="monospace" font-size="30">0 arb fires · 0 plants · 0 swaps</text>
+  <text x="60" y="420" fill="#8a8f98" font-family="monospace" font-size="22">gas 62922 gwei · head 10764942</text>
+  <text x="60" y="560" fill="#00ffa3" font-family="monospace" font-size="20">anchored on Quai Cyprus-1 · 2026-10-23T10:06:24.051Z</text>
+</svg>
